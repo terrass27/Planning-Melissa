@@ -332,7 +332,6 @@
       <button id="header-menu-btn" aria-label="Menu" style="background:none; border:1px solid var(--line); border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--gold-bright); font-size:1.3rem; line-height:1;">⋯</button>
       <div id="header-menu-panel" style="display:none; position:absolute; top:calc(100% + 8px); right:0; background:#F6EFE3; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.35); padding:10px; min-width:220px; z-index:50;">
         <div id="whoami-indicator" style="font-size:.76rem; color:#8A7A70; font-weight:500; padding:8px 10px;"></div>
-        <div id="sync-indicator" style="display:none; font-size:.76rem; font-weight:600; padding:0 10px 8px;"></div>
         <button class="header-menu-item" id="pin-manage-btn" style="display:none;">🔑 Codes d'accès</button>
         <button class="header-menu-item" id="backup-btn">💾 Sauvegarde</button>
         <button class="header-menu-item" id="logout-btn" style="display:none; color:#B14A5E;">Déconnexion</button>
@@ -340,6 +339,12 @@
     </div>
   </div>
 </header>
+
+<div id="connectivity-banner" style="display:none; border-bottom:1px solid rgba(0,0,0,0.15);">
+  <div class="container" style="padding:9px 0; font-size:.82rem; font-weight:600; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+    <span id="connectivity-banner-text"></span>
+  </div>
+</div>
 
 <div id="storage-warning" style="display:none; background:#F8DCC0; border-bottom:1px solid #7A3B12;">
   <div class="container" style="padding:10px 0; font-size:.82rem; color:#5A2A0C; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
@@ -914,18 +919,38 @@
   const pendingSync = {};
   let syncRetryTimer = null;
 
+  // ---------- connectivity banner (the "voyant") ----------
+  // Deliberately does NOT rely only on Firestore's own promise resolving —
+  // while offline, a Firestore write can sit pending for a long time without
+  // ever rejecting, which would leave an indicator that only reacts to
+  // Firestore silently stuck on "✓ Synchronisé" and lying to the person.
+  // navigator.onLine + the online/offline events are checked directly and
+  // are what actually drives what's shown, so the banner reacts instantly.
+  function isOnline() { return typeof navigator === 'undefined' || navigator.onLine !== false; }
+
   function updateSyncIndicator() {
-    const el = document.getElementById('sync-indicator');
-    if (!el) return;
-    const pendingKeys = Object.keys(pendingSync).filter(k => pendingSync[k]);
+    const el = document.getElementById('connectivity-banner');
+    const textEl = document.getElementById('connectivity-banner-text');
+    if (!el || !textEl) return;
     if (!fbReady || !fbAuth || !fbAuth.currentUser) { el.style.display = 'none'; return; }
-    el.style.display = '';
-    if (pendingKeys.length === 0) {
-      el.textContent = '✓ Synchronisé';
-      el.style.color = '#7A9A5A';
+
+    const pendingKeys = Object.keys(pendingSync).filter(k => pendingSync[k]);
+
+    if (!isOnline()) {
+      el.style.display = '';
+      el.style.background = '#F8DCC0';
+      el.style.borderBottomColor = '#7A3B12';
+      textEl.style.color = '#5A2A0C';
+      textEl.textContent = '📴 Hors ligne — tes modifications sont enregistrées sur cet appareil et se synchroniseront automatiquement au retour du réseau.';
+    } else if (pendingKeys.length > 0) {
+      el.style.display = '';
+      el.style.background = '#F8DCC0';
+      el.style.borderBottomColor = '#7A3B12';
+      textEl.style.color = '#5A2A0C';
+      textEl.textContent = '🔄 Synchronisation en cours… tes données sont enregistrées sur cet appareil.';
     } else {
-      el.textContent = '🔄 Synchronisation en attente…';
-      el.style.color = '#B98A2E';
+      // Everything is fine — no need to occupy screen space permanently.
+      el.style.display = 'none';
     }
   }
 
@@ -938,7 +963,7 @@
   }
 
   async function retryPendingSync() {
-    if (!fbReady || !fbAuth || !fbAuth.currentUser) return;
+    if (!fbReady || !fbAuth || !fbAuth.currentUser || !isOnline()) return;
     const keys = Object.keys(pendingSync).filter(k => pendingSync[k]);
     for (const key of keys) {
       try {
@@ -955,7 +980,13 @@
   }
 
   if (typeof window !== 'undefined') {
-    window.addEventListener('online', () => retryPendingSync());
+    window.addEventListener('online', () => { updateSyncIndicator(); retryPendingSync(); });
+    window.addEventListener('offline', () => { updateSyncIndicator(); });
+    // iOS sometimes fails to fire online/offline reliably in the background —
+    // re-check whenever the app comes back to the foreground too.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') { updateSyncIndicator(); retryPendingSync(); }
+    });
   }
 
   function saveIndexed(key, items) {
@@ -967,14 +998,30 @@
     else { memoryStore[key] = JSON.stringify(items); }
 
     if (fbReady && fbAuth && fbAuth.currentUser) {
-      FB_DOC(key).set({ items: items, updatedAt: Date.now() })
-        .then(() => { pendingSync[key] = false; updateSyncIndicator(); })
-        .catch(err => {
-          console.error('Firestore save failed for', key, '— queued for retry', err);
-          pendingSync[key] = true;
-          updateSyncIndicator();
-          scheduleSyncRetry();
-        });
+      // Known offline right away: don't even wait on Firestore, which may
+      // hang for a long time instead of promptly rejecting. Flip the banner
+      // on immediately so nothing looks "invisible".
+      if (!isOnline()) {
+        pendingSync[key] = true;
+        updateSyncIndicator();
+      } else {
+        // Belt-and-braces: if the write neither resolves nor rejects within
+        // 6s (can happen mid-way through losing connection), treat it as
+        // pending too rather than leaving the banner in the dark.
+        let settled = false;
+        const timeoutId = setTimeout(() => {
+          if (!settled) { pendingSync[key] = true; updateSyncIndicator(); }
+        }, 6000);
+        FB_DOC(key).set({ items: items, updatedAt: Date.now() })
+          .then(() => { settled = true; clearTimeout(timeoutId); pendingSync[key] = false; updateSyncIndicator(); })
+          .catch(err => {
+            settled = true; clearTimeout(timeoutId);
+            console.error('Firestore save failed for', key, '— queued for retry', err);
+            pendingSync[key] = true;
+            updateSyncIndicator();
+            scheduleSyncRetry();
+          });
+      }
     }
     return Promise.resolve(localOk);
   }
@@ -3293,7 +3340,7 @@
       document.getElementById('admin-home-view').style.display = 'block';
       document.getElementById('backup-btn').style.display = 'none';
       document.getElementById('pin-manage-btn').style.display = 'none';
-      document.getElementById('sync-indicator').style.display = 'none';
+      document.getElementById('connectivity-banner').style.display = 'none';
       return;
     }
 
