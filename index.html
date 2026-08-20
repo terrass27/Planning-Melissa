@@ -50,7 +50,7 @@
   /* ---------- header ---------- */
   header{
     position:sticky; top:0; z-index:20; background:rgba(11,7,9,0.92); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line); padding:14px 0;
+    border-bottom:1px solid var(--line); padding:14px 0; padding-top:calc(14px + env(safe-area-inset-top, 0px));
   }
   .header-inner{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
   .header-menu-item{
@@ -977,6 +977,102 @@
         });
     }
     return Promise.resolve(localOk);
+  }
+
+  // =========================================================
+  // Form drafts — protects against iOS silently reloading (and wiping) the
+  // page while the app is backgrounded, e.g. switching apps to enable
+  // airplane mode. As long as at least one field changed, the in-progress
+  // entry is mirrored to localStorage continuously and flushed instantly
+  // whenever the tab is hidden — never only on a timer, since a reload can
+  // happen the moment the person leaves. Cleared on successful save or
+  // explicit Cancel, so it never resurfaces stale data.
+  // =========================================================
+  function serializeFormFields(formEl) {
+    const data = {};
+    formEl.querySelectorAll('input[id], textarea[id], select[id]').forEach(el => {
+      data[el.id] = (el.type === 'checkbox') ? el.checked : el.value;
+    });
+    return data;
+  }
+  function applyFormFields(formEl, data) {
+    Object.keys(data).forEach(id => {
+      const el = formEl.querySelector('#' + CSS.escape(id));
+      if (!el) return;
+      if (el.type === 'checkbox') el.checked = !!data[id];
+      else el.value = data[id];
+    });
+  }
+  function formHasAnyValue(data, skipIds) {
+    return Object.keys(data).some(id => !skipIds.includes(id) && String(data[id] || '').trim() !== '');
+  }
+
+  const DRAFT_CLIENT_KEY = 'ml_draft_client_form';
+  const DRAFT_PLANNING_KEY = 'ml_draft_planning_form';
+
+  function saveDraftNow(formEl, storageKey, skipIds) {
+    try {
+      const data = serializeFormFields(formEl);
+      if (!formHasAnyValue(data, skipIds)) { localStorage.removeItem(storageKey); return; }
+      localStorage.setItem(storageKey, JSON.stringify({ data, savedAt: Date.now() }));
+    } catch (e) { /* best-effort only — never block the person's typing */ }
+  }
+  function clearDraft(storageKey) { try { localStorage.removeItem(storageKey); } catch (e) {} }
+  function loadDraft(storageKey) {
+    try { const raw = localStorage.getItem(storageKey); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+  }
+
+  function attachDraftAutosave(formEl, storageKey, skipIds) {
+    let timer = null;
+    formEl.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => saveDraftNow(formEl, storageKey, skipIds), 400);
+    });
+    formEl.addEventListener('change', () => saveDraftNow(formEl, storageKey, skipIds));
+  }
+
+  // Flush both forms instantly the moment the app is hidden/backgrounded —
+  // this is the moment right before iOS might silently reload the page.
+  function flushAllDraftsIfOpen() {
+    if (clientForm.style.display !== 'none') saveDraftNow(clientForm, DRAFT_CLIENT_KEY, ['c-edit-id']);
+    if (planningForm.style.display !== 'none') saveDraftNow(planningForm, DRAFT_PLANNING_KEY, ['p-edit-id', 'p-client-id']);
+  }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushAllDraftsIfOpen(); });
+  window.addEventListener('pagehide', flushAllDraftsIfOpen);
+  window.addEventListener('beforeunload', flushAllDraftsIfOpen);
+
+  function draftAgeLabel(savedAt) {
+    const mins = Math.max(1, Math.round((Date.now() - savedAt) / 60000));
+    if (mins < 60) return `il y a ${mins} min`;
+    const hrs = Math.round(mins / 60);
+    return `il y a ${hrs} h`;
+  }
+
+  // Offered once, right after login — restoring re-opens the right form
+  // (including re-selecting the client for a RDV draft) with everything
+  // exactly as it was typed; declining discards it for good.
+  function offerDraftRestore() {
+    const clientDraft = loadDraft(DRAFT_CLIENT_KEY);
+    if (clientDraft) {
+      const ok = confirm(`Une fiche cliente non enregistrée a été retrouvée (${draftAgeLabel(clientDraft.savedAt)}). Récupérer cette saisie ?`);
+      if (ok) {
+        const editId = clientDraft.data['c-edit-id'];
+        if (editId) openClientEditForm(editId); else newClientBtn.click();
+        applyFormFields(clientForm, clientDraft.data);
+      } else clearDraft(DRAFT_CLIENT_KEY);
+    }
+    const planningDraft = loadDraft(DRAFT_PLANNING_KEY);
+    if (planningDraft) {
+      const ok = confirm(`Un rendez-vous non enregistré a été retrouvé (${draftAgeLabel(planningDraft.savedAt)}). Récupérer cette saisie ?`);
+      if (ok) {
+        const editId = planningDraft.data['p-edit-id'];
+        if (editId) openPlanningEdit(editId); else newPlanningBtn.click();
+        applyFormFields(planningForm, planningDraft.data);
+        const cid = planningDraft.data['p-client-id'];
+        const client = cid ? cachedClients.find(c => c.id === cid) : null;
+        if (client) showClientInfo(client);
+      } else clearDraft(DRAFT_PLANNING_KEY);
+    }
   }
 
   function attachRealtimeListeners() {
@@ -1991,6 +2087,7 @@
 
   const newPlanningBtn = document.getElementById('new-planning-btn');
   const planningForm = document.getElementById('planning-form');
+  attachDraftAutosave(planningForm, DRAFT_PLANNING_KEY, ['p-edit-id', 'p-client-id']);
   const cancelPlanningBtn = document.getElementById('cancel-planning');
   const pClientSearch = document.getElementById('p-client-search');
   const pClientResults = document.getElementById('p-client-results');
@@ -2167,6 +2264,7 @@
     clearClientSelection();
     pClientResults.style.display = 'none';
     planningForm.style.display = 'none';
+    clearDraft(DRAFT_PLANNING_KEY);
   });
 
   function renderReminders() {
@@ -2484,6 +2582,7 @@
       refreshDemoVisibility();
       autoBackup();
       showToast(isEditing ? 'Rendez-vous mis à jour et enregistré' : 'Rendez-vous enregistré');
+      clearDraft(DRAFT_PLANNING_KEY);
       selectedPlanningDate = entry.date;
       renderPlanningDay();
       planningForm.reset();
@@ -2507,6 +2606,7 @@
   // CLIENTS
   // =========================================================
   const clientForm = document.getElementById('client-form');
+  attachDraftAutosave(clientForm, DRAFT_CLIENT_KEY, ['c-edit-id']);
   const newClientBtn = document.getElementById('new-client-btn');
   const cancelClientBtn = document.getElementById('cancel-client');
   const clientsList = document.getElementById('clients-list');
@@ -2540,6 +2640,7 @@
     document.getElementById('delete-client-btn').style.display = 'none';
     resetClientFormMsg();
     clientForm.style.display = 'none';
+    clearDraft(DRAFT_CLIENT_KEY);
   });
 
   document.getElementById('delete-client-btn').addEventListener('click', async () => {
@@ -2675,6 +2776,7 @@
       cachedClients.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
       autoBackup();
       showToast(isEditing ? 'Fiche mise à jour et enregistrée' : 'Fiche cliente enregistrée');
+      clearDraft(DRAFT_CLIENT_KEY);
       renderClients();
       clientForm.reset();
       document.getElementById('c-edit-id').value = '';
@@ -3216,13 +3318,21 @@
       // an anonymous session simply satisfies Firestore's security rules so
       // multi-device sync can work. It is never a second login screen.
       fbAuth.signInAnonymously()
-        .then(() => { attachRealtimeListeners(); updateSyncIndicator(); })
+        .then(() => {
+          attachRealtimeListeners();
+          updateSyncIndicator();
+          // Short delay so the first Firestore snapshot has time to populate
+          // cachedClients before we try to re-select a client for a RDV draft.
+          setTimeout(offerDraftRestore, 1200);
+        })
         .catch(err => {
           console.error('Firebase anonymous sign-in failed, staying local-only for this session', err);
           loadAll();
+          offerDraftRestore();
         });
     } else {
       loadAll();
+      offerDraftRestore();
     }
   }
 
