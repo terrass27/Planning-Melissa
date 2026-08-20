@@ -1,0 +1,3316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0B0709">
+<title>Melissa Lefèvre — Planning &amp; Clients</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --noir:#0B0709; --noir-2:#171012; --cream:#FBF3E4; --cream-soft:#E3D2B8;
+    --gold:#D4AF37; --gold-bright:#F4D976; --berry:#B14A5E; --line:rgba(212,175,55,0.35);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--noir); color:var(--cream);
+    font-family:'Jost', sans-serif; font-weight:400; line-height:1.6;
+    -webkit-font-smoothing:antialiased; min-height:100vh;
+    overflow-x:hidden; padding-bottom:env(safe-area-inset-bottom, 0px);
+  }
+  h1,h2,h3{font-family:'Fraunces', serif; color:var(--cream); margin:0 0 .3em 0; font-weight:500;}
+  p{margin:0 0 .8em 0; color:var(--cream-soft); font-size:.94rem;}
+  a{color:inherit;}
+  .container{max-width:900px; margin:0 auto; padding:0 20px;}
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:.2em; font-size:.66rem; font-weight:500;
+    color:var(--gold); display:inline-flex; align-items:center; gap:8px; margin-bottom:.5em;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--noir);
+    border:none; padding:12px 22px; font-family:'Jost',sans-serif; font-weight:500; font-size:.82rem;
+    text-transform:uppercase; letter-spacing:.08em; text-decoration:none; cursor:pointer;
+    transition:background .2s;
+  }
+  .btn:hover{background:var(--gold-bright);}
+  .btn.berry{background:var(--berry); color:#fff;}
+  .btn.berry:hover{background:#9A3B4B;}
+  .btn-text{background:none; border:none; color:var(--cream-soft); font-size:.8rem; text-decoration:underline; cursor:pointer; padding:10px 2px; min-height:44px; display:inline-flex; align-items:center;}
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:20; background:rgba(11,7,9,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:14px 0;
+  }
+  .header-inner{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .header-menu-item{
+    display:block; width:100%; text-align:left; background:none; border:none; color:#241820;
+    font-family:'Jost',sans-serif; font-size:.86rem; padding:11px 10px; border-radius:6px; cursor:pointer; min-height:44px;
+  }
+  .header-menu-item:active{background:#EFE3CC;}
+  .brand-block{display:flex; align-items:center; gap:12px;}
+  .monogram{
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center; flex:none; position:relative;
+  }
+  .monogram span{font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:.78rem; color:var(--gold);}
+  .brand{font-family:'Fraunces', serif; font-weight:500; font-size:1rem; line-height:1.1;}
+  .brand span{display:block; font-family:'Jost',sans-serif; font-weight:400; font-size:.6rem; color:var(--gold); text-transform:uppercase; letter-spacing:.18em; margin-top:3px;}
+  .form-msg{font-size:.82rem;}
+  .form-msg.ok{color:#7A9A5A;}
+  .form-msg.err{color:#B14A5E;}
+  /* ---------- app shell ---------- */
+  main{padding:26px 0 60px;}
+  .tabs{
+    display:flex; gap:6px; flex-wrap:wrap; border-bottom:1px solid var(--line); margin-bottom:24px;
+    position:sticky; top:var(--header-height, 76px); z-index:19; background:var(--noir); padding-top:4px;
+  }
+  .tab{
+    background:none; border:none; padding:13px 16px; font-family:'Jost',sans-serif; font-size:.82rem;
+    font-weight:500; color:var(--cream-soft); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px;
+    display:flex; align-items:center; gap:8px; min-height:44px;
+  }
+  .tab.active{color:var(--gold-bright); border-bottom-color:var(--gold);}
+  .tab-icon{width:18px; height:18px; flex:none;}
+  .view{display:none;}
+  .view.active{display:block;}
+  /* ---------- light panels (forms/lists on cream bg for readability) ---------- */
+  .panel{background:#F6EFE3; color:#241820; border-radius:10px; padding:22px;}
+  .panel h3{color:#241820;}
+  .panel label{
+    display:block; font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em;
+    color:#93374A; margin:10px 0 5px;
+  }
+  .panel input:not([type="checkbox"]), .panel select, .panel textarea{
+    width:100%; padding:12px 12px; border-radius:5px; border:1px solid #D8C9B0; background:#fff;
+    color:#241820; font-family:'Jost',sans-serif; font-size:16px;
+    -webkit-appearance:none; appearance:none; min-height:44px;
+  }
+  .panel select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2393374A'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 12px center; background-size:16px; padding-right:36px;
+  }
+  #login-form input{
+    width:100%; padding:12px 12px; border-radius:5px; border:1px solid #D8C9B0; background:#fff;
+    color:#241820; font-family:'Jost',sans-serif; font-size:16px; -webkit-appearance:none; appearance:none; min-height:44px;
+  }
+  #login-form label{
+    display:block; font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em;
+    color:#93374A; margin-bottom:6px;
+  }
+  .panel textarea{resize:vertical;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:520px){ .field-row{grid-template-columns:1fr;} }
+  .addr-wrap{position:relative;}
+  .addr-results{
+    position:absolute; left:0; right:0; top:calc(100% + 2px); z-index:20;
+    background:#fff; border:1px solid #D8C9B0; border-radius:6px; box-shadow:0 8px 20px rgba(0,0,0,0.28);
+    max-height:200px; overflow-y:auto;
+  }
+  .addr-result-row{padding:9px 12px; font-size:.84rem; color:#241820; cursor:pointer; border-bottom:1px solid #F0E7D6;}
+  .addr-result-row:last-child{border-bottom:none;}
+  .addr-result-row:hover{background:#FBF3E1;}
+  .addr-result-empty{padding:10px 12px; font-size:.8rem; color:#8A7A70; text-align:center;}
+  .hair-section{margin:14px 0; border:1px solid #E7DAC0; border-radius:8px; padding:12px 14px; background:#FBF7EF;}
+  .hair-section h4{
+    font-family:'Fraunces',serif; font-style:italic; font-size:.86rem; font-weight:500; color:#93374A; margin:0 0 10px;
+  }
+  .form-actions{display:flex; align-items:center; gap:16px; margin-top:14px; flex-wrap:wrap;}
+  /* ---------- clients tab ---------- */
+  .toolbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; flex-wrap:wrap;}
+  .toolbar select, .toolbar input:not([type="checkbox"]){
+    padding:11px 12px; border-radius:6px; border:1px solid #D8C9B0; background:#fff; color:#241820;
+    font-family:'Jost',sans-serif; font-size:16px; -webkit-appearance:none; appearance:none; min-height:44px;
+  }
+  .toolbar select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2393374A'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 12px center; background-size:16px; padding-right:36px;
+  }
+  .toolbar input:not([type="checkbox"]){flex:1; min-width:160px;}
+  input[type="checkbox"]{width:18px; height:18px; min-height:0; flex:none; accent-color:#93374A;}
+  .client-card{
+    background:#fff; border:1px solid #E7DAC0; border-radius:6px; padding:14px 16px; margin-bottom:10px;
+    display:flex; justify-content:space-between; gap:12px; align-items:flex-start;
+  }
+  .client-card b{display:block; font-size:.95rem; color:#241820;}
+  .client-card > div > span{font-size:.8rem; color:#6E5F63; display:block; margin-top:2px;}
+  .client-actions{display:flex; flex-direction:column; gap:6px; align-items:flex-end; flex:none;}
+  .client-actions button{background:none; border:none; font-size:.76rem; cursor:pointer; text-decoration:underline; padding:8px 2px; min-height:38px;}
+  .action-history{color:#7A5A12;}
+  .action-edit{color:#93374A;}
+  .action-delete{color:#B14A5E;}
+  .hair-tags{display:flex; flex-wrap:wrap; gap:5px; margin-top:8px;}
+  .hair-tag{font-size:.68rem; background:#F0E7D6; color:#6E5F63; padding:3px 8px; border-radius:999px;}
+  .hair-tag.alert{background:#F8DCC0; color:#7A3B12; font-weight:600;}
+  .admin-empty{font-size:.9rem; color:#6E5F63; text-align:center; padding:24px 0;}
+  .admin-note{font-size:.8rem; color:#8A7A70;}
+  /* ---------- broadcast ---------- */
+  .broadcast-body-top{border-bottom:1px solid #E7DAC0; padding-bottom:18px; margin-bottom:20px;}
+  .broadcast-templates{display:flex; gap:16px; margin:6px 0;}
+  .broadcast-select-all{display:flex; align-items:center; gap:8px; font-size:.82rem; margin:10px 0 8px; cursor:pointer;}
+  #broadcast-client-checks{max-height:160px; overflow-y:auto; border:1px solid #E7DAC0; border-radius:6px; padding:8px 12px; background:#FBF7EF;}
+  .broadcast-check-row{display:flex; align-items:center; gap:8px; padding:5px 0; font-size:.84rem;}
+  .broadcast-check-row span.dim{color:#B3A38F; font-size:.75rem;}
+  /* ---------- planning ---------- */
+  .planning-nav{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .planning-nav-btn{width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:none; color:var(--gold); font-size:1.2rem; cursor:pointer; flex:none; display:flex; align-items:center; justify-content:center;}
+  .planning-nav-date{flex:1; text-align:center; position:relative; font-family:'Fraunces',serif; font-style:italic; font-size:1.05rem; text-transform:capitalize;}
+  .planning-nav-date input{position:absolute; inset:0; opacity:0; width:100%; height:100%; cursor:pointer;}
+  .month-nav{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .month-weekdays{display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-top:14px;}
+  .month-weekdays span{font-size:.62rem; text-transform:uppercase; color:#B3A38F; text-align:center; padding:2px 0;}
+  .month-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-top:4px;}
+  .month-day{
+    aspect-ratio:1/1; border-radius:8px; border:1px solid #E7DAC0; background:#fff;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    cursor:pointer; font-size:.8rem; color:#241820; gap:3px; padding:0;
+  }
+  .month-day.empty-cell{border:none; background:none; cursor:default;}
+  .month-day.today{border-color:#93374A; border-width:2px;}
+  .month-day.selected{background:#93374A; color:#fff; border-color:#93374A;}
+  .month-day .dot{width:6px; height:6px; border-radius:50%; flex:none;}
+  .month-day.selected .dot{box-shadow:0 0 0 1.5px #fff;}
+  .month-legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; font-size:.72rem; color:#8A7A70;}
+  .month-legend span{display:flex; align-items:center; gap:6px;}
+  .month-legend .dot{width:8px; height:8px; border-radius:50%; display:inline-block;}
+  .export-row{display:flex; gap:18px; flex-wrap:wrap; margin-top:12px;}
+  .reminders-box{
+    background:#FBF0E9; border:1px solid #E7B98F; border-radius:8px; padding:14px 16px; margin-top:16px;
+  }
+  .reminders-box h4{
+    font-family:'Fraunces',serif; font-style:italic; font-size:.86rem; color:#93374A; margin:0 0 8px;
+  }
+  .reminder-item{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    background:#fff; border:1px solid #E7DAC0; border-radius:6px; padding:8px 12px; margin-top:6px; font-size:.82rem; color:#241820;
+  }
+  .reminder-item button{
+    background:#93374A; color:#fff; border:none; border-radius:6px; padding:6px 12px; font-size:.76rem; cursor:pointer; flex:none;
+  }
+  .timeline-wrap{border:1px solid #E7DAC0; border-radius:8px; background:#fff; overflow:hidden; margin-top:16px;}
+  .timeline{position:relative; height:648px;}
+  .timeline-hour{position:absolute; left:0; right:0; border-top:1px solid #EFE6D5; font-size:.68rem; color:#B3A38F; padding-left:6px;}
+  .timeline-hour span{position:relative; top:-8px; background:#fff; padding-right:4px;}
+  .timeline-block{
+    position:absolute; left:52px; right:8px; border-radius:5px; padding:4px 8px; overflow:hidden;
+    font-size:.72rem; line-height:1.3; color:#fff; background:var(--berry); box-shadow:0 2px 6px rgba(0,0,0,0.12);
+  }
+  .timeline-block b{display:block; font-size:.74rem;}
+  .planning-empty-day{font-size:.85rem; color:#8A7A70; text-align:center; padding:30px 0;}
+  .agenda-item{
+    display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;
+    background:#fff; border:1px solid #E7DAC0; border-radius:6px; padding:10px 14px; margin-bottom:8px; font-size:.86rem; color:#241820;
+    text-align:left; cursor:pointer; font-family:'Jost',sans-serif;
+  }
+  .agenda-item .a-time{font-weight:600; min-width:60px;}
+  .agenda-item .a-info{color:#6E5F63; flex:1;}
+  .agenda-item .a-chevron{color:#B3A38F; font-size:1.1rem; flex:none;}
+  .client-info-card{background:#F6EFE3; border:1px solid #E7DAC0; border-radius:6px; padding:10px 12px; margin-top:8px; font-size:.8rem; color:#6E5F63;}
+  .client-info-card b{color:#241820; display:block; margin-bottom:2px;}
+  /* ---------- history modal ---------- */
+  #history-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:100; display:none;
+    align-items:flex-start; justify-content:center; padding:calc(env(safe-area-inset-top, 0px) + 16px) 16px 16px; overflow-y:auto;
+  }
+  #history-overlay.open{display:flex;}
+  .history-modal{background:#F6EFE3; color:#241820; border-radius:8px; max-width:600px; width:100%; padding:26px; position:relative;}
+  .history-close{position:sticky; top:0; float:right; margin:-10px -10px 0 0; background:#F6EFE3; border:none; font-size:1.6rem; cursor:pointer; color:#6E5F63; padding:10px; border-radius:50%; min-width:44px; min-height:44px; display:flex; align-items:center; justify-content:center;}
+  .history-table{width:100%; border-collapse:collapse; margin-top:14px; font-size:.82rem;}
+  .history-table th{text-align:left; font-size:.66rem; text-transform:uppercase; letter-spacing:.06em; color:#93374A; border-bottom:1px solid #E7DAC0; padding:6px 8px;}
+  .history-table td{border-bottom:1px solid #F0E7D6; padding:8px; vertical-align:top;}
+  .history-source{font-size:.68rem; color:#8A7A70; display:block; margin-top:2px;}
+  #fiche-overlay, #appt-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:105; display:none;
+    align-items:flex-start; justify-content:center; padding:calc(env(safe-area-inset-top, 0px) + 16px) 16px 16px; overflow-y:auto;
+  }
+  #fiche-overlay.open, #appt-overlay.open{display:flex;}
+  .fiche-section{margin-top:16px;}
+  .fiche-section h4{
+    font-family:'Fraunces',serif; font-style:italic; font-size:.88rem; color:#93374A; margin:0 0 8px;
+    border-bottom:1px solid #E7DAC0; padding-bottom:6px;
+  }
+  .fiche-row{display:flex; justify-content:space-between; gap:12px; padding:5px 0; font-size:.86rem;}
+  .fiche-row .k{color:#8A7A70;}
+  .fiche-row .v{color:#241820; font-weight:500; text-align:right;}
+  .fiche-row .v.alert{color:#7A3B12; font-weight:600;}
+  .fiche-section textarea{
+    width:100%; padding:11px; border-radius:5px; border:1px solid #D8C9B0; background:#fff;
+    color:#241820; font-family:'Jost',sans-serif; font-size:16px; resize:vertical; -webkit-appearance:none; appearance:none;
+  }
+  .client-card{cursor:pointer;}
+  #backup-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:110; display:none;
+    align-items:flex-start; justify-content:center; padding:calc(env(safe-area-inset-top, 0px) + 16px) 16px 16px; overflow-y:auto;
+  }
+  #backup-overlay.open{display:flex;}
+  #pin-manage-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:110; display:none;
+    align-items:flex-start; justify-content:center; padding:calc(env(safe-area-inset-top, 0px) + 16px) 16px 16px; overflow-y:auto;
+  }
+  #pin-manage-overlay.open{display:flex;}
+  .backup-modal{background:#F6EFE3; color:#241820; border-radius:8px; max-width:520px; width:100%; padding:26px; position:relative;}
+  .backup-modal h3{color:#241820;}
+  .backup-modal label{
+    display:block; font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em;
+    color:#93374A; margin:14px 0 6px;
+  }
+  .backup-modal input[type="file"]{
+    width:100%; padding:11px; border-radius:5px; border:1px solid #D8C9B0; background:#fff; font-size:.84rem; min-height:44px;
+  }
+  .backup-modal input:not([type="file"]):not([type="checkbox"]), .backup-modal select{
+    width:100%; padding:12px; border-radius:5px; border:1px solid #D8C9B0; background:#fff;
+    color:#241820; font-family:'Jost',sans-serif; font-size:16px; -webkit-appearance:none; appearance:none; min-height:44px;
+  }
+  .backup-modal input[type="checkbox"]{width:18px; height:18px; flex:none;}
+  .auto-backup-box{background:#FBF7EF; border:1px solid #E7DAC0; border-radius:8px; padding:14px;}
+  .auto-backup-item{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    background:#fff; border:1px solid #E7DAC0; border-radius:6px; padding:8px 12px; margin-top:6px; font-size:.8rem;
+  }
+  .auto-backup-item button{background:none; border:none; color:#93374A; font-size:.76rem; cursor:pointer; text-decoration:underline; flex:none;}
+  footer{padding:30px 0; text-align:center;}
+  footer .small{font-size:.74rem; color:var(--cream-soft);}
+  #save-toast{
+    position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px);
+    background:#241820; color:#F4D976; padding:10px 18px; border-radius:999px; font-size:.82rem;
+    font-family:'Jost',sans-serif; box-shadow:0 8px 24px rgba(0,0,0,0.35); z-index:200;
+    opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease;
+    display:flex; align-items:center; gap:8px;
+  }
+  #save-toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- Firebase (synchronisation multi-appareils) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+
+<div id="login-overlay" style="position:fixed; inset:0; background:#0B0709; z-index:300; display:none; align-items:center; justify-content:center; padding:20px; padding-top:calc(20px + env(safe-area-inset-top)); padding-bottom:calc(20px + env(safe-area-inset-bottom)); overflow-y:auto;">
+  <div style="max-width:340px; width:100%; background:#F6EFE3; border-radius:10px; padding:30px 26px; text-align:center; margin:auto;">
+    <div class="monogram" style="margin:0 auto 14px;"><span>ML</span></div>
+    <h3 style="margin:0 0 4px; color:#241820;">Melissa Lefèvre</h3>
+    <p class="admin-note" style="margin:0 0 20px;">Planning &amp; Clients — connexion requise</p>
+
+    <!-- Local PIN-code path — the only login screen. Firebase, once
+         configured, only runs quietly in the background for sync. -->
+    <div id="pin-id-select" style="display:flex; flex-direction:column; gap:10px;">
+      <button type="button" class="btn berry" data-pin-id="Melissa" style="width:100%;">Melissa</button>
+      <button type="button" class="btn" data-pin-id="admin" style="width:100%; background:#fff; color:#93374A; border:1px solid #93374A;">Admin</button>
+    </div>
+
+    <div id="pin-entry" style="display:none;">
+      <p class="admin-note" id="pin-entry-label" style="margin:0 0 10px;">Code de Melissa</p>
+      <div id="pin-dots" style="display:flex; gap:12px; justify-content:center; margin:6px 0 18px;"></div>
+      <div id="pin-keypad" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;"></div>
+      <button type="button" id="pin-back" class="btn-text" style="margin-top:14px; color:#8A7A70;">‹ Changer de compte</button>
+      <p class="form-msg" id="pin-msg"></p>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="container header-inner">
+    <div class="brand-block">
+      <div class="monogram"><span>ML</span></div>
+      <div class="brand">Melissa Lefèvre<span>Planning &amp; Clients</span></div>
+    </div>
+    <div style="position:relative;">
+      <button id="header-menu-btn" aria-label="Menu" style="background:none; border:1px solid var(--line); border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--gold-bright); font-size:1.3rem; line-height:1;">⋯</button>
+      <div id="header-menu-panel" style="display:none; position:absolute; top:calc(100% + 8px); right:0; background:#F6EFE3; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.35); padding:10px; min-width:220px; z-index:50;">
+        <div id="whoami-indicator" style="font-size:.76rem; color:#8A7A70; font-weight:500; padding:8px 10px;"></div>
+        <div id="sync-indicator" style="display:none; font-size:.76rem; font-weight:600; padding:0 10px 8px;"></div>
+        <button class="header-menu-item" id="pin-manage-btn" style="display:none;">🔑 Codes d'accès</button>
+        <button class="header-menu-item" id="backup-btn">💾 Sauvegarde</button>
+        <button class="header-menu-item" id="logout-btn" style="display:none; color:#B14A5E;">Déconnexion</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="storage-warning" style="display:none; background:#F8DCC0; border-bottom:1px solid #7A3B12;">
+  <div class="container" style="padding:10px 0; font-size:.82rem; color:#5A2A0C; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+    <span>⚠️ Sauvegarde automatique indisponible sur cet appareil (ouverture en fichier local). Toutes les fonctions marchent normalement, mais <strong>pense à exporter tes données</strong> (bouton Sauvegarde en haut) avant de fermer la page, sous peine de les perdre.</span>
+  </div>
+</div>
+
+<div id="backup-overlay">
+  <div class="backup-modal">
+    <button class="history-close" id="close-backup" aria-label="Fermer">×</button>
+    <h3>Sauvegarde &amp; transfert entre appareils</h3>
+
+    <div class="auto-backup-box">
+      <p class="admin-note" id="last-backup-time" style="margin:0;">Dernière sauvegarde automatique : —</p>
+      <p class="admin-note" style="margin:4px 0 0;">Une sauvegarde se crée automatiquement à chaque ajout, modification ou suppression — les 10 dernières sont conservées ici, restaurables en un clic si besoin.</p>
+      <div id="auto-backup-list" style="margin-top:10px;"></div>
+    </div>
+
+    <hr style="border:none; border-top:1px solid #E7DAC0; margin:18px 0;">
+    <p class="admin-note">Ceci reste dans ce navigateur : si tu changes d'appareil ou vides tes données, il faut un export. Pour retrouver tes fiches sur ton iPhone <em>et</em> ton PC, exporte une sauvegarde ici, puis importe-la sur l'autre appareil (envoie-toi le fichier par email, AirDrop ou iCloud Drive).</p>
+    <div class="form-actions" style="margin-top:10px;">
+      <button class="btn berry" id="export-btn">⬇️ Exporter mes données (.json)</button>
+      <button class="btn berry" id="export-xlsx-btn" style="background:#1D6F42;">📊 Exporter en Excel (.xlsx)</button>
+    </div>
+    <p class="admin-note" style="margin-top:8px;">Le fichier Excel est fait pour être envoyé par email et conservé comme secours — il contient tout (fiches clientes, planning, notes du jour) et peut être réimporté ci-dessous en cas de perte de données.</p>
+    <hr style="border:none; border-top:1px solid #E7DAC0; margin:20px 0;">
+    <label for="import-file">Importer une sauvegarde (.json)</label>
+    <input type="file" id="import-file" accept="application/json">
+    <label for="import-xlsx-file" style="margin-top:14px;">Importer une sauvegarde Excel (.xlsx)</label>
+    <input type="file" id="import-xlsx-file" accept=".xlsx">
+    <div class="form-actions">
+      <label class="broadcast-select-all" style="margin:0;"><input type="checkbox" id="import-merge" checked> Fusionner avec les données existantes (décoche pour tout remplacer)</label>
+    </div>
+    <p class="form-msg" id="backup-msg"></p>
+
+    <hr style="border:none; border-top:1px solid #E7DAC0; margin:20px 0;">
+    <h4 style="color:#B14A5E; margin:0 0 8px;">Zone dangereuse</h4>
+    <p class="admin-note">Supprime définitivement toutes les fiches clientes, tous les rendez-vous et toutes les notes du jour sur cet appareil. Utile pour repartir de zéro avant une mise en ligne réelle. <strong>Pense à exporter une sauvegarde avant si tu n'es pas sûr(e).</strong></p>
+    <div class="form-actions" style="margin-top:8px;">
+      <button type="button" class="btn-text" id="wipe-all-btn" style="color:#B14A5E;">🗑️ Vider toutes les données</button>
+    </div>
+    <p class="form-msg" id="wipe-msg"></p>
+  </div>
+</div>
+
+<div id="pin-manage-overlay">
+  <div class="backup-modal">
+    <button class="history-close" id="close-pin-manage" aria-label="Fermer">×</button>
+    <h3>Codes d'accès</h3>
+    <p class="admin-note" id="pin-manage-current" style="margin:4px 0 18px;"></p>
+
+    <div id="pin-manage-own">
+      <label>Nouveau code pour <span id="pin-manage-own-name"></span></label>
+      <div class="field-row" style="margin-top:6px;">
+        <div>
+          <label for="pin-new-1" style="font-size:.68rem;">Nouveau code (4 chiffres)</label>
+          <input type="tel" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" id="pin-new-1" placeholder="••••">
+        </div>
+        <div>
+          <label for="pin-new-2" style="font-size:.68rem;">Confirmer</label>
+          <input type="tel" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" id="pin-new-2" placeholder="••••">
+        </div>
+      </div>
+      <div class="form-actions" style="margin-top:10px;">
+        <button type="button" class="btn berry" id="pin-manage-save-own">Enregistrer mon code</button>
+      </div>
+      <p class="form-msg" id="pin-manage-own-msg"></p>
+    </div>
+
+    <div id="pin-manage-admin-section" style="display:none; margin-top:24px; padding-top:20px; border-top:1px solid #E7DAC0;">
+      <h4 style="margin:0 0 10px;">Réinitialiser le code d'un autre compte</h4>
+      <label for="pin-manage-target">Compte à réinitialiser</label>
+      <select id="pin-manage-target"></select>
+      <div class="field-row" style="margin-top:10px;">
+        <div>
+          <label for="pin-reset-1" style="font-size:.68rem;">Nouveau code (4 chiffres)</label>
+          <input type="tel" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" id="pin-reset-1" placeholder="••••">
+        </div>
+        <div>
+          <label for="pin-reset-2" style="font-size:.68rem;">Confirmer</label>
+          <input type="tel" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" id="pin-reset-2" placeholder="••••">
+        </div>
+      </div>
+      <div class="form-actions" style="margin-top:10px;">
+        <button type="button" class="btn berry" id="pin-manage-save-reset">Réinitialiser ce code</button>
+      </div>
+      <p class="form-msg" id="pin-manage-reset-msg"></p>
+      <p class="admin-note" style="margin-top:10px;">C'est la seule façon de récupérer l'accès si quelqu'un oublie son code : se connecter avec le compte Admin, puis réinitialiser le code ici.</p>
+    </div>
+  </div>
+</div>
+
+<div id="admin-home-view" style="display:none;">
+  <main class="container" style="max-width:420px; margin:60px auto 0;">
+    <div class="panel" style="text-align:center;">
+      <div class="monogram" style="margin:0 auto 14px;"><span>ML</span></div>
+      <h3 style="margin:0 0 8px;">Compte Admin</h3>
+      <p class="admin-note">Ce compte sert uniquement à récupérer l'accès si Melissa oublie son code — il ne donne accès ni aux fiches clientes, ni au planning, ni aux sauvegardes.</p>
+      <button type="button" class="btn berry" id="admin-open-reset-btn" style="width:100%; margin-top:12px;">🔑 Réinitialiser un code d'accès</button>
+    </div>
+  </main>
+</div>
+
+<div id="app">
+  <main class="container">
+    <div class="tabs">
+      <button class="tab active" data-tab="planning" style="position:relative;">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7 14h3M14 14h3M7 17h3"/></svg>
+        Planning
+        <span id="planning-tab-badge" style="display:none; position:absolute; top:2px; right:2px; background:#B14A5E; color:#fff; font-size:.62rem; font-weight:700; border-radius:10px; min-width:16px; height:16px; line-height:16px; text-align:center; padding:0 3px;"></span>
+      </button>
+      <button class="tab" data-tab="clients">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5"/><circle cx="17" cy="8.5" r="2.4"/><path d="M15.5 13.6c2.2.4 3.9 2.3 3.9 5.4"/></svg>
+        Clientes
+      </button>
+    </div>
+
+    <!-- ================= PLANNING ================= -->
+    <div class="view active" id="view-planning">
+      <div class="panel">
+        <div class="month-nav">
+          <button type="button" class="planning-nav-btn" id="month-prev" aria-label="Mois précédent">‹</button>
+          <span id="month-label" style="font-family:'Fraunces',serif; font-style:italic; font-size:1.05rem; text-transform:capitalize;">—</span>
+          <button type="button" class="planning-nav-btn" id="month-next" aria-label="Mois suivant">›</button>
+        </div>
+        <div class="month-weekdays">
+          <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+        </div>
+        <div class="month-grid" id="month-grid"></div>
+        <div class="month-legend">
+          <span><i class="dot" style="background:#7C8B6F;"></i> Disponible</span>
+          <span><i class="dot" style="background:hsl(60,62%,45%);"></i> Se remplit</span>
+          <span><i class="dot" style="background:hsl(0,62%,45%);"></i> Complète</span>
+        </div>
+
+        <div id="week-summary" style="background:#F6EFE3; border:1px solid #E7DAC0; border-radius:8px; padding:10px 14px; margin-top:14px; font-size:.82rem; color:#241820; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;"></div>
+
+        <div class="export-row">
+          <button type="button" class="btn-text" id="export-csv-week-btn" style="color:#93374A;">📊 Rapport de la semaine (Excel)</button>
+          <button type="button" class="btn-text" id="export-csv-btn" style="color:#93374A;">📊 Rapport du mois (Excel)</button>
+        </div>
+
+        <div id="reminders-box" class="reminders-box" style="display:none;">
+          <h4>🔔 Messages à envoyer</h4>
+          <div id="reminders-list"></div>
+        </div>
+
+        <div class="planning-nav" style="margin-top:22px;">
+          <button type="button" class="planning-nav-btn" id="planning-prev" aria-label="Jour précédent">‹</button>
+          <div class="planning-nav-date"><span id="planning-date-label">—</span><input type="date" id="planning-date-input"></div>
+          <button type="button" class="planning-nav-btn" id="planning-next" aria-label="Jour suivant">›</button>
+        </div>
+
+        <button class="btn berry" id="new-planning-btn" style="margin:16px 0;">+ Nouveau rendez-vous</button>
+
+        <form id="planning-form" style="display:none;">
+          <input type="hidden" id="p-edit-id" value="">
+          <label for="p-client-search">Cliente</label>
+          <input type="hidden" id="p-client-id" value="">
+          <div class="addr-wrap">
+            <input type="text" id="p-client-search" placeholder="Rechercher par nom, prénom ou téléphone…" autocomplete="off">
+            <div id="p-client-results" class="addr-results" style="display:none;"></div>
+          </div>
+          <div id="p-client-empty" class="admin-note" style="display:none;">Aucune fiche cliente pour le moment — ajoute-en une ci-dessous, ou dans l'onglet Clientes.</div>
+          <div id="p-client-info" class="client-info-card" style="display:none;"></div>
+
+          <div id="p-new-client-inline" style="display:none; background:#F6EFE3; border:1px solid #E7DAC0; border-radius:8px; padding:14px; margin-top:6px;">
+            <p class="admin-note" style="margin:0 0 10px; font-weight:600; color:#93374A;">Nouvelle cliente</p>
+            <div class="field-row">
+              <div>
+                <label for="p-newclient-firstname" style="font-size:.68rem;">Prénom</label>
+                <input type="text" id="p-newclient-firstname" placeholder="Prénom">
+              </div>
+              <div>
+                <label for="p-newclient-lastname" style="font-size:.68rem;">Nom</label>
+                <input type="text" id="p-newclient-lastname" placeholder="Nom">
+              </div>
+            </div>
+            <label for="p-newclient-phone" style="font-size:.68rem; margin-top:8px;">Téléphone (optionnel)</label>
+            <input type="tel" id="p-newclient-phone" placeholder="06 12 34 56 78">
+            <label for="p-newclient-address" style="font-size:.68rem; margin-top:8px;">Adresse (optionnel)</label>
+            <input type="text" id="p-newclient-address" placeholder="Ex : 12 rue des Fleurs">
+            <div class="field-row">
+              <div>
+                <label for="p-newclient-postcode" style="font-size:.68rem;">Code postal</label>
+                <input type="text" id="p-newclient-postcode" placeholder="27310">
+              </div>
+              <div>
+                <label for="p-newclient-city" style="font-size:.68rem;">Ville</label>
+                <input type="text" id="p-newclient-city" placeholder="Ex : Elbeuf">
+              </div>
+            </div>
+            <p class="admin-note">La fiche technique capillaire pourra être complétée plus tard, depuis l'onglet Clientes.</p>
+            <p class="form-msg" id="p-newclient-msg"></p>
+            <div class="form-actions" style="margin-top:6px;">
+              <button type="button" class="btn berry" id="p-newclient-save">Enregistrer et sélectionner</button>
+              <button type="button" class="btn-text" id="p-newclient-cancel" style="color:#8A7A70;">Annuler</button>
+            </div>
+          </div>
+
+          <label for="p-service">Prestation</label>
+          <select id="p-service" required>
+            <option value="">Choisir…</option>
+            <option>Coupe Femme</option>
+            <option>Coupe Enfant</option>
+            <option>Coupe Homme</option>
+            <option>Brushing & Coiffage</option>
+            <option>Coloration</option>
+            <option>Mèches & Balayage</option>
+            <option>Permanente</option>
+            <option>Soin capillaire</option>
+            <option>Chignon & Coiffure événement</option>
+          </select>
+
+          <div class="field-row">
+            <div><label for="p-date">Date</label><input type="date" id="p-date" required></div>
+            <div>
+              <label for="p-time-hour">Heure de début</label>
+              <div style="display:flex; gap:8px;">
+                <select id="p-time-hour" style="flex:1;"></select>
+                <select id="p-time-minute" style="flex:1;"></select>
+              </div>
+              <input type="hidden" id="p-time">
+            </div>
+          </div>
+
+          <label class="broadcast-select-all" style="margin-top:12px;"><input type="checkbox" id="p-addr-override-check"> Adresse différente pour ce rendez-vous</label>
+          <div id="p-addr-override-fields" style="display:none;">
+            <label for="p-addr-override">Adresse (n° et rue)</label>
+            <div class="addr-wrap">
+              <input type="text" id="p-addr-override" placeholder="Ex : 12 rue des Fleurs" autocomplete="off">
+              <div id="p-addr-override-results" class="addr-results" style="display:none;"></div>
+            </div>
+            <div class="field-row">
+              <div>
+                <label for="p-postcode-override">Code postal</label>
+                <div class="addr-wrap">
+                  <input type="text" id="p-postcode-override" inputmode="numeric" placeholder="27310" autocomplete="off">
+                  <div id="p-postcode-override-results" class="addr-results" style="display:none;"></div>
+                </div>
+              </div>
+              <div>
+                <label for="p-city-override">Ville</label>
+                <div class="addr-wrap">
+                  <input type="text" id="p-city-override" placeholder="Ex : Elbeuf" autocomplete="off">
+                  <div id="p-city-override-results" class="addr-results" style="display:none;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <label for="p-duration">Temps prévu</label>
+          <select id="p-duration" required>
+            <option value="30">30 min</option>
+            <option value="45" selected>45 min</option>
+            <option value="60">1h</option>
+            <option value="75">1h15</option>
+            <option value="90">1h30</option>
+            <option value="120">2h</option>
+            <option value="150">2h30</option>
+            <option value="180">3h</option>
+          </select>
+
+          <label for="p-price">Tarif indicatif (optionnel, suivi personnel)</label>
+          <input type="number" id="p-price" min="0" step="0.5" placeholder="Ex : 45">
+
+          <label for="p-notes">Notes (optionnel)</label>
+          <textarea id="p-notes" rows="2" placeholder="Précisions utiles…"></textarea>
+
+          <p class="form-msg" id="planning-form-msg"></p>
+          <label class="broadcast-select-all" id="p-force-save-wrap" style="display:none;">
+            <input type="checkbox" id="p-force-save"> Enregistrer quand même malgré cet avertissement
+          </label>
+
+          <div class="form-actions">
+            <button type="submit" class="btn berry" id="planning-submit-btn">Ajouter au planning</button>
+            <button type="button" class="btn-text" id="cancel-planning" style="color:#8A7A70;">Annuler</button>
+          </div>
+        </form>
+
+        <div class="timeline-wrap"><div class="timeline" id="timeline"></div></div>
+
+        <div class="fiche-section" style="margin-top:20px;">
+          <h4>Notes du jour</h4>
+          <textarea id="daily-note-input" rows="3" placeholder="Un rappel pour cette journée : matériel à prendre, imprévu, note perso…"></textarea>
+          <div class="form-actions" style="margin-top:8px;">
+            <button type="button" class="btn-text" id="daily-note-save" style="color:#93374A;">Enregistrer la note</button>
+            <span class="form-msg" id="daily-note-msg"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CLIENTS ================= -->
+    <div class="view" id="view-clients">
+      <div class="panel">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+          <button class="btn berry" id="new-client-btn">+ Nouvelle cliente</button>
+          <button type="button" class="btn" id="toggle-broadcast" style="background:#fff; color:#93374A; border:1px solid #93374A; padding:11px 20px;">✉️ Message collectif</button>
+        </div>
+
+        <div id="broadcast-body" class="broadcast-body-top" style="display:none;">
+          <p class="admin-note">Choisis les clientes à contacter, rédige ton message, puis envoie-le par email (en copie cachée) ou copie les numéros pour un envoi groupé par SMS / WhatsApp.</p>
+          <div class="broadcast-templates">
+            <button type="button" class="btn-text" id="tpl-promo" style="color:#93374A;">Modèle promotion</button>
+            <button type="button" class="btn-text" id="tpl-conges" style="color:#93374A;">Modèle fermeture congés</button>
+          </div>
+          <label class="broadcast-select-all"><input type="checkbox" id="broadcast-select-all" checked> Sélectionner tout / aucun</label>
+          <div id="broadcast-client-checks"></div>
+          <label for="broadcast-subject">Objet (email)</label>
+          <input type="text" id="broadcast-subject" placeholder="Ex : Fermeture pour congés">
+          <label for="broadcast-message">Message</label>
+          <textarea id="broadcast-message" rows="5" placeholder="Écris ton message ici…"></textarea>
+          <p class="admin-note" style="margin-top:6px;">🔒 Par email, chaque cliente reste invisible aux autres (copie cachée). Pour un SMS groupé, aucune méthode ne garantit cette confidentialité sur iPhone — copie les numéros et envoie-les un par un, ou colle-les dans une liste de diffusion dédiée.</p>
+          <div class="form-actions">
+            <button type="button" class="btn berry" id="broadcast-send-email">Envoyer par email (privé)</button>
+            <button type="button" class="btn-text" id="broadcast-copy-phones" style="color:#93374A;">Copier les numéros</button>
+            <button type="button" class="btn-text" id="broadcast-copy-emails" style="color:#93374A;">Copier les emails</button>
+          </div>
+          <p class="form-msg" id="broadcast-msg"></p>
+        </div>
+
+        <form id="client-form" style="display:none;">
+          <input type="hidden" id="c-edit-id" value="">
+          <div class="field-row">
+            <div><label for="c-firstname">Prénom</label><input type="text" id="c-firstname" required placeholder="Prénom"></div>
+            <div><label for="c-lastname">Nom</label><input type="text" id="c-lastname" required placeholder="Nom"></div>
+          </div>
+
+          <label for="c-address">Adresse (n° et rue)</label>
+          <div class="addr-wrap">
+            <input type="text" id="c-address" placeholder="Ex : 12 rue des Fleurs" autocomplete="off">
+            <div id="c-address-results" class="addr-results" style="display:none;"></div>
+          </div>
+          <div class="field-row">
+            <div>
+              <label for="c-postcode">Code postal</label>
+              <div class="addr-wrap">
+                <input type="text" id="c-postcode" inputmode="numeric" placeholder="27310" autocomplete="off">
+                <div id="c-postcode-results" class="addr-results" style="display:none;"></div>
+              </div>
+            </div>
+            <div>
+              <label for="c-city">Ville</label>
+              <div class="addr-wrap">
+                <input type="text" id="c-city" placeholder="Ex : Elbeuf" autocomplete="off">
+                <div id="c-city-results" class="addr-results" style="display:none;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div><label for="c-phone">Téléphone</label><input type="tel" id="c-phone" placeholder="06 12 34 56 78"></div>
+            <div><label for="c-email">Email (optionnel)</label><input type="text" inputmode="email" id="c-email" placeholder="email@exemple.fr"></div>
+          </div>
+
+          <div class="hair-section">
+            <h4>Fiche technique capillaire (optionnel)</h4>
+            <div class="field-row">
+              <div><label for="c-hairtype">Nature du cheveu</label>
+                <select id="c-hairtype"><option>Raides</option><option>Ondulés</option><option>Bouclés</option><option>Frisés / Crépus</option></select>
+              </div>
+              <div><label for="c-thickness">Épaisseur (diamètre)</label>
+                <select id="c-thickness"><option>Fins</option><option selected>Moyens</option><option>Épais</option></select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div><label for="c-density">Densité</label>
+                <select id="c-density"><option>Clairsemée</option><option selected>Moyenne</option><option>Fournie</option></select>
+              </div>
+              <div><label for="c-length">Longueur actuelle</label>
+                <select id="c-length"><option>Court</option><option selected>Mi-long</option><option>Long</option><option>Très long</option></select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div><label for="c-porosity">Porosité</label>
+                <select id="c-porosity"><option selected>Normale</option><option>Faible</option><option>Élevée</option></select>
+              </div>
+              <div><label for="c-elasticity">Élasticité</label>
+                <select id="c-elasticity"><option selected>Bonne</option><option>Moyenne</option><option>Faible (casse)</option></select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div><label for="c-scalp">Cuir chevelu</label>
+                <select id="c-scalp"><option selected>Normal</option><option>Sec</option><option>Gras</option><option>Sensible</option><option>Avec pellicules</option><option>Irritations / plaies</option><option>Psoriasis / eczéma</option></select>
+              </div>
+              <div><label for="c-hairstate">État du cheveu</label>
+                <select id="c-hairstate"><option selected>Naturel</option><option>Coloré</option><option>Décoloré</option><option>Méché / balayage</option><option>Permanenté</option><option>Lissé / défrisé</option></select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div><label for="c-colored">Cheveux colorés ?</label>
+                <select id="c-colored"><option selected>Non</option><option>Oui</option></select>
+              </div>
+              <div><label for="c-history">Antécédents techniques</label>
+                <select id="c-history"><option selected>Aucun</option><option>Défrisage</option><option>Permanente</option><option>Extensions</option><option>Autre</option></select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div><label for="c-henna">Henné / coloration végétale récente</label>
+                <select id="c-henna"><option selected>Non</option><option>Oui</option></select>
+              </div>
+              <div><label for="c-patchtest">Test de sensibilisation (allergie)</label>
+                <select id="c-patchtest"><option selected>Non fait</option><option>Négatif</option><option>Positif</option></select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div><label for="c-allergies">Allergies connues</label>
+                <select id="c-allergies"><option selected>Aucune connue</option><option>Oui (voir notes)</option></select>
+              </div>
+              <div><label for="c-pregnancy">Grossesse / allaitement</label>
+                <select id="c-pregnancy"><option selected>Non concerné</option><option>Oui</option></select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div><label for="c-medical">Traitement médical en cours</label>
+                <select id="c-medical"><option selected>Non</option><option>Oui (voir notes)</option></select>
+              </div>
+              <div></div>
+            </div>
+          </div>
+
+          <label for="c-notes">Notes personnelles (optionnel)</label>
+          <textarea id="c-notes" rows="3" placeholder="Préférences, habitudes, remarques à retenir…"></textarea>
+
+          <p class="form-msg" id="client-form-msg"></p>
+          <label class="broadcast-select-all" id="c-force-save-wrap" style="display:none;">
+            <input type="checkbox" id="c-force-save"> Enregistrer quand même malgré cet avertissement
+          </label>
+
+          <div class="form-actions">
+            <button type="submit" class="btn berry" id="client-submit-btn">Enregistrer la fiche</button>
+            <button type="button" class="btn-text" id="cancel-client" style="color:#8A7A70;">Annuler</button>
+          </div>
+          <button type="button" class="btn-text" id="delete-client-btn" style="display:none; color:#B14A5E; margin-top:10px;">Supprimer cette fiche</button>
+        </form>
+
+        <div class="toolbar">
+          <span id="clients-count" class="admin-note" style="margin:0;">0 fiche</span>
+          <select id="clients-sort">
+            <option value="lastName">Trier par nom</option>
+            <option value="firstName">Trier par prénom</option>
+            <option value="city">Trier par ville</option>
+            <option value="loyalty">Trier par fidélité</option>
+          </select>
+          <input type="text" id="clients-search" placeholder="Rechercher un nom ou un numéro…">
+          <label style="display:flex; align-items:center; gap:8px; font-size:.82rem; color:#8A7A70; width:100%;">
+            <input type="checkbox" id="clients-favorites-only"> ⭐ Favorites uniquement
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; font-size:.82rem; color:#8A7A70; width:100%;">
+            <input type="checkbox" id="clients-dormant-only"> 😴 À relancer uniquement
+          </label>
+        </div>
+        <div id="clients-list"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="save-toast"></div>
+
+<div id="fiche-overlay">
+  <div class="history-modal">
+    <button class="history-close" id="close-fiche" aria-label="Fermer">×</button>
+    <h3 id="fiche-client-name">Fiche cliente</h3>
+    <div id="fiche-body"></div>
+    <div class="form-actions" style="margin-top:18px;">
+      <button class="btn berry" id="fiche-edit-btn">Modifier la fiche</button>
+    </div>
+  </div>
+</div>
+
+<div id="appt-overlay">
+  <div class="history-modal">
+    <button class="history-close" id="close-appt" aria-label="Fermer">×</button>
+    <h3>Détail du rendez-vous</h3>
+    <div id="appt-body"></div>
+    <div class="form-actions" style="margin-top:18px;">
+      <button class="btn berry" id="appt-edit-btn">Modifier</button>
+      <button class="btn-text" id="appt-duplicate-btn" style="color:#93374A;">📋 Dupliquer</button>
+      <button class="btn-text" id="appt-delete-btn" style="color:#B14A5E;">Supprimer ce rendez-vous</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // =========================================================
+  // Storage — 100% local to this browser (localStorage), no dependency on
+  // Claude, no internet connection required. Data stays on this device only,
+  // which is why there's an export/import system below to move it between
+  // your iPhone and your PC.
+  // =========================================================
+  const CLIENTS_KEY = 'ml_clients_index';
+  const PLANNING_KEY = 'ml_planning_index';
+  const NOTES_KEY = 'ml_daily_notes';
+
+  // Safari refuses localStorage entirely when a page is opened as a local file
+  // (file:// URLs get an "opaque origin", and WebKit blocks Storage APIs for
+  // those — this is a platform restriction, not something a page can opt out
+  // of). Rather than silently failing every save, detect it once up front and
+  // fall back to an in-memory store so every feature keeps working for the
+  // rest of this session — only the automatic persistence between visits is
+  // lost, and a visible banner explains that + points at Export/Import.
+  let storageAvailable = true;
+  const memoryStore = {};
+  (function detectStorage() {
+    try {
+      const probeKey = '__ml_probe__';
+      localStorage.setItem(probeKey, '1');
+      localStorage.removeItem(probeKey);
+      storageAvailable = true;
+    } catch (err) {
+      storageAvailable = false;
+    }
+  })();
+
+  // =========================================================
+  // Firebase — multi-device sync (Melissa's iPhone + a PC can share the same
+  // data live). Fill in your own project's values below (Firebase console >
+  // Project settings > Your apps). If left as placeholders, or if the
+  // Firebase scripts fail to load (no internet, ad-blocker, etc.), the app
+  // automatically falls back to fully local, single-device storage — nothing
+  // breaks, it just won't sync between devices.
+  // =========================================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyA13ZIJ4WVvqgD3DMH-VhQk8_hlRWMYkrE",
+    authDomain: "planning-melissa.firebaseapp.com",
+    projectId: "planning-melissa",
+    storageBucket: "planning-melissa.firebasestorage.app",
+    messagingSenderId: "158640039643",
+    appId: "1:158640039643:web:5883d64e3035c9b3e28efe"
+  };
+
+  let fbReady = false;
+  let fbAuth = null;
+  let fbDb = null;
+  try {
+    if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== 'REPLACE_ME') {
+      firebase.initializeApp(firebaseConfig);
+      fbAuth = firebase.auth();
+      fbDb = firebase.firestore();
+      fbReady = true;
+    }
+  } catch (err) {
+    console.error('Firebase init failed, falling back to local-only mode', err);
+    fbReady = false;
+  }
+
+  const FB_DOC_NAMES = { [CLIENTS_KEY]: 'clients', [PLANNING_KEY]: 'planning', [NOTES_KEY]: 'dailyNotes' };
+  const FB_DOC = (key) => fbDb.collection('melissa_app').doc(FB_DOC_NAMES[key] || key);
+  let fbListenersAttached = false;
+  let unsubClients = null, unsubPlanning = null, unsubNotes = null;
+
+  let cachedDailyNotes = {};
+
+  function loadIndexed(key) {
+    if (!storageAvailable) return memoryStore[key] ? JSON.parse(memoryStore[key]) : [];
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : [];
+    } catch (err) { console.error('load failed for', key, err); return []; }
+  }
+
+  function loadDailyNotesLocal() {
+    const raw = loadIndexed(NOTES_KEY);
+    return (raw && typeof raw === 'object' && !Array.isArray(raw)) ? raw : {};
+  }
+
+  // Keys with local changes not yet confirmed synced to Firestore (e.g. the
+  // device was offline at save time). Retried automatically in the
+  // background — the person never has to redo anything.
+  const pendingSync = {};
+  let syncRetryTimer = null;
+
+  function updateSyncIndicator() {
+    const el = document.getElementById('sync-indicator');
+    if (!el) return;
+    const pendingKeys = Object.keys(pendingSync).filter(k => pendingSync[k]);
+    if (!fbReady || !fbAuth || !fbAuth.currentUser) { el.style.display = 'none'; return; }
+    el.style.display = '';
+    if (pendingKeys.length === 0) {
+      el.textContent = '✓ Synchronisé';
+      el.style.color = '#7A9A5A';
+    } else {
+      el.textContent = '🔄 Synchronisation en attente…';
+      el.style.color = '#B98A2E';
+    }
+  }
+
+  function scheduleSyncRetry() {
+    if (syncRetryTimer) return;
+    syncRetryTimer = setTimeout(() => {
+      syncRetryTimer = null;
+      retryPendingSync();
+    }, 8000);
+  }
+
+  async function retryPendingSync() {
+    if (!fbReady || !fbAuth || !fbAuth.currentUser) return;
+    const keys = Object.keys(pendingSync).filter(k => pendingSync[k]);
+    for (const key of keys) {
+      try {
+        const raw = storageAvailable ? localStorage.getItem(key) : memoryStore[key];
+        const items = raw ? JSON.parse(raw) : (key === NOTES_KEY ? {} : []);
+        await FB_DOC(key).set({ items: items, updatedAt: Date.now() });
+        pendingSync[key] = false;
+      } catch (err) {
+        console.error('retry sync failed for', key, err);
+      }
+    }
+    updateSyncIndicator();
+    if (Object.values(pendingSync).some(Boolean)) scheduleSyncRetry();
+  }
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('online', () => retryPendingSync());
+  }
+
+  function saveIndexed(key, items) {
+    // The local write is the source of truth for "did this save or not" —
+    // it practically never fails, so once it succeeds the person's data is
+    // safe on this device no matter what happens to the network next.
+    let localOk = true;
+    if (storageAvailable) { try { localStorage.setItem(key, JSON.stringify(items)); } catch (e) { localOk = false; } }
+    else { memoryStore[key] = JSON.stringify(items); }
+
+    if (fbReady && fbAuth && fbAuth.currentUser) {
+      FB_DOC(key).set({ items: items, updatedAt: Date.now() })
+        .then(() => { pendingSync[key] = false; updateSyncIndicator(); })
+        .catch(err => {
+          console.error('Firestore save failed for', key, '— queued for retry', err);
+          pendingSync[key] = true;
+          updateSyncIndicator();
+          scheduleSyncRetry();
+        });
+    }
+    return Promise.resolve(localOk);
+  }
+
+  function attachRealtimeListeners() {
+    if (!fbReady || fbListenersAttached) return;
+    fbListenersAttached = true;
+
+    unsubClients = FB_DOC(CLIENTS_KEY).onSnapshot(snap => {
+      const data = snap.exists ? (snap.data().items || []) : [];
+      try { localStorage.setItem(CLIENTS_KEY, JSON.stringify(data)); } catch (e) {}
+      const realClients = data.filter(c => !c.isDemo);
+      const realPlanning = cachedPlanning.filter(p => !p.isDemo);
+      cachedClients = withDemoData(realClients, realPlanning).clients;
+      cachedClients.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+      renderClientSelect();
+      renderClients();
+    }, err => console.error('clients listener error', err));
+
+    unsubPlanning = FB_DOC(PLANNING_KEY).onSnapshot(snap => {
+      const data = snap.exists ? (snap.data().items || []) : [];
+      try { localStorage.setItem(PLANNING_KEY, JSON.stringify(data)); } catch (e) {}
+      const realPlanning = data.filter(p => !p.isDemo);
+      const realClients = cachedClients.filter(c => !c.isDemo);
+      cachedPlanning = withDemoData(realClients, realPlanning).planning;
+      renderPlanningDay();
+      if (typeof renderMonthGrid === 'function') renderMonthGrid();
+    }, err => console.error('planning listener error', err));
+
+    unsubNotes = FB_DOC(NOTES_KEY).onSnapshot(snap => {
+      const data = snap.exists && snap.data().items && typeof snap.data().items === 'object' ? snap.data().items : {};
+      try { localStorage.setItem(NOTES_KEY, JSON.stringify(data)); } catch (e) {}
+      cachedDailyNotes = data;
+      if (typeof renderDailyNoteBox === 'function') renderDailyNoteBox();
+    }, err => console.error('notes listener error', err));
+  }
+
+  function detachRealtimeListeners() {
+    if (unsubClients) { unsubClients(); unsubClients = null; }
+    if (unsubPlanning) { unsubPlanning(); unsubPlanning = null; }
+    if (unsubNotes) { unsubNotes(); unsubNotes = null; }
+    fbListenersAttached = false;
+  }
+
+  // ---------- visible save confirmation ----------
+  let toastTimer;
+  function showToast(message) {
+    const el = document.getElementById('save-toast');
+    if (!el) return;
+    el.textContent = '✓ ' + message;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+  }
+
+  // ---------- automatic backup history ----------
+  // Browsers won't let a page silently download a file without a click, so a real
+  // "auto-export" isn't possible without your action. Instead, every save keeps a
+  // timestamped snapshot here (last 10) so a mistake can be undone in one click,
+  // and shows exactly when the last automatic save happened.
+  const AUTO_BACKUP_KEY = 'ml_auto_backups';
+  const MAX_AUTO_BACKUPS = 10;
+
+  function autoBackup() {
+    try {
+      const list = storageAvailable
+        ? JSON.parse(localStorage.getItem(AUTO_BACKUP_KEY) || '[]')
+        : JSON.parse(memoryStore[AUTO_BACKUP_KEY] || '[]');
+      list.unshift({
+        timestamp: new Date().toISOString(),
+        clients: cachedClients.filter(c => !c.isDemo),
+        planning: cachedPlanning.filter(p => !p.isDemo)
+      });
+      const trimmed = JSON.stringify(list.slice(0, MAX_AUTO_BACKUPS));
+      if (storageAvailable) localStorage.setItem(AUTO_BACKUP_KEY, trimmed);
+      else memoryStore[AUTO_BACKUP_KEY] = trimmed;
+      const lbEl = document.getElementById('last-backup-time');
+      if (lbEl) {
+        lbEl.textContent = storageAvailable
+          ? 'Dernière sauvegarde automatique : ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+          : 'Sauvegarde automatique indisponible sur cet appareil (voir le bandeau ci-dessus) — dernière mise à jour en mémoire : ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+      }
+    } catch (err) { console.error('auto backup failed', err); }
+  }
+
+  function loadAutoBackups() {
+    try {
+      return storageAvailable
+        ? JSON.parse(localStorage.getItem(AUTO_BACKUP_KEY) || '[]')
+        : JSON.parse(memoryStore[AUTO_BACKUP_KEY] || '[]');
+    } catch (err) { return []; }
+  }
+
+  function normalizePhone(p) { return (p || '').replace(/[\s.\-]/g, ''); }
+  function escapeHtml(str) { const div = document.createElement('div'); div.textContent = str || ''; return div.innerHTML; }
+  function debounce(fn, delay) { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), delay); }; }
+  function isoDateOffset(days) { const d = new Date(); d.setDate(d.getDate() + days); return toLocalISO(d); }
+
+  function formatFullAddress(c) {
+    const parts = [];
+    if (c.address) parts.push(c.address);
+    const cityLine = [c.postcode, c.city].filter(Boolean).join(' ');
+    if (cityLine) parts.push(cityLine);
+    return parts.join(', ');
+  }
+
+  function isDormantClient(c) {
+    const items = getClientHistoryItems(c);
+    if (items.length === 0) return null; // never had an appointment — not "dormant", just new
+    const today = todayLocalISO();
+    const hasFuture = items.some(it => it.date > today);
+    if (hasFuture) return null; // already has something booked ahead
+    const mostRecentPast = items.find(it => it.date <= today);
+    if (!mostRecentPast) return null;
+    const daysSince = Math.floor((new Date(today + 'T00:00:00') - new Date(mostRecentPast.date + 'T00:00:00')) / 86400000);
+    return daysSince >= 60 ? daysSince : null;
+  }
+
+  function formatHairTags(c) {
+    const tags = [];
+    if (c.hairType) tags.push({ text: c.hairType });
+    if (c.thickness) tags.push({ text: c.thickness });
+    if (c.length) tags.push({ text: c.length });
+    if (c.scalp && c.scalp !== 'Normal') tags.push({ text: 'Cuir chevelu : ' + c.scalp });
+    if (c.colored === 'Oui') tags.push({ text: 'Cheveux colorés' });
+    if (c.history && c.history !== 'Aucun') tags.push({ text: c.history });
+    if (c.allergies && c.allergies !== 'Aucune connue') tags.push({ text: '⚠️ Allergie', alert: true });
+    if (c.henna === 'Oui') tags.push({ text: '⚠️ Henné/végétal', alert: true });
+    if (c.patchTest === 'Positif') tags.push({ text: '⚠️ Test positif', alert: true });
+    if (c.pregnancy === 'Oui') tags.push({ text: '⚠️ Grossesse/allaitement', alert: true });
+    const dormantDays = isDormantClient(c);
+    if (dormantDays != null) tags.push({ text: `😴 Sans RDV depuis ${dormantDays} j`, alert: true });
+    if (tags.length === 0) return '';
+    return `<div class="hair-tags">${tags.map(t => `<span class="hair-tag${t.alert ? ' alert' : ''}">${escapeHtml(t.text)}</span>`).join('')}</div>`;
+  }
+
+  // ---------- static demo data (in-memory only, always available for testing) ----------
+  const DEMO_CLIENTS = [
+    { id: 'c_demo1', firstName: 'Sophie', lastName: 'Martin', address: '15 rue des Tilleuls', postcode: '27310', city: 'La Croix-Saint-Leufroy', phone: '06 12 34 56 78', email: 'sophie.martin@exemple.fr',
+      hairType: 'Ondulés', thickness: 'Moyens', length: 'Mi-long', scalp: 'Normal', colored: 'Oui', history: 'Aucun', allergies: 'Aucune connue', pregnancy: 'Non concerné',
+      createdAt: new Date().toISOString(), isDemo: true },
+    { id: 'c_demo2', firstName: 'Julie', lastName: 'Bernard', address: '8 rue Victor Hugo', postcode: '76500', city: 'Elbeuf', phone: '06 98 76 54 32', email: 'julie.bernard@exemple.fr',
+      hairType: 'Bouclés', thickness: 'Épais', length: 'Long', scalp: 'Sec', colored: 'Oui', history: 'Défrisage', allergies: 'Oui (voir notes)', pregnancy: 'Non concerné',
+      createdAt: new Date().toISOString(), isDemo: true },
+    { id: 'c_demo3', firstName: 'Camille', lastName: 'Petit', address: '22 rue de la Paix', postcode: '27600', city: 'Gaillon', phone: '06 45 67 89 10', email: '',
+      hairType: 'Raides', thickness: 'Fins', length: 'Court', scalp: 'Gras', colored: 'Non', history: 'Aucun', allergies: 'Aucune connue', pregnancy: 'Non concerné',
+      createdAt: new Date().toISOString(), isDemo: true }
+  ];
+  function buildDemoPlanning() {
+    const items = [
+      { client: DEMO_CLIENTS[0], service: 'Coupe Femme', date: isoDateOffset(-45), time: '10:00', duration: 45, notes: 'Première coupe' },
+      { client: DEMO_CLIENTS[0], service: 'Coloration', date: isoDateOffset(-20), time: '14:30', duration: 120, notes: '' },
+      { client: DEMO_CLIENTS[0], service: 'Brushing & Coiffage', date: isoDateOffset(7), time: '09:30', duration: 45, notes: "Mariage de sa soeur" },
+      { client: DEMO_CLIENTS[1], service: 'Mèches & Balayage', date: isoDateOffset(-60), time: '11:00', duration: 150, notes: '' },
+      { client: DEMO_CLIENTS[1], service: 'Coupe Femme', date: isoDateOffset(14), time: '16:00', duration: 45, notes: '' },
+      { client: DEMO_CLIENTS[2], service: 'Coupe Homme', date: isoDateOffset(-90), time: '09:00', duration: 30, notes: '' },
+      { client: DEMO_CLIENTS[2], service: 'Coupe Homme', date: isoDateOffset(-50), time: '09:00', duration: 30, notes: '' },
+      { client: DEMO_CLIENTS[2], service: 'Coupe Homme', date: isoDateOffset(-10), time: '09:00', duration: 30, notes: 'Cliente fidèle, tous les 6 semaines' }
+    ];
+    return items.map(item => ({
+      id: 'p_demo_' + item.client.id + '_' + item.date, clientId: item.client.id,
+      clientName: `${item.client.firstName} ${item.client.lastName}`,
+      address: item.client.address, postcode: item.client.postcode, city: item.client.city,
+      phone: item.client.phone, email: item.client.email,
+      service: item.service, date: item.date, time: item.time, duration: item.duration,
+      notes: item.notes, createdAt: new Date().toISOString(), isDemo: true
+    }));
+  }
+
+  // Sample/demo entries are only ever shown on a genuinely empty install —
+  // Demo/sample data is disabled entirely — the app now always shows only
+  // real data, empty or not. (Kept as a no-op pass-through rather than
+  // ripping out every call site, to keep this change small and reversible.)
+  function withDemoData(realClients, realPlanning) {
+    return { clients: realClients, planning: realPlanning };
+  }
+
+  // Call this right after any cachedClients/cachedPlanning mutation, so the
+  // sample entries correctly vanish the instant real data exists (and
+  // reappear if everything real is later deleted) — not just on page load.
+  function refreshDemoVisibility() {
+    const merged = withDemoData(cachedClients.filter(c => !c.isDemo), cachedPlanning.filter(p => !p.isDemo));
+    cachedClients = merged.clients.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+    cachedPlanning = merged.planning;
+  }
+
+  // ---------- address autocomplete (French national address APIs — free, no key) ----------
+  async function fetchStreetSuggestions(query) {
+    try {
+      const res = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`);
+      const data = await res.json();
+      return (data.features || []).map(f => ({ label: f.properties.label, street: f.properties.name || f.properties.label, postcode: f.properties.postcode || '', city: f.properties.city || '' }));
+    } catch (e) { console.error(e); return []; }
+  }
+  async function fetchCommunesByPostcode(cp) {
+    try {
+      const res = await fetch(`https://geo.api.gouv.fr/communes?codePostal=${encodeURIComponent(cp)}&fields=nom&boost=population`);
+      const data = await res.json();
+      return (data || []).map(c => ({ label: c.nom, city: c.nom, postcode: cp }));
+    } catch (e) { console.error(e); return []; }
+  }
+  async function fetchCommunesByName(name) {
+    try {
+      const res = await fetch(`https://geo.api.gouv.fr/communes?nom=${encodeURIComponent(name)}&boost=population&limit=6&fields=nom,codesPostaux`);
+      const data = await res.json();
+      return (data || []).map(c => { const postcode = (c.codesPostaux && c.codesPostaux[0]) || ''; return { label: c.nom + (postcode ? ` (${postcode})` : ''), city: c.nom, postcode }; });
+    } catch (e) { console.error(e); return []; }
+  }
+  function renderAddrResults(container, items, onPick) {
+    if (items.length === 0) { container.innerHTML = '<div class="addr-result-empty">Aucun résultat.</div>'; }
+    else {
+      container.innerHTML = items.map((it, i) => `<div class="addr-result-row" data-i="${i}">${escapeHtml(it.label)}</div>`).join('');
+      container.querySelectorAll('.addr-result-row').forEach(row => {
+        row.addEventListener('click', () => { onPick(items[parseInt(row.getAttribute('data-i'), 10)]); container.style.display = 'none'; });
+      });
+    }
+    container.style.display = 'block';
+  }
+  function setupAddressAutocomplete(streetId, postcodeId, cityId) {
+    const streetInput = document.getElementById(streetId), postcodeInput = document.getElementById(postcodeId), cityInput = document.getElementById(cityId);
+    const streetResults = document.getElementById(streetId + '-results'), postcodeResults = document.getElementById(postcodeId + '-results'), cityResults = document.getElementById(cityId + '-results');
+    if (!streetInput) return;
+    streetInput.addEventListener('input', debounce(async () => {
+      const q = streetInput.value.trim();
+      if (q.length < 3) { streetResults.style.display = 'none'; return; }
+      renderAddrResults(streetResults, await fetchStreetSuggestions(q), (it) => { streetInput.value = it.street; if (it.postcode) postcodeInput.value = it.postcode; if (it.city) cityInput.value = it.city; });
+    }, 350));
+    postcodeInput.addEventListener('input', debounce(async () => {
+      const q = postcodeInput.value.trim();
+      if (!/^\d{4,5}$/.test(q)) { postcodeResults.style.display = 'none'; return; }
+      const items = await fetchCommunesByPostcode(q);
+      if (items.length === 1) { cityInput.value = items[0].city; postcodeResults.style.display = 'none'; return; }
+      renderAddrResults(postcodeResults, items, (it) => { cityInput.value = it.city; });
+    }, 350));
+    cityInput.addEventListener('input', debounce(async () => {
+      const q = cityInput.value.trim();
+      if (q.length < 2) { cityResults.style.display = 'none'; return; }
+      renderAddrResults(cityResults, await fetchCommunesByName(q), (it) => { cityInput.value = it.city; if (it.postcode) postcodeInput.value = it.postcode; });
+    }, 350));
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#' + streetId) && !e.target.closest('#' + streetId + '-results')) streetResults.style.display = 'none';
+      if (!e.target.closest('#' + postcodeId) && !e.target.closest('#' + postcodeId + '-results')) postcodeResults.style.display = 'none';
+      if (!e.target.closest('#' + cityId) && !e.target.closest('#' + cityId + '-results')) cityResults.style.display = 'none';
+    });
+  }
+
+  // =========================================================
+  // App state
+  // =========================================================
+  let cachedClients = [];
+  let cachedPlanning = [];
+  // Local calendar date (YYYY-MM-DD) — NOT toISOString(), which reports the
+  // UTC date and would be off by one day for part of the night in France
+  // (e.g. just after local midnight, toISOString() can still say "yesterday").
+  function toLocalISO(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+  function todayLocalISO() { return toLocalISO(new Date()); }
+
+  let selectedPlanningDate = todayLocalISO();
+
+  // ---------- backup: export / import (moves data between iPhone and PC) ----------
+  const backupOverlay = document.getElementById('backup-overlay');
+  const backupMsgEl = document.getElementById('backup-msg');
+
+  document.getElementById('backup-btn').addEventListener('click', () => {
+    backupOverlay.classList.add('open');
+    renderAutoBackupList();
+  });
+  document.getElementById('close-backup').addEventListener('click', () => backupOverlay.classList.remove('open'));
+  backupOverlay.addEventListener('click', (e) => { if (e.target === backupOverlay) backupOverlay.classList.remove('open'); });
+
+  document.getElementById('export-btn').addEventListener('click', () => {
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      clients: cachedClients.filter(c => !c.isDemo),
+      planning: cachedPlanning.filter(p => !p.isDemo),
+      dailyNotes: cachedDailyNotes
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `melissa-sauvegarde-${todayLocalISO()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    backupMsgEl.textContent = '✓ Fichier téléchargé — transfère-le sur ton autre appareil pour l\'importer.';
+    backupMsgEl.className = 'form-msg ok';
+  });
+
+  // Shared by both the .json and .xlsx import paths.
+  function applyImportedData(data, merge) {
+    const importedClients = Array.isArray(data.clients) ? data.clients : [];
+    const importedPlanning = Array.isArray(data.planning) ? data.planning : [];
+    const importedNotes = (data.dailyNotes && typeof data.dailyNotes === 'object' && !Array.isArray(data.dailyNotes)) ? data.dailyNotes : {};
+
+    let newClients, newPlanning, newNotes;
+    if (merge) {
+      const existingClientIds = new Set(cachedClients.filter(c => !c.isDemo).map(c => c.id));
+      newClients = [...cachedClients.filter(c => !c.isDemo), ...importedClients.filter(c => !existingClientIds.has(c.id))];
+      const existingPlanningIds = new Set(cachedPlanning.filter(p => !p.isDemo).map(p => p.id));
+      newPlanning = [...cachedPlanning.filter(p => !p.isDemo), ...importedPlanning.filter(p => !existingPlanningIds.has(p.id))];
+      newNotes = { ...importedNotes, ...cachedDailyNotes };
+    } else {
+      newClients = importedClients;
+      newPlanning = importedPlanning;
+      newNotes = importedNotes;
+    }
+
+    saveIndexed(CLIENTS_KEY, newClients);
+    saveIndexed(PLANNING_KEY, newPlanning);
+    saveIndexed(NOTES_KEY, newNotes);
+    const merged = withDemoData(newClients, newPlanning);
+    cachedClients = merged.clients.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+    cachedPlanning = merged.planning;
+    cachedDailyNotes = newNotes;
+
+    renderClientSelect();
+    renderPlanningDay();
+    renderClients();
+
+    return { clientsCount: importedClients.length, planningCount: importedPlanning.length };
+  }
+
+  document.getElementById('import-file').addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const merge = document.getElementById('import-merge').checked;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        const { clientsCount, planningCount } = applyImportedData(data, merge);
+        backupMsgEl.textContent = `✓ Import réussi : ${clientsCount} fiche(s) cliente(s), ${planningCount} rendez-vous.`;
+        backupMsgEl.className = 'form-msg ok';
+      } catch (err) {
+        console.error(err);
+        backupMsgEl.textContent = "Ce fichier n'a pas pu être lu — vérifie qu'il s'agit bien d'une sauvegarde exportée depuis cet outil.";
+        backupMsgEl.className = 'form-msg err';
+      }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  // ---------- Excel (.xlsx) backup export/import ----------
+  const XLSX_CLIENT_FIELDS = ['id','firstName','lastName','address','postcode','city','phone','email',
+    'hairType','thickness','density','length','porosity','elasticity','scalp','hairState','colored',
+    'history','henna','patchTest','allergies','pregnancy','medical','notes','createdAt'];
+  const XLSX_PLANNING_FIELDS = ['id','clientId','clientName','address','postcode','city','addressOverride',
+    'phone','email','service','date','time','duration','notes','createdAt','pendingConfirm','pendingModify','reminderDismissed'];
+
+  document.getElementById('export-xlsx-btn').addEventListener('click', () => {
+    if (typeof XLSX === 'undefined') {
+      backupMsgEl.textContent = "Le générateur Excel n'a pas pu se charger (vérifie ta connexion internet) — utilise l'export .json en attendant.";
+      backupMsgEl.className = 'form-msg err';
+      return;
+    }
+    const clients = cachedClients.filter(c => !c.isDemo);
+    const planning = cachedPlanning.filter(p => !p.isDemo);
+    const notesRows = Object.keys(cachedDailyNotes).sort().map(date => ({ date, note: cachedDailyNotes[date] }));
+
+    const wb = XLSX.utils.book_new();
+    const wsClients = XLSX.utils.json_to_sheet(clients, { header: XLSX_CLIENT_FIELDS });
+    const wsPlanning = XLSX.utils.json_to_sheet(planning, { header: XLSX_PLANNING_FIELDS });
+    const wsNotes = XLSX.utils.json_to_sheet(notesRows, { header: ['date', 'note'] });
+    XLSX.utils.book_append_sheet(wb, wsClients, 'Clients');
+    XLSX.utils.book_append_sheet(wb, wsPlanning, 'RDV');
+    XLSX.utils.book_append_sheet(wb, wsNotes, 'Notes du jour');
+
+    const filename = `melissa-sauvegarde-${todayLocalISO()}.xlsx`;
+    XLSX.writeFile(wb, filename);
+    backupMsgEl.textContent = `✓ Fichier Excel téléchargé (${clients.length} fiche(s), ${planning.length} RDV) — envoie-le-toi par email pour le garder en sécurité.`;
+    backupMsgEl.className = 'form-msg ok';
+  });
+
+  document.getElementById('import-xlsx-file').addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    if (typeof XLSX === 'undefined') {
+      backupMsgEl.textContent = "Le lecteur Excel n'a pas pu se charger (vérifie ta connexion internet) — utilise l'import .json en attendant.";
+      backupMsgEl.className = 'form-msg err';
+      e.target.value = '';
+      return;
+    }
+    const merge = document.getElementById('import-merge').checked;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const wb = XLSX.read(reader.result, { type: 'array' });
+        const clientsSheet = wb.Sheets['Clients'];
+        const planningSheet = wb.Sheets['RDV'];
+        const notesSheet = wb.Sheets['Notes du jour'];
+        if (!clientsSheet || !planningSheet) throw new Error('missing sheets');
+
+        const rawClients = XLSX.utils.sheet_to_json(clientsSheet, { defval: '' });
+        const rawPlanning = XLSX.utils.sheet_to_json(planningSheet, { defval: '' });
+        const rawNotes = notesSheet ? XLSX.utils.sheet_to_json(notesSheet, { defval: '' }) : [];
+
+        const importedClients = rawClients.filter(r => r.id).map(r => {
+          const c = {}; XLSX_CLIENT_FIELDS.forEach(f => { c[f] = r[f] !== undefined ? String(r[f]) : ''; }); return c;
+        });
+        const importedPlanning = rawPlanning.filter(r => r.id).map(r => {
+          const p = {};
+          XLSX_PLANNING_FIELDS.forEach(f => {
+            let v = r[f];
+            if (f === 'duration') v = parseInt(v, 10) || 45;
+            else if (['addressOverride','pendingConfirm','pendingModify','reminderDismissed'].includes(f)) v = (v === true || v === 'TRUE' || v === 'true' || v === 1);
+            else v = v !== undefined ? String(v) : '';
+            p[f] = v;
+          });
+          return p;
+        });
+        const importedNotes = {};
+        rawNotes.forEach(r => { if (r.date) importedNotes[String(r.date)] = String(r.note || ''); });
+
+        const { clientsCount, planningCount } = applyImportedData({ clients: importedClients, planning: importedPlanning, dailyNotes: importedNotes }, merge);
+        backupMsgEl.textContent = `✓ Import Excel réussi : ${clientsCount} fiche(s) cliente(s), ${planningCount} rendez-vous.`;
+        backupMsgEl.className = 'form-msg ok';
+      } catch (err) {
+        console.error(err);
+        backupMsgEl.textContent = "Ce fichier Excel n'a pas pu être lu — vérifie qu'il s'agit bien d'une sauvegarde exportée depuis cet outil (onglets Clients / RDV).";
+        backupMsgEl.className = 'form-msg err';
+      }
+      e.target.value = '';
+    };
+    reader.readAsArrayBuffer(file);
+  });
+
+  document.getElementById('wipe-all-btn').addEventListener('click', async () => {
+    const wipeMsgEl = document.getElementById('wipe-msg');
+    const realCount = cachedClients.filter(c => !c.isDemo).length;
+    const realRdvCount = cachedPlanning.filter(p => !p.isDemo).length;
+    if (!confirm(`Supprimer définitivement ${realCount} fiche(s) cliente(s) et ${realRdvCount} rendez-vous sur cet appareil ? Cette action est irréversible.`)) return;
+    if (!confirm('Dernière confirmation : toutes les données seront perdues sur cet appareil (les autres appareils synchronisés ne sont pas concernés tant que tu ne les rouvres pas). Continuer ?')) return;
+
+    try {
+      await saveIndexed(CLIENTS_KEY, []);
+      await saveIndexed(PLANNING_KEY, []);
+      await saveIndexed(NOTES_KEY, {});
+      cachedClients = [];
+      cachedPlanning = [];
+      cachedDailyNotes = {};
+      renderClientSelect();
+      renderPlanningDay();
+      renderClients();
+      wipeMsgEl.textContent = '✓ Toutes les données ont été supprimées sur cet appareil.';
+      wipeMsgEl.className = 'form-msg ok';
+    } catch (err) {
+      console.error(err);
+      wipeMsgEl.textContent = "Une erreur est survenue pendant la suppression.";
+      wipeMsgEl.className = 'form-msg err';
+    }
+  });
+
+  function renderAutoBackupList() {
+    const listEl = document.getElementById('auto-backup-list');
+    const backups = loadAutoBackups();
+    if (backups.length === 0) {
+      listEl.innerHTML = '<p class="admin-note" style="margin:6px 0 0;">Aucune sauvegarde automatique pour le moment — elle apparaîtra dès ta première modification.</p>';
+      return;
+    }
+    listEl.innerHTML = backups.map((b, i) => {
+      const d = new Date(b.timestamp);
+      const label = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' à ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+      return `<div class="auto-backup-item">
+        <span>${label} · ${b.clients.length} fiche(s), ${b.planning.length} RDV</span>
+        <button type="button" data-i="${i}">Restaurer</button>
+      </div>`;
+    }).join('');
+    listEl.querySelectorAll('button[data-i]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = parseInt(btn.getAttribute('data-i'), 10);
+        const backup = backups[i];
+        if (!backup) return;
+        if (!confirm('Restaurer cette sauvegarde ? Tes données actuelles seront remplacées par celles du ' + new Date(backup.timestamp).toLocaleString('fr-FR') + '.')) return;
+        saveIndexed(CLIENTS_KEY, backup.clients);
+        saveIndexed(PLANNING_KEY, backup.planning);
+        const merged = withDemoData(backup.clients, backup.planning);
+        cachedClients = merged.clients.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+        cachedPlanning = merged.planning;
+        renderClientSelect();
+        renderPlanningDay();
+        renderClients();
+        backupMsgEl.textContent = '✓ Sauvegarde restaurée.';
+        backupMsgEl.className = 'form-msg ok';
+      });
+    });
+  }
+
+  // ---------- tabs ----------
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + tab.dataset.tab).classList.add('active');
+      // Always refresh on switch — planning and clients cross-reference each
+      // other (loyalty rank, dormant clients, alerts…), so either view can
+      // go stale while the other tab was active and data changed.
+      if (tab.dataset.tab === 'clients' && typeof renderClients === 'function') renderClients();
+      if (tab.dataset.tab === 'planning' && typeof renderPlanningDay === 'function') renderPlanningDay();
+    });
+  });
+
+  function loadAll() {
+    const warningEl = document.getElementById('storage-warning');
+    if (warningEl) warningEl.style.display = storageAvailable ? 'none' : 'block';
+    cachedClients = loadIndexed(CLIENTS_KEY);
+    cachedPlanning = loadIndexed(PLANNING_KEY);
+    cachedDailyNotes = loadDailyNotesLocal();
+
+    // Sample data only shows up on a genuinely empty install (see withDemoData).
+    const merged = withDemoData(cachedClients.filter(c => !c.isDemo), cachedPlanning.filter(p => !p.isDemo));
+    cachedClients = merged.clients.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+    cachedPlanning = merged.planning;
+
+    renderClientSelect();
+    renderPlanningDay();
+    renderClients();
+
+    const backups = loadAutoBackups();
+    const lbEl = document.getElementById('last-backup-time');
+    if (lbEl) {
+      lbEl.textContent = backups.length > 0
+        ? 'Dernière sauvegarde automatique : ' + new Date(backups[0].timestamp).toLocaleString('fr-FR', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' })
+        : 'Dernière sauvegarde automatique : —';
+    }
+  }
+
+  setupAddressAutocomplete('c-address', 'c-postcode', 'c-city');
+  setupAddressAutocomplete('p-addr-override', 'p-postcode-override', 'p-city-override');
+
+  document.getElementById('p-addr-override-check').addEventListener('change', (e) => {
+    document.getElementById('p-addr-override-fields').style.display = e.target.checked ? 'block' : 'none';
+  });
+
+  // =========================================================
+  // PLANNING
+  // =========================================================
+  const TIMELINE_START_HOUR = 8, TIMELINE_END_HOUR = 20, HOUR_HEIGHT = 52;
+  const planningDateLabel = document.getElementById('planning-date-label');
+  const planningDateInput = document.getElementById('planning-date-input');
+  const timelineEl = document.getElementById('timeline');
+
+  function formatDayLabel(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    const label = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+    const todayStr = todayLocalISO();
+    return label + (dateStr === todayStr ? " · Aujourd'hui" : '');
+  }
+  function shiftDate(dateStr, days) { const d = new Date(dateStr + 'T00:00:00'); d.setDate(d.getDate() + days); return toLocalISO(d); }
+
+  document.getElementById('planning-prev').addEventListener('click', () => { selectedPlanningDate = shiftDate(selectedPlanningDate, -1); renderPlanningDay(); });
+  document.getElementById('planning-next').addEventListener('click', () => { selectedPlanningDate = shiftDate(selectedPlanningDate, 1); renderPlanningDay(); });
+  planningDateInput.addEventListener('change', () => { if (planningDateInput.value) { selectedPlanningDate = planningDateInput.value; renderPlanningDay(); } });
+
+  function getDayItems(dateStr) {
+    return cachedPlanning.filter(p => p.date === dateStr).map(p => ({
+      time: p.time, duration: p.duration || 45, label: `${p.clientName} — ${p.service}`, sub: p.notes || '', id: p.id,
+      phone: p.phone, service: p.service, date: p.date, clientName: p.clientName, clientId: p.clientId,
+      address: p.address, postcode: p.postcode, city: p.city
+    }));
+  }
+
+  // ---------- month calendar (occupancy overview) ----------
+  // A well-booked day is considered "full" around 7h of appointments —
+  // not the entire 8h–20h working span, which almost never fills up in
+  // practice and made the color barely move. 6h of bookings should already
+  // read as clearly busy (close to red) with just a little room left.
+  const FULL_DAY_REFERENCE_MINUTES = 7 * 60;
+  let calendarYear = parseInt(selectedPlanningDate.slice(0, 4), 10);
+  let calendarMonth = parseInt(selectedPlanningDate.slice(5, 7), 10) - 1; // 0-indexed
+
+  function dayOccupancyPct(dateStr) {
+    const minutes = cachedPlanning.filter(p => p.date === dateStr).reduce((sum, p) => sum + (p.duration || 45), 0);
+    return Math.min(1, minutes / FULL_DAY_REFERENCE_MINUTES);
+  }
+
+  function occupancyColor(pct) {
+    if (pct <= 0) return '#7C8B6F'; // fully free — sage green
+    // Curved rather than linear: stays clearly green early on, then moves
+    // through orange to red more sharply as the day genuinely fills up —
+    // easier to read at a glance than a flat gradient.
+    const curved = Math.pow(pct, 0.7);
+    const hue = 120 - (120 * Math.min(1, curved));
+    return `hsl(${hue}, 72%, 42%)`;
+  }
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  function renderMonthCalendar() {
+    const monthLabelEl = document.getElementById('month-label');
+    const first = new Date(calendarYear, calendarMonth, 1);
+    monthLabelEl.textContent = first.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+
+    // Monday-first offset
+    let offset = first.getDay() - 1;
+    if (offset < 0) offset = 6;
+    const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+    const todayStr = todayLocalISO();
+
+    const grid = document.getElementById('month-grid');
+    let html = '';
+    for (let i = 0; i < offset; i++) html += `<div class="month-day empty-cell"></div>`;
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${calendarYear}-${pad2(calendarMonth + 1)}-${pad2(d)}`;
+      const pct = dayOccupancyPct(dateStr);
+      const classes = ['month-day'];
+      if (dateStr === todayStr) classes.push('today');
+      if (dateStr === selectedPlanningDate) classes.push('selected');
+      html += `<button type="button" class="${classes.join(' ')}" data-date="${dateStr}">${d}<span class="dot" style="background:${occupancyColor(pct)};"></span></button>`;
+    }
+    grid.innerHTML = html;
+    grid.querySelectorAll('.month-day:not(.empty-cell)').forEach(cell => {
+      cell.addEventListener('click', () => {
+        selectedPlanningDate = cell.getAttribute('data-date');
+        renderPlanningDay();
+        renderMonthCalendar();
+      });
+    });
+  }
+
+  document.getElementById('month-prev').addEventListener('click', () => {
+    calendarMonth -= 1;
+    if (calendarMonth < 0) { calendarMonth = 11; calendarYear -= 1; }
+    renderMonthCalendar();
+  });
+  document.getElementById('month-next').addEventListener('click', () => {
+    calendarMonth += 1;
+    if (calendarMonth > 11) { calendarMonth = 0; calendarYear += 1; }
+    renderMonthCalendar();
+  });
+
+  // ---------- CSV export (report usable on PC / Excel) ----------
+  function csvEscape(val) {
+    const s = String(val == null ? '' : val);
+    return /[",;\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function formatReportDate(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  async function exportXlsxRange(startDate, endDate, filenameSuffix, title, emptyMessage) {
+    const rows = cachedPlanning
+      .filter(p => p.date && p.date >= startDate && p.date <= endDate && !p.isDemo)
+      .sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.time || '').localeCompare(b.time || ''));
+
+    if (rows.length === 0) { alert(emptyMessage); return; }
+
+    if (typeof ExcelJS === 'undefined') {
+      alert("Le générateur Excel n'a pas pu se charger (vérifie ta connexion internet) — réessaie dans un instant.");
+      return;
+    }
+
+    const NOIR = 'FF1F1512', GOLD = 'FFF4D976', CREAM = 'FFFBF3E4', BAND = 'FFF6EFE3', BORDER = 'FFE7DAC0', BERRY = 'FF93374A';
+
+    const wb = new ExcelJS.Workbook();
+    wb.creator = 'Melissa Lefèvre — Planning & Clients';
+    wb.created = new Date();
+    const ws = wb.addWorksheet('Rapport', { views: [{ state: 'frozen', ySplit: 3 }] });
+
+    ws.columns = [
+      { width: 24 }, // Date
+      { width: 10 }, // Heure
+      { width: 26 }, // Cliente
+      { width: 30 }, // Prestation réalisée
+      { width: 11 }, // Durée
+      { width: 15 }, // Tarif indicatif
+      { width: 16 }, // Téléphone
+      { width: 34 }, // Adresse
+      { width: 34 }  // Notes
+    ];
+
+    // ---- title block ----
+    ws.mergeCells('A1:I1');
+    const titleCell = ws.getCell('A1');
+    titleCell.value = title;
+    titleCell.font = { name: 'Georgia', size: 15, bold: true, color: { argb: NOIR } };
+    titleCell.alignment = { vertical: 'middle' };
+    ws.getRow(1).height = 28;
+
+    ws.mergeCells('A2:I2');
+    const subCell = ws.getCell('A2');
+    subCell.value = `${rows.length} rendez-vous · généré le ${new Date().toLocaleDateString('fr-FR')}`;
+    subCell.font = { size: 10, italic: true, color: { argb: 'FF6E5F63' } };
+    ws.getRow(2).height = 18;
+
+    // ---- header row (row 3) — client / date / time / service pushed first & emphasized ----
+    const headers = ['Date', 'Heure', 'Cliente', 'Prestation réalisée', 'Durée (min)', 'Tarif indicatif', 'Téléphone', 'Adresse', 'Notes'];
+    const headerRow = ws.getRow(3);
+    headerRow.values = headers;
+    headerRow.height = 22;
+    headerRow.eachCell(cell => {
+      cell.font = { bold: true, color: { argb: GOLD }, size: 11 };
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: NOIR } };
+      cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+      cell.border = { top: { style: 'thin', color: { argb: BORDER } }, bottom: { style: 'thin', color: { argb: BORDER } }, left: { style: 'thin', color: { argb: BORDER } }, right: { style: 'thin', color: { argb: BORDER } } };
+    });
+
+    // ---- data rows ----
+    let priceTotal = 0, priceCount = 0;
+    rows.forEach((p, i) => {
+      if (p.price != null) { priceTotal += p.price; priceCount++; }
+      const row = ws.addRow([
+        formatReportDate(p.date), p.time || '', p.clientName || '', p.service || '',
+        p.duration || '', p.price != null ? p.price : '', p.phone || '', [p.address, p.postcode, p.city].filter(Boolean).join(', '), p.notes || ''
+      ]);
+      const band = i % 2 === 0 ? { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFFF' } } : { type: 'pattern', pattern: 'solid', fgColor: { argb: BAND } };
+      row.eachCell((cell, colNumber) => {
+        cell.fill = band;
+        cell.border = { bottom: { style: 'hair', color: { argb: BORDER } } };
+        cell.alignment = { vertical: 'top', wrapText: colNumber === 8 || colNumber === 9 };
+        cell.font = { size: 10.5, color: { argb: 'FF241820' } };
+        if (colNumber === 3) cell.font = { size: 10.5, bold: true, color: { argb: 'FF241820' } }; // Cliente emphasized
+        if (colNumber === 4) cell.font = { size: 10.5, bold: true, color: { argb: BERRY } };        // Prestation emphasized
+        if (colNumber === 6 && p.price != null) cell.numFmt = '0.00 €';
+      });
+    });
+
+    ws.autoFilter = { from: 'A3', to: 'I3' };
+
+    // ---- indicative total (personal tracking only, not an official accounting figure) ----
+    if (priceCount > 0) {
+      const totalRowIdx = 4 + rows.length;
+      ws.mergeCells(`A${totalRowIdx}:E${totalRowIdx}`);
+      const totalLabel = ws.getCell(`A${totalRowIdx}`);
+      totalLabel.value = 'Total indicatif (suivi personnel, ne remplace pas une facturation officielle)';
+      totalLabel.font = { italic: true, size: 9.5, color: { argb: 'FF6E5F63' } };
+      totalLabel.alignment = { vertical: 'middle' };
+      const totalValue = ws.getCell(`F${totalRowIdx}`);
+      totalValue.value = priceTotal;
+      totalValue.numFmt = '0.00 €';
+      totalValue.font = { bold: true, size: 10.5, color: { argb: BERRY } };
+      ws.getRow(totalRowIdx).height = 20;
+    }
+
+    const buffer = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `melissa-rapport-${filenameSuffix}.xlsx`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function getWeekRange(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    const dow = d.getDay() === 0 ? 7 : d.getDay(); // Monday = 1 ... Sunday = 7
+    const monday = new Date(d); monday.setDate(d.getDate() - (dow - 1));
+    const sunday = new Date(monday); sunday.setDate(monday.getDate() + 6);
+    return { start: toLocalISO(monday), end: toLocalISO(sunday) };
+  }
+
+  function renderWeekSummary() {
+    const box = document.getElementById('week-summary');
+    if (!box) return;
+    const { start, end } = getWeekRange(selectedPlanningDate);
+    const weekItems = cachedPlanning.filter(p => p.date && p.date >= start && p.date <= end && !p.isDemo);
+    const count = weekItems.length;
+    const total = weekItems.reduce((sum, p) => sum + (p.price != null ? p.price : 0), 0);
+    const priced = weekItems.some(p => p.price != null);
+    box.innerHTML = `
+      <span><strong>${count}</strong> rendez-vous cette semaine</span>
+      ${priced ? `<span>~<strong>${total.toFixed(2)} €</strong> indicatif</span>` : ''}
+    `;
+  }
+
+  document.getElementById('export-csv-week-btn').addEventListener('click', () => {
+    const { start, end } = getWeekRange(selectedPlanningDate);
+    const label = `Rapport de la semaine du ${formatReportDate(start)} au ${formatReportDate(end)}`;
+    exportXlsxRange(start, end, `semaine-${start}`, label, 'Aucun rendez-vous enregistré pour cette semaine.');
+  });
+
+  document.getElementById('export-csv-btn').addEventListener('click', () => {
+    const monthPrefix = `${calendarYear}-${pad2(calendarMonth + 1)}`;
+    const monthLabel = new Date(calendarYear, calendarMonth, 1).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+    exportXlsxRange(`${monthPrefix}-01`, `${monthPrefix}-31`, monthPrefix, `Rapport du mois de ${monthLabel}`, 'Aucun rendez-vous enregistré pour ce mois.');
+  });
+
+  function renderPlanningDay() {
+    calendarYear = parseInt(selectedPlanningDate.slice(0, 4), 10);
+    calendarMonth = parseInt(selectedPlanningDate.slice(5, 7), 10) - 1;
+    renderMonthCalendar();
+    renderReminders();
+
+    planningDateLabel.textContent = formatDayLabel(selectedPlanningDate);
+    planningDateInput.value = selectedPlanningDate;
+    document.getElementById('p-date').value = selectedPlanningDate;
+    renderDailyNoteBox();
+    renderWeekSummary();
+
+    const items = getDayItems(selectedPlanningDate);
+    const withTime = items.filter(i => i.time).sort((a, b) => a.time.localeCompare(b.time));
+
+    let html = '';
+    for (let h = TIMELINE_START_HOUR; h <= TIMELINE_END_HOUR; h++) {
+      html += `<div class="timeline-hour" style="top:${(h - TIMELINE_START_HOUR) * HOUR_HEIGHT}px;"><span>${h}:00</span></div>`;
+    }
+
+    const blockGeometry = {}; // id -> { top, height, bottom }
+    withTime.forEach(it => {
+      const [hh, mm] = it.time.split(':').map(Number);
+      let startMin = Math.max(0, Math.min((hh - TIMELINE_START_HOUR) * 60 + mm, (TIMELINE_END_HOUR - TIMELINE_START_HOUR) * 60 - 20));
+      const top = (startMin / 60) * HOUR_HEIGHT;
+      const height = Math.max(24, (it.duration / 60) * HOUR_HEIGHT - 3);
+      blockGeometry[it.id] = { top, height, bottom: top + height };
+      const hasAlert = clientAlertList(cachedClients.find(c => c.id === it.clientId)).length > 0;
+      html += `<div class="timeline-block" data-id="${it.id}" style="top:${top}px; height:${height}px; cursor:pointer;"><b>${hasAlert ? '⚠️ ' : ''}${escapeHtml(it.time)}</b>${escapeHtml(it.label)}</div>`;
+    });
+
+    // Travel-time markers, placed in the visual gap between consecutive
+    // appointments directly on the timeline (replaces the old bottom list).
+    for (let i = 0; i < withTime.length - 1; i++) {
+      const from = withTime[i], to = withTime[i + 1];
+      const g1 = blockGeometry[from.id], g2 = blockGeometry[to.id];
+      if (!g1 || !g2 || g2.top <= g1.bottom) continue; // no visible gap to label
+      const gapTop = g1.bottom, gapHeight = g2.top - g1.bottom;
+      html += `<div class="timeline-gap" data-from="${from.id}" data-to="${to.id}" style="position:absolute; left:56px; right:4px; top:${gapTop}px; height:${gapHeight}px; display:flex; align-items:center; justify-content:center; z-index:5; pointer-events:none; overflow:hidden;">
+        <span class="travel-badge-text" style="font-size:.62rem; line-height:1.25; background:#FBF7EF; padding:2px 6px; border-radius:8px; color:#8A7A70; white-space:normal; text-align:center; border:1px solid #E7DAC0; pointer-events:auto; max-width:100%; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">Calcul du trajet…</span>
+      </div>`;
+    }
+
+    timelineEl.innerHTML = html;
+    timelineEl.querySelectorAll('.timeline-block').forEach(el => {
+      el.addEventListener('click', () => openAppointmentDetail(el.getAttribute('data-id')));
+    });
+
+    if (withTime.length === 0) {
+      timelineEl.insertAdjacentHTML('beforeend', '<p class="planning-empty-day" style="position:absolute; top:50%; left:0; right:0; transform:translateY(-50%);">Aucun rendez-vous ce jour-là.</p>');
+    }
+
+    populateTravelBadges(withTime);
+  }
+
+  async function populateTravelBadges(withTime) {
+    for (let i = 0; i < withTime.length - 1; i++) {
+      const from = withTime[i], to = withTime[i + 1];
+      const badge = timelineEl.querySelector(`.timeline-gap[data-from="${from.id}"][data-to="${to.id}"]`);
+      if (!badge) continue;
+      const textEl = badge.querySelector('.travel-badge-text');
+      const fromAddr = fullAddressOf(from), toAddr = fullAddressOf(to);
+      const gap = (timeToMinutes(to.time)) - (timeToMinutes(from.time) + (from.duration || 45));
+      if (!fromAddr || !toAddr) { textEl.textContent = `${gap} min avant le RDV suivant`; continue; }
+      if (fromAddr.toLowerCase() === toAddr.toLowerCase()) { textEl.textContent = `Même adresse · ${gap} min avant le RDV suivant`; continue; }
+      try {
+        const travel = await drivingMinutesBetween(fromAddr, toAddr);
+        if (travel == null) { textEl.textContent = `${gap} min avant le RDV suivant (trajet non calculable)`; continue; }
+        const tight = gap < travel + 5;
+        badge.style.color = tight ? '#B14A5E' : '#7A9A5A';
+        textEl.innerHTML = `${tight ? '⚠️ ' : '🚗 '}~${travel} min de route (+5 min de marge) · ${gap} min disponible${gap > 1 ? 's' : ''}`;
+      } catch (err) {
+        console.error('travel badge failed', err);
+        textEl.textContent = `${gap} min avant le RDV suivant`;
+      }
+    }
+  }
+
+  // ---------- daily note (small reminder area under each day's agenda) ----------
+  function renderDailyNoteBox() {
+    const input = document.getElementById('daily-note-input');
+    const msgEl = document.getElementById('daily-note-msg');
+    if (!input) return;
+    input.value = cachedDailyNotes[selectedPlanningDate] || '';
+    if (msgEl) { msgEl.textContent = ''; msgEl.className = 'form-msg'; }
+  }
+
+  async function saveDailyNote(showConfirmation) {
+    const input = document.getElementById('daily-note-input');
+    const msgEl = document.getElementById('daily-note-msg');
+    const dateAtSaveTime = selectedPlanningDate;
+    const text = input.value.trim();
+    const updated = { ...cachedDailyNotes };
+    if (text) updated[dateAtSaveTime] = text; else delete updated[dateAtSaveTime];
+    const result = await saveIndexed(NOTES_KEY, updated);
+    if (!result) {
+      msgEl.textContent = "Impossible d'enregistrer cette note pour le moment.";
+      msgEl.className = 'form-msg err';
+      return;
+    }
+    cachedDailyNotes = updated;
+    if (showConfirmation) { msgEl.textContent = '✓ Note enregistrée'; msgEl.className = 'form-msg ok'; }
+  }
+
+  const dailyNoteInputEl = document.getElementById('daily-note-input');
+  dailyNoteInputEl.addEventListener('input', debounce(() => saveDailyNote(false), 800));
+  dailyNoteInputEl.addEventListener('blur', () => saveDailyNote(false));
+  document.getElementById('daily-note-save').addEventListener('click', async () => {
+    await saveDailyNote(true);
+  });
+
+  // ---------- appointment detail (tap an agenda link to see everything) ----------
+  const apptOverlay = document.getElementById('appt-overlay');
+  const apptBody = document.getElementById('appt-body');
+  let apptCurrentId = null;
+
+  function apptRow(label, value) {
+    if (!value) return '';
+    return `<div class="fiche-row"><span class="k">${escapeHtml(label)}</span><span class="v">${escapeHtml(value)}</span></div>`;
+  }
+
+  function apptAddressRow(addressLine, suffix) {
+    if (!addressLine) return '';
+    const q = encodeURIComponent(addressLine);
+    return `
+      <div class="fiche-row" style="align-items:flex-start; flex-direction:column; gap:6px;">
+        <span class="k">Adresse</span>
+        <span class="v" style="text-align:left;">${escapeHtml(addressLine)}${suffix ? ' ' + escapeHtml(suffix) : ''}</span>
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <a href="https://maps.apple.com/?daddr=${q}" target="_blank" rel="noopener" style="font-size:.78rem; color:#93374A; text-decoration:underline;">📍 Plans</a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${q}" target="_blank" rel="noopener" style="font-size:.78rem; color:#93374A; text-decoration:underline;">📍 Google Maps</a>
+          <a href="https://waze.com/ul?q=${q}&navigate=yes" target="_blank" rel="noopener" style="font-size:.78rem; color:#93374A; text-decoration:underline;">📍 Waze</a>
+        </div>
+      </div>`;
+  }
+
+  function clientAlertList(c) {
+    if (!c) return [];
+    const alerts = [];
+    if (c.allergies && c.allergies !== 'Aucune connue') alerts.push('Allergie : ' + c.allergies);
+    if (c.henna === 'Oui') alerts.push('Henné / coloration végétale récente');
+    if (c.patchTest === 'Positif') alerts.push('Test de sensibilisation positif');
+    if (c.pregnancy === 'Oui') alerts.push('Grossesse / allaitement');
+    if (c.medical && c.medical !== 'Non') alerts.push('Traitement médical en cours');
+    if (c.scalp && ['Irritations / plaies', 'Psoriasis / eczéma'].includes(c.scalp)) alerts.push('Cuir chevelu : ' + c.scalp);
+    if (c.elasticity === 'Faible (casse)') alerts.push('Cheveux fragiles (élasticité faible)');
+    return alerts;
+  }
+
+  function openAppointmentDetail(id) {
+    const p = cachedPlanning.find(x => x.id === id);
+    if (!p) return;
+    apptCurrentId = id;
+    const client = cachedClients.find(c => c.id === p.clientId);
+    const addressLine = [p.address, [p.postcode, p.city].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+
+    let html = '';
+    const alerts = clientAlertList(client);
+    if (alerts.length > 0) {
+      html += `<div style="background:#FBEAEA; border:1px solid #EFC2C2; border-radius:8px; padding:12px 14px; margin-bottom:16px;">
+        <div style="font-weight:600; color:#B14A5E; font-size:.82rem; margin-bottom:6px;">⚠️ Points d'attention</div>
+        ${alerts.map(a => `<div style="font-size:.84rem; color:#7A3B12; margin-top:4px;">${escapeHtml(a)}</div>`).join('')}
+      </div>`;
+    }
+
+    html += '<div class="fiche-section">';
+    html += apptRow('Cliente', p.clientName);
+    html += apptRow('Prestation', p.service);
+    html += apptRow('Date', formatSmsDate(p.date));
+    html += apptRow('Heure', p.time);
+    html += apptRow('Durée', p.duration ? `${p.duration} min` : '');
+    html += apptRow('Tarif indicatif', p.price != null ? `${p.price} € (usage personnel)` : '');
+    html += apptRow('Téléphone', p.phone);
+    html += apptAddressRow(addressLine, p.addressOverride ? '(spécifique à ce RDV)' : '');
+    html += apptRow('Notes', p.notes);
+    html += '</div>';
+
+    if (client) {
+      html += '<div class="fiche-section"><h4>Fiche technique capillaire</h4>';
+      html += ficheRow('Nature du cheveu', client.hairType);
+      html += ficheRow('Épaisseur (diamètre)', client.thickness);
+      html += ficheRow('Densité', client.density);
+      html += ficheRow('Longueur', client.length);
+      html += ficheRow('Porosité', client.porosity);
+      html += ficheRow('Élasticité', client.elasticity, client.elasticity === 'Faible (casse)');
+      html += ficheRow('Cuir chevelu', client.scalp, client.scalp && client.scalp !== 'Normal');
+      html += ficheRow('État du cheveu', client.hairState);
+      html += ficheRow('Cheveux colorés', client.colored);
+      html += ficheRow('Antécédents techniques', client.history);
+      html += ficheRow('Henné / coloration végétale', client.henna, client.henna === 'Oui');
+      html += ficheRow('Test de sensibilisation', client.patchTest, client.patchTest === 'Positif');
+      const hairNote = [client.hairType, client.thickness, client.length].filter(Boolean).join(' · ');
+      if (!hairNote && !client.density) html += '<p class="admin-note" style="margin-top:0;">Fiche capillaire non renseignée pour cette cliente.</p>';
+      html += '</div>';
+    }
+
+    apptBody.innerHTML = html;
+    apptOverlay.classList.add('open');
+  }
+
+  document.getElementById('close-appt').addEventListener('click', () => apptOverlay.classList.remove('open'));
+  apptOverlay.addEventListener('click', (e) => { if (e.target === apptOverlay) apptOverlay.classList.remove('open'); });
+  document.getElementById('appt-edit-btn').addEventListener('click', () => {
+    apptOverlay.classList.remove('open');
+    if (apptCurrentId) openPlanningEdit(apptCurrentId);
+  });
+  document.getElementById('appt-duplicate-btn').addEventListener('click', () => {
+    apptOverlay.classList.remove('open');
+    if (apptCurrentId) openPlanningDuplicate(apptCurrentId);
+  });
+  document.getElementById('appt-delete-btn').addEventListener('click', async () => {
+    if (!apptCurrentId) return;
+    if (!confirm('Supprimer ce rendez-vous du planning ?')) return;
+    try {
+      const updated = cachedPlanning.filter(p => p.id !== apptCurrentId);
+      const result = await saveIndexed(PLANNING_KEY, updated.filter(p => !p.isDemo));
+      if (!result) throw new Error('delete failed');
+      cachedPlanning = updated;
+      refreshDemoVisibility();
+      autoBackup();
+      showToast('Rendez-vous supprimé et enregistré');
+      apptOverlay.classList.remove('open');
+      renderPlanningDay();
+    } catch (err) { console.error(err); alert('Impossible de supprimer ce rendez-vous pour le moment.'); }
+  });
+
+  const newPlanningBtn = document.getElementById('new-planning-btn');
+  const planningForm = document.getElementById('planning-form');
+  const cancelPlanningBtn = document.getElementById('cancel-planning');
+  const pClientSearch = document.getElementById('p-client-search');
+  const pClientResults = document.getElementById('p-client-results');
+  const pClientIdInput = document.getElementById('p-client-id');
+  const pClientEmpty = document.getElementById('p-client-empty');
+  const pClientInfo = document.getElementById('p-client-info');
+
+  // ---------- p-time: hour/minute dropdowns (5-minute steps) ----------
+  const pTimeHour = document.getElementById('p-time-hour');
+  const pTimeMinute = document.getElementById('p-time-minute');
+  const pTimeHidden = document.getElementById('p-time');
+
+  for (let h = 0; h < 24; h++) {
+    const opt = document.createElement('option');
+    const hh = String(h).padStart(2, '0');
+    opt.value = hh;
+    opt.textContent = hh + ' h';
+    pTimeHour.appendChild(opt);
+  }
+  for (let m = 0; m < 60; m += 5) {
+    const opt = document.createElement('option');
+    const mm = String(m).padStart(2, '0');
+    opt.value = mm;
+    opt.textContent = mm;
+    pTimeMinute.appendChild(opt);
+  }
+
+  function syncPTimeFromSelects() {
+    pTimeHidden.value = pTimeHour.value + ':' + pTimeMinute.value;
+  }
+  function setPTime(hhmm) {
+    const [hh, mm] = (hhmm || '09:00').split(':');
+    let hour = parseInt(hh || '9', 10);
+    let roundedMin = Math.round(parseInt(mm || '0', 10) / 5) * 5;
+    if (roundedMin === 60) { roundedMin = 0; hour = (hour + 1) % 24; }
+    pTimeHour.value = String(hour).padStart(2, '0');
+    pTimeMinute.value = String(roundedMin).padStart(2, '0');
+    syncPTimeFromSelects();
+  }
+  function resetScheduleMsg() {
+    const el = document.getElementById('planning-form-msg');
+    const wrap = document.getElementById('p-force-save-wrap');
+    const check = document.getElementById('p-force-save');
+    if (el) { el.textContent = ''; el.className = 'form-msg'; }
+    if (wrap) wrap.style.display = 'none';
+    if (check) check.checked = false;
+  }
+  pTimeHour.addEventListener('change', syncPTimeFromSelects);
+  pTimeMinute.addEventListener('change', syncPTimeFromSelects);
+  setPTime('09:00'); // default shown before any interaction
+
+  function renderClientSelect() { pClientEmpty.style.display = cachedClients.length === 0 ? 'block' : 'none'; }
+  function showClientInfo(client) {
+    const fullAddress = formatFullAddress(client);
+    pClientInfo.innerHTML = `<b>${escapeHtml(client.firstName)} ${escapeHtml(client.lastName)}</b>${fullAddress ? `📍 ${escapeHtml(fullAddress)}<br>` : ''}${client.phone ? `📞 ${escapeHtml(client.phone)} ` : ''}${client.email ? `· ✉️ ${escapeHtml(client.email)}` : ''}`;
+    pClientInfo.style.display = 'block';
+  }
+  function selectClient(client) { pClientIdInput.value = client.id; pClientSearch.value = `${client.firstName} ${client.lastName}`; pClientResults.style.display = 'none'; showClientInfo(client); }
+  function clearClientSelection() { pClientIdInput.value = ''; pClientInfo.style.display = 'none'; }
+
+  pClientSearch.addEventListener('input', () => {
+    clearClientSelection();
+    const query = pClientSearch.value.trim().toLowerCase();
+    const queryDigits = query.replace(/[\s.\-]/g, '');
+    if (!query) { pClientResults.style.display = 'none'; return; }
+    const matches = cachedClients.filter(c => {
+      const fullName = `${c.firstName} ${c.lastName}`.toLowerCase();
+      const reverseName = `${c.lastName} ${c.firstName}`.toLowerCase();
+      const phoneDigits = (c.phone || '').replace(/[\s.\-]/g, '');
+      return fullName.includes(query) || reverseName.includes(query) || (queryDigits && phoneDigits.includes(queryDigits));
+    }).slice(0, 8);
+    const newClientRow = `<div class="addr-result-row" id="p-new-client-trigger" style="color:#93374A; font-weight:600;">+ Nouvelle cliente${pClientSearch.value.trim() ? ' « ' + escapeHtml(pClientSearch.value.trim()) + ' »' : ''}</div>`;
+    if (matches.length === 0) { pClientResults.innerHTML = '<div class="addr-result-empty">Aucune cliente trouvée.</div>' + newClientRow; }
+    else {
+      pClientResults.innerHTML = matches.map(c => `<div class="addr-result-row" data-id="${c.id}">${escapeHtml(c.firstName)} ${escapeHtml(c.lastName)}<span class="dim" style="display:block;font-size:.74rem;color:#8A7A70;">${c.phone ? escapeHtml(c.phone) : ''}${c.phone && formatFullAddress(c) ? ' · ' : ''}${formatFullAddress(c) ? escapeHtml(formatFullAddress(c)) : ''}</span></div>`).join('') + newClientRow;
+      pClientResults.querySelectorAll('.addr-result-row[data-id]').forEach(row => {
+        row.addEventListener('click', () => { const client = cachedClients.find(c => c.id === row.getAttribute('data-id')); if (client) selectClient(client); });
+      });
+    }
+    document.getElementById('p-new-client-trigger').addEventListener('click', () => openNewClientInline(pClientSearch.value.trim()));
+    pClientResults.style.display = 'block';
+  });
+  pClientSearch.addEventListener('focus', () => { if (pClientSearch.value.trim()) pClientResults.style.display = 'block'; });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.addr-wrap')) pClientResults.style.display = 'none'; });
+
+  // ---------- quick "new client" creation, inline from the RDV form ----------
+  const pNewClientInline = document.getElementById('p-new-client-inline');
+  function openNewClientInline(prefill) {
+    pClientResults.style.display = 'none';
+    pNewClientInline.style.display = 'block';
+    document.getElementById('p-newclient-msg').textContent = '';
+    const parts = (prefill || '').trim().split(/\s+/);
+    document.getElementById('p-newclient-firstname').value = parts[0] || '';
+    document.getElementById('p-newclient-lastname').value = parts.slice(1).join(' ') || '';
+    document.getElementById('p-newclient-phone').value = '';
+    document.getElementById('p-newclient-address').value = '';
+    document.getElementById('p-newclient-postcode').value = '';
+    document.getElementById('p-newclient-city').value = '';
+    document.getElementById('p-newclient-firstname').focus();
+  }
+  document.getElementById('p-newclient-cancel').addEventListener('click', () => {
+    pNewClientInline.style.display = 'none';
+    pClientSearch.value = '';
+  });
+  document.getElementById('p-newclient-phone').addEventListener('blur', (e) => {
+    if (isValidFrenchPhone(e.target.value)) e.target.value = formatFrenchPhoneDisplay(e.target.value);
+  });
+  document.getElementById('p-newclient-save').addEventListener('click', async () => {
+    const msgEl = document.getElementById('p-newclient-msg');
+    const firstName = document.getElementById('p-newclient-firstname').value.trim();
+    const lastName = document.getElementById('p-newclient-lastname').value.trim();
+    const phone = document.getElementById('p-newclient-phone').value.trim();
+    if (!firstName || !lastName) {
+      msgEl.textContent = 'Prénom et nom sont nécessaires pour créer la fiche.';
+      msgEl.className = 'form-msg err';
+      return;
+    }
+    if (!isValidFrenchPhone(phone)) {
+      msgEl.textContent = 'Numéro de téléphone invalide — attendu : 10 chiffres (ex : 06 12 34 56 78).';
+      msgEl.className = 'form-msg err';
+      return;
+    }
+    const newClient = {
+      id: 'c_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+      firstName, lastName, phone,
+      address: document.getElementById('p-newclient-address').value.trim(),
+      postcode: document.getElementById('p-newclient-postcode').value.trim(),
+      city: document.getElementById('p-newclient-city').value.trim(),
+      email: '', hairType: '', thickness: '', density: '', length: '', porosity: '', elasticity: '',
+      scalp: 'Normal', hairState: '', colored: 'Non', history: 'Aucun', henna: 'Non', patchTest: 'Non fait',
+      allergies: 'Aucune connue', pregnancy: 'Non concerné', medical: 'Non', notes: '', favorite: false,
+      createdAt: new Date().toISOString()
+    };
+    const duplicate = findDuplicateClient(newClient, null);
+    if (duplicate) {
+      msgEl.textContent = `⚠️ Une fiche existe déjà pour ${duplicate.firstName} ${duplicate.lastName}${duplicate.phone ? ' (' + duplicate.phone + ')' : ''} — vérifie avant de continuer, ou cherche-la directement ci-dessus.`;
+      msgEl.className = 'form-msg err';
+      return;
+    }
+    const updated = [...cachedClients, newClient];
+    const result = await saveIndexed(CLIENTS_KEY, updated.filter(c => !c.isDemo));
+    if (!result) { msgEl.textContent = 'Impossible d\'enregistrer la fiche pour le moment.'; msgEl.className = 'form-msg err'; return; }
+    cachedClients = updated;
+    refreshDemoVisibility();
+    autoBackup();
+    renderClientSelect();
+    pNewClientInline.style.display = 'none';
+    selectClient(newClient);
+    showToast('Nouvelle fiche cliente créée et sélectionnée');
+  });
+
+  newPlanningBtn.addEventListener('click', () => {
+    const showing = planningForm.style.display !== 'none';
+    if (showing) { planningForm.style.display = 'none'; return; }
+    renderClientSelect();
+    planningForm.reset();
+    setPTime('09:00');
+    resetScheduleMsg();
+    document.getElementById('p-edit-id').value = '';
+    document.getElementById('p-addr-override-fields').style.display = 'none';
+    document.getElementById('planning-submit-btn').textContent = 'Ajouter au planning';
+    clearClientSelection();
+    pClientSearch.value = '';
+    document.getElementById('p-date').value = selectedPlanningDate;
+    planningForm.style.display = 'block';
+  });
+  cancelPlanningBtn.addEventListener('click', () => {
+    planningForm.reset();
+    setPTime('09:00');
+    resetScheduleMsg();
+    document.getElementById('p-edit-id').value = '';
+    document.getElementById('p-addr-override-fields').style.display = 'none';
+    document.getElementById('planning-submit-btn').textContent = 'Ajouter au planning';
+    clearClientSelection();
+    pClientResults.style.display = 'none';
+    planningForm.style.display = 'none';
+  });
+
+  function renderReminders() {
+    const box = document.getElementById('reminders-box');
+    const listEl = document.getElementById('reminders-list');
+    const badge = document.getElementById('planning-tab-badge');
+    const tomorrow = shiftDate(todayLocalISO(), 1);
+
+    const rows = [];
+    cachedPlanning.forEach(p => {
+      if (p.pendingConfirm) rows.push({ id: p.id, kind: 'confirm', label: `Confirmation — ${p.clientName} · ${formatSmsDate(p.date)} à ${p.time}` });
+      if (p.pendingModify) rows.push({ id: p.id, kind: 'modify', label: `Modification — ${p.clientName} · ${formatSmsDate(p.date)} à ${p.time}` });
+      if (p.date === tomorrow && !p.reminderDismissed) rows.push({ id: p.id, kind: 'remind', label: `Rappel (demain) — ${p.clientName} · ${p.time}` });
+    });
+
+    if (badge) {
+      if (rows.length > 0) { badge.textContent = rows.length; badge.style.display = 'block'; }
+      else { badge.style.display = 'none'; }
+    }
+
+    if (rows.length === 0) { box.style.display = 'none'; return; }
+    box.style.display = 'block';
+    listEl.innerHTML = rows.map((r, i) => `
+      <div class="reminder-item">
+        <span>${escapeHtml(r.label)}</span>
+        <button type="button" class="msg-send" data-i="${i}">📱 Envoyer</button>
+        <button type="button" class="msg-dismiss" data-i="${i}" title="Supprimer ce message">✕</button>
+      </div>`).join('');
+
+    listEl.querySelectorAll('.msg-send').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const r = rows[parseInt(btn.getAttribute('data-i'), 10)];
+        sendAppointmentSms(r.id, r.kind);
+        clearMessageFlag(r.id, r.kind);
+      });
+    });
+    listEl.querySelectorAll('.msg-dismiss').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const r = rows[parseInt(btn.getAttribute('data-i'), 10)];
+        clearMessageFlag(r.id, r.kind);
+        showToast('Message supprimé de la liste');
+      });
+    });
+  }
+
+  function clearMessageFlag(id, kind) {
+    const updated = cachedPlanning.map(p => {
+      if (p.id !== id) return p;
+      if (kind === 'confirm') return { ...p, pendingConfirm: false };
+      if (kind === 'modify') return { ...p, pendingModify: false };
+      if (kind === 'remind') return { ...p, reminderDismissed: true };
+      return p;
+    });
+    cachedPlanning = updated;
+    refreshDemoVisibility();
+    saveIndexed(PLANNING_KEY, updated.filter(p => !p.isDemo));
+    renderReminders();
+  }
+
+  function formatSmsDate(dateStr) {
+    return new Date(dateStr + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  }
+
+  function sendAppointmentSms(id, kind) {
+    const entry = cachedPlanning.find(p => p.id === id);
+    if (!entry) return;
+    if (!entry.phone) { showToast("Pas de numéro pour cette cliente"); return; }
+
+    const firstName = (entry.clientName || '').trim().split(/\s+/)[0] || '';
+    const dateLabel = formatSmsDate(entry.date);
+    let message;
+    if (kind === 'confirm') {
+      message = `Bonjour ${firstName}, votre rendez-vous du ${dateLabel} à ${entry.time} pour ${entry.service} est bien confirmé. À bientôt ! Melissa`;
+    } else if (kind === 'modify') {
+      message = `Bonjour ${firstName}, votre rendez-vous a été modifié : nouveau créneau le ${dateLabel} à ${entry.time} pour ${entry.service}. Merci de votre compréhension. Melissa`;
+    } else {
+      message = `Bonjour ${firstName}, petit rappel : votre rendez-vous est demain (${dateLabel}) à ${entry.time} pour ${entry.service}. À demain ! Melissa`;
+    }
+    const phone = entry.phone.replace(/[\s.\-]/g, '');
+    window.location.href = `sms:${phone}?body=${encodeURIComponent(message)}`;
+  }
+
+  function openPlanningEdit(id) {
+    const entry = cachedPlanning.find(p => p.id === id);
+    if (!entry) return;
+    renderClientSelect();
+    document.getElementById('p-edit-id').value = entry.id;
+    pClientIdInput.value = entry.clientId || '';
+    pClientSearch.value = entry.clientName || '';
+    const client = cachedClients.find(c => c.id === entry.clientId) || { firstName: entry.clientName || '', lastName: '', address: entry.address || '', postcode: entry.postcode || '', city: entry.city || '', phone: entry.phone || '', email: entry.email || '' };
+    showClientInfo(client);
+    document.getElementById('p-service').value = entry.service || '';
+    document.getElementById('p-date').value = entry.date || selectedPlanningDate;
+    document.getElementById('p-time').value = entry.time || '';
+    setPTime(entry.time || '09:00');
+    resetScheduleMsg();
+    document.getElementById('p-duration').value = String(entry.duration || 45);
+    document.getElementById('p-price').value = entry.price != null ? entry.price : '';
+    document.getElementById('p-notes').value = entry.notes || '';
+    document.getElementById('p-addr-override-check').checked = !!entry.addressOverride;
+    document.getElementById('p-addr-override-fields').style.display = entry.addressOverride ? 'block' : 'none';
+    document.getElementById('p-addr-override').value = entry.addressOverride ? (entry.address || '') : '';
+    document.getElementById('p-postcode-override').value = entry.addressOverride ? (entry.postcode || '') : '';
+    document.getElementById('p-city-override').value = entry.addressOverride ? (entry.city || '') : '';
+    document.getElementById('planning-submit-btn').textContent = 'Mettre à jour le rendez-vous';
+    planningForm.style.display = 'block';
+    try { planningForm.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
+  }
+
+  // Same as editing, but leaves p-edit-id empty (so saving creates a brand
+  // new appointment) and leaves date/time blank — everything else (client,
+  // service, duration, price, address override) carries over, since that's
+  // the point: only the date/time actually needs deciding for a repeat visit.
+  function openPlanningDuplicate(id) {
+    const entry = cachedPlanning.find(p => p.id === id);
+    if (!entry) return;
+    renderClientSelect();
+    document.getElementById('p-edit-id').value = '';
+    pClientIdInput.value = entry.clientId || '';
+    pClientSearch.value = entry.clientName || '';
+    const client = cachedClients.find(c => c.id === entry.clientId) || { firstName: entry.clientName || '', lastName: '', address: entry.address || '', postcode: entry.postcode || '', city: entry.city || '', phone: entry.phone || '', email: entry.email || '' };
+    showClientInfo(client);
+    document.getElementById('p-service').value = entry.service || '';
+    document.getElementById('p-date').value = selectedPlanningDate;
+    setPTime('09:00');
+    resetScheduleMsg();
+    document.getElementById('p-duration').value = String(entry.duration || 45);
+    document.getElementById('p-price').value = entry.price != null ? entry.price : '';
+    document.getElementById('p-notes').value = '';
+    document.getElementById('p-addr-override-check').checked = !!entry.addressOverride;
+    document.getElementById('p-addr-override-fields').style.display = entry.addressOverride ? 'block' : 'none';
+    document.getElementById('p-addr-override').value = entry.addressOverride ? (entry.address || '') : '';
+    document.getElementById('p-postcode-override').value = entry.addressOverride ? (entry.postcode || '') : '';
+    document.getElementById('p-city-override').value = entry.addressOverride ? (entry.city || '') : '';
+    document.getElementById('planning-submit-btn').textContent = 'Ajouter au planning';
+    planningForm.style.display = 'block';
+    try { planningForm.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
+    showToast('Rendez-vous dupliqué — choisis une nouvelle date/heure');
+  }
+
+  // =========================================================
+  // Schedule validation — overlap detection + travel-time buffer check
+  // =========================================================
+
+  // Geocoding cache (address text -> {lat, lon}), reused across the session
+  // and persisted locally so the same addresses aren't re-geocoded every time.
+  const geocodeCache = (() => {
+    try { return JSON.parse(localStorage.getItem('ml_geocode_cache') || '{}'); } catch (e) { return {}; }
+  })();
+  function saveGeocodeCache() { try { localStorage.setItem('ml_geocode_cache', JSON.stringify(geocodeCache)); } catch (e) {} }
+
+  async function geocodeAddress(addressText) {
+    const key = (addressText || '').trim().toLowerCase();
+    if (!key) return null;
+    if (geocodeCache[key]) return geocodeCache[key];
+    try {
+      const res = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(addressText)}&limit=1`);
+      const data = await res.json();
+      const feat = (data.features || [])[0];
+      if (!feat) return null;
+      const [lon, lat] = feat.geometry.coordinates;
+      const coords = { lat, lon };
+      geocodeCache[key] = coords;
+      saveGeocodeCache();
+      return coords;
+    } catch (e) { console.error('geocode failed', e); return null; }
+  }
+
+  // Driving time via OSRM's public demo routing server (free, no key). This
+  // is a shared demo instance — fine for a handful of lookups a day, but not
+  // guaranteed uptime, so every caller must fail open (skip the check)
+  // rather than block saving when it's unreachable.
+  async function drivingMinutesBetween(addrA, addrB) {
+    const [a, b] = await Promise.all([geocodeAddress(addrA), geocodeAddress(addrB)]);
+    if (!a || !b) return null;
+    try {
+      const url = `https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=false`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data.code !== 'Ok' || !data.routes || !data.routes[0]) return null;
+      return Math.ceil(data.routes[0].duration / 60);
+    } catch (e) { console.error('routing failed', e); return null; }
+  }
+
+  function timeToMinutes(hhmm) {
+    const parts = (hhmm || '0:0').split(':');
+    return (parseInt(parts[0], 10) || 0) * 60 + (parseInt(parts[1], 10) || 0);
+  }
+  function minutesToTime(mins) {
+    const norm = ((mins % 1440) + 1440) % 1440;
+    return String(Math.floor(norm / 60)).padStart(2, '0') + ':' + String(norm % 60).padStart(2, '0');
+  }
+  function fullAddressOf(entryLike) {
+    return [entryLike.address, entryLike.postcode, entryLike.city].filter(Boolean).join(', ');
+  }
+
+  function findConflictsAndNeighbors(date, startMin, endMin, excludeId) {
+    const sameDay = cachedPlanning.filter(p => p.date === date && p.id !== excludeId);
+    let overlap = null, prevNeighbor = null, nextNeighbor = null;
+    for (const p of sameDay) {
+      const pStart = timeToMinutes(p.time);
+      const pEnd = pStart + (parseInt(p.duration, 10) || 45);
+      if (pStart < endMin && startMin < pEnd) overlap = p;
+      if (pEnd <= startMin && (!prevNeighbor || pEnd > (timeToMinutes(prevNeighbor.time) + (parseInt(prevNeighbor.duration, 10) || 45)))) prevNeighbor = p;
+      if (pStart >= endMin && (!nextNeighbor || pStart < timeToMinutes(nextNeighbor.time))) nextNeighbor = p;
+    }
+    return { overlap, prevNeighbor, nextNeighbor };
+  }
+
+  // Returns { blocking: bool, message: string }. blocking=true can never be
+  // bypassed (real double-booking). blocking=false + a message is a
+  // travel-time warning the user can override via the "force save" checkbox.
+  async function validateSchedule(entry, excludeId) {
+    const startMin = timeToMinutes(entry.time);
+    const endMin = startMin + (parseInt(entry.duration, 10) || 45);
+    const { overlap, prevNeighbor, nextNeighbor } = findConflictsAndNeighbors(entry.date, startMin, endMin, excludeId);
+
+    if (overlap) {
+      return { blocking: true, message: `⚠️ Ce créneau chevauche le rendez-vous de ${overlap.clientName} à ${overlap.time} (${overlap.duration} min). Choisis un autre horaire.` };
+    }
+
+    const entryAddr = fullAddressOf(entry);
+    if (!entryAddr) return { blocking: false, message: '' };
+
+    const warnings = [];
+    if (prevNeighbor) {
+      const prevEnd = timeToMinutes(prevNeighbor.time) + (parseInt(prevNeighbor.duration, 10) || 45);
+      const gap = startMin - prevEnd;
+      const prevAddr = fullAddressOf(prevNeighbor);
+      if (prevAddr && prevAddr.toLowerCase() !== entryAddr.toLowerCase()) {
+        const travel = await drivingMinutesBetween(prevAddr, entryAddr);
+        if (travel != null && gap < travel + 5) {
+          warnings.push(`Après le RDV de ${prevNeighbor.clientName} (fin ${minutesToTime(prevEnd)}), il faut environ ${travel} min de route + 5 min de marge, mais il ne reste que ${gap} min avant celui-ci.`);
+        }
+      }
+    }
+    if (nextNeighbor) {
+      const nextStart = timeToMinutes(nextNeighbor.time);
+      const gap = nextStart - endMin;
+      const nextAddr = fullAddressOf(nextNeighbor);
+      if (nextAddr && nextAddr.toLowerCase() !== entryAddr.toLowerCase()) {
+        const travel = await drivingMinutesBetween(entryAddr, nextAddr);
+        if (travel != null && gap < travel + 5) {
+          warnings.push(`Avant le RDV de ${nextNeighbor.clientName} (début ${nextNeighbor.time}), il faut environ ${travel} min de route + 5 min de marge, mais il ne reste que ${gap} min après celui-ci.`);
+        }
+      }
+    }
+
+    if (warnings.length > 0) return { blocking: false, message: '⏱️ ' + warnings.join(' ') };
+    return { blocking: false, message: '' };
+  }
+
+  planningForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const client = cachedClients.find(c => c.id === pClientIdInput.value);
+    if (!client) { alert('Merci de rechercher et sélectionner une cliente dans la liste.'); return; }
+    const submitBtn = planningForm.querySelector('button[type="submit"]');
+    const scheduleMsgEl = document.getElementById('planning-form-msg');
+    const forceWrap = document.getElementById('p-force-save-wrap');
+    const forceCheck = document.getElementById('p-force-save');
+    submitBtn.disabled = true;
+    const editId = document.getElementById('p-edit-id').value;
+    const isEditing = !!editId;
+    const existing = isEditing ? cachedPlanning.find(p => p.id === editId) : null;
+
+    const useOverride = document.getElementById('p-addr-override-check').checked;
+    const entry = {
+      id: isEditing ? editId : ('p_' + Date.now() + '_' + Math.random().toString(36).slice(2,7)),
+      clientId: client.id, clientName: `${client.firstName} ${client.lastName}`,
+      address: useOverride ? document.getElementById('p-addr-override').value.trim() : (client.address || ''),
+      postcode: useOverride ? document.getElementById('p-postcode-override').value.trim() : (client.postcode || ''),
+      city: useOverride ? document.getElementById('p-city-override').value.trim() : (client.city || ''),
+      addressOverride: useOverride,
+      phone: client.phone || '', email: client.email || '',
+      service: document.getElementById('p-service').value,
+      date: document.getElementById('p-date').value,
+      time: document.getElementById('p-time').value,
+      duration: parseInt(document.getElementById('p-duration').value, 10),
+      price: document.getElementById('p-price').value ? parseFloat(document.getElementById('p-price').value) : null,
+      notes: document.getElementById('p-notes').value.trim(),
+      createdAt: existing ? existing.createdAt : new Date().toISOString(),
+      pendingConfirm: isEditing ? (existing ? existing.pendingConfirm : false) : true,
+      pendingModify: isEditing ? true : false,
+      reminderDismissed: isEditing ? (existing ? existing.reminderDismissed : false) : false
+    };
+
+    scheduleMsgEl.textContent = '';
+    scheduleMsgEl.className = 'form-msg';
+
+    try {
+      const check = await validateSchedule(entry, isEditing ? editId : null);
+      if (check.blocking) {
+        scheduleMsgEl.textContent = check.message;
+        scheduleMsgEl.className = 'form-msg err';
+        forceWrap.style.display = 'none';
+        submitBtn.disabled = false;
+        return;
+      }
+      if (check.message && !forceCheck.checked) {
+        scheduleMsgEl.textContent = check.message;
+        scheduleMsgEl.className = 'form-msg err';
+        forceWrap.style.display = 'flex';
+        submitBtn.disabled = false;
+        return;
+      }
+    } catch (err) {
+      console.error('schedule validation failed, saving without it', err);
+    }
+
+    try {
+      const updated = isEditing ? cachedPlanning.map(p => p.id === editId ? entry : p) : [...cachedPlanning, entry];
+      const result = await saveIndexed(PLANNING_KEY, updated.filter(p => !p.isDemo));
+      if (!result) throw new Error('save failed');
+      cachedPlanning = updated;
+      refreshDemoVisibility();
+      autoBackup();
+      showToast(isEditing ? 'Rendez-vous mis à jour et enregistré' : 'Rendez-vous enregistré');
+      selectedPlanningDate = entry.date;
+      renderPlanningDay();
+      planningForm.reset();
+      setPTime('09:00');
+      scheduleMsgEl.textContent = '';
+      forceWrap.style.display = 'none';
+      forceCheck.checked = false;
+      document.getElementById('p-edit-id').value = '';
+      document.getElementById('p-addr-override-fields').style.display = 'none';
+      document.getElementById('planning-submit-btn').textContent = 'Ajouter au planning';
+      clearClientSelection();
+      pClientResults.style.display = 'none';
+      planningForm.style.display = 'none';
+    } catch (err) {
+      console.error(err);
+      alert("Impossible d'enregistrer ce rendez-vous pour le moment.");
+    } finally { submitBtn.disabled = false; }
+  });
+
+  // =========================================================
+  // CLIENTS
+  // =========================================================
+  const clientForm = document.getElementById('client-form');
+  const newClientBtn = document.getElementById('new-client-btn');
+  const cancelClientBtn = document.getElementById('cancel-client');
+  const clientsList = document.getElementById('clients-list');
+  const clientsSearchInput = document.getElementById('clients-search');
+  const clientsSortSelect = document.getElementById('clients-sort');
+  const clientsCountEl = document.getElementById('clients-count');
+
+  function resetClientFormMsg() {
+    const el = document.getElementById('client-form-msg');
+    const wrap = document.getElementById('c-force-save-wrap');
+    const check = document.getElementById('c-force-save');
+    if (el) { el.textContent = ''; el.className = 'form-msg'; }
+    if (wrap) wrap.style.display = 'none';
+    if (check) check.checked = false;
+  }
+
+  newClientBtn.addEventListener('click', () => {
+    const showing = clientForm.style.display !== 'none';
+    if (showing) { clientForm.style.display = 'none'; return; }
+    clientForm.reset();
+    document.getElementById('c-edit-id').value = '';
+    document.getElementById('client-submit-btn').textContent = 'Enregistrer la fiche';
+    document.getElementById('delete-client-btn').style.display = 'none';
+    resetClientFormMsg();
+    clientForm.style.display = 'block';
+  });
+  cancelClientBtn.addEventListener('click', () => {
+    clientForm.reset();
+    document.getElementById('c-edit-id').value = '';
+    document.getElementById('client-submit-btn').textContent = 'Enregistrer la fiche';
+    document.getElementById('delete-client-btn').style.display = 'none';
+    resetClientFormMsg();
+    clientForm.style.display = 'none';
+  });
+
+  document.getElementById('delete-client-btn').addEventListener('click', async () => {
+    const id = document.getElementById('c-edit-id').value;
+    if (!id) return;
+    const client = cachedClients.find(c => c.id === id);
+    const name = client ? `${client.firstName} ${client.lastName}` : 'cette fiche';
+    if (!confirm(`Supprimer définitivement la fiche de ${name} ? Cette action est irréversible.`)) return;
+    try {
+      const updated = cachedClients.filter(c => c.id !== id);
+      const result = await saveIndexed(CLIENTS_KEY, updated.filter(c => !c.isDemo));
+      if (!result) throw new Error('delete failed');
+      cachedClients = updated;
+      refreshDemoVisibility();
+      autoBackup();
+      showToast('Fiche cliente supprimée');
+      clientForm.reset();
+      document.getElementById('c-edit-id').value = '';
+      document.getElementById('delete-client-btn').style.display = 'none';
+      clientForm.style.display = 'none';
+      renderClients();
+    } catch (err) { console.error(err); alert('Impossible de supprimer cette fiche pour le moment.'); }
+  });
+
+  function isValidFrenchPhone(phone) {
+    const digits = (phone || '').replace(/[^\d]/g, '');
+    if (!digits) return true; // optional field
+    return /^0\d{9}$/.test(digits) || /^33\d{9}$/.test(digits);
+  }
+  function formatFrenchPhoneDisplay(phone) {
+    let digits = (phone || '').replace(/[^\d]/g, '');
+    if (digits.startsWith('33') && digits.length === 11) digits = '0' + digits.slice(2);
+    if (!/^0\d{9}$/.test(digits)) return phone; // leave untouched if not a recognizable format
+    return digits.match(/.{1,2}/g).join(' ');
+  }
+  function isValidEmail(email) {
+    if (!email) return true; // optional field
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  function findDuplicateClient(client, excludeId) {
+    const phoneDigits = (client.phone || '').replace(/[^\d]/g, '');
+    const fullName = `${client.firstName} ${client.lastName}`.trim().toLowerCase();
+    return cachedClients.find(c => {
+      if (c.id === excludeId || c.isDemo) return false;
+      const cPhoneDigits = (c.phone || '').replace(/[^\d]/g, '');
+      const cFullName = `${c.firstName} ${c.lastName}`.trim().toLowerCase();
+      return (phoneDigits && cPhoneDigits && phoneDigits === cPhoneDigits) || (fullName && cFullName === fullName);
+    });
+  }
+
+  document.getElementById('c-phone').addEventListener('blur', (e) => {
+    if (isValidFrenchPhone(e.target.value)) e.target.value = formatFrenchPhoneDisplay(e.target.value);
+  });
+
+  clientForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = clientForm.querySelector('button[type="submit"]');
+    const msgEl = document.getElementById('client-form-msg');
+    const forceWrap = document.getElementById('c-force-save-wrap');
+    const forceCheck = document.getElementById('c-force-save');
+    submitBtn.disabled = true;
+    const editId = document.getElementById('c-edit-id').value;
+    const isEditing = !!editId;
+
+    const phoneVal = document.getElementById('c-phone').value.trim();
+    const emailVal = document.getElementById('c-email').value.trim();
+
+    if (!isValidFrenchPhone(phoneVal)) {
+      msgEl.textContent = 'Numéro de téléphone invalide — attendu : 10 chiffres (ex : 06 12 34 56 78).';
+      msgEl.className = 'form-msg err';
+      forceWrap.style.display = 'none';
+      submitBtn.disabled = false;
+      return;
+    }
+    if (!isValidEmail(emailVal)) {
+      msgEl.textContent = 'Adresse email invalide — vérifie le format (ex : nom@exemple.fr).';
+      msgEl.className = 'form-msg err';
+      forceWrap.style.display = 'none';
+      submitBtn.disabled = false;
+      return;
+    }
+
+    msgEl.textContent = isEditing ? 'Mise à jour…' : 'Enregistrement…';
+    msgEl.className = 'form-msg';
+
+    const existing = isEditing ? cachedClients.find(c => c.id === editId) : null;
+    const client = {
+      id: isEditing ? editId : ('c_' + Date.now() + '_' + Math.random().toString(36).slice(2,7)),
+      firstName: document.getElementById('c-firstname').value.trim(),
+      lastName: document.getElementById('c-lastname').value.trim(),
+      address: document.getElementById('c-address').value.trim(),
+      postcode: document.getElementById('c-postcode').value.trim(),
+      city: document.getElementById('c-city').value.trim(),
+      phone: phoneVal,
+      email: emailVal,
+      hairType: document.getElementById('c-hairtype').value,
+      thickness: document.getElementById('c-thickness').value,
+      density: document.getElementById('c-density').value,
+      length: document.getElementById('c-length').value,
+      porosity: document.getElementById('c-porosity').value,
+      elasticity: document.getElementById('c-elasticity').value,
+      scalp: document.getElementById('c-scalp').value,
+      hairState: document.getElementById('c-hairstate').value,
+      colored: document.getElementById('c-colored').value,
+      history: document.getElementById('c-history').value,
+      henna: document.getElementById('c-henna').value,
+      patchTest: document.getElementById('c-patchtest').value,
+      allergies: document.getElementById('c-allergies').value,
+      pregnancy: document.getElementById('c-pregnancy').value,
+      medical: document.getElementById('c-medical').value,
+      notes: document.getElementById('c-notes').value.trim(),
+      favorite: existing ? !!existing.favorite : false,
+      createdAt: existing ? existing.createdAt : new Date().toISOString()
+    };
+
+    const duplicate = findDuplicateClient(client, isEditing ? editId : null);
+    if (duplicate && !forceCheck.checked) {
+      msgEl.textContent = `⚠️ Une fiche existe déjà pour ${duplicate.firstName} ${duplicate.lastName}${duplicate.phone ? ' (' + duplicate.phone + ')' : ''} — vérifie qu'il ne s'agit pas de la même cliente.`;
+      msgEl.className = 'form-msg err';
+      forceWrap.style.display = 'flex';
+      submitBtn.disabled = false;
+      return;
+    }
+    forceWrap.style.display = 'none';
+    forceCheck.checked = false;
+
+    try {
+      const updated = isEditing ? cachedClients.map(c => c.id === editId ? client : c) : [...cachedClients, client];
+      const result = await saveIndexed(CLIENTS_KEY, updated.filter(c => !c.isDemo));
+      if (!result) throw new Error('save failed');
+      cachedClients = updated;
+      refreshDemoVisibility();
+      cachedClients.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+      autoBackup();
+      showToast(isEditing ? 'Fiche mise à jour et enregistrée' : 'Fiche cliente enregistrée');
+      renderClients();
+      clientForm.reset();
+      document.getElementById('c-edit-id').value = '';
+      document.getElementById('client-submit-btn').textContent = 'Enregistrer la fiche';
+      clientForm.style.display = 'none';
+      resetClientFormMsg();
+      const newCard = clientsList.querySelector(`[data-client-id="${client.id}"]`);
+      try { if (newCard && typeof newCard.scrollIntoView === 'function') newCard.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { /* purely cosmetic, never treat as a save failure */ }
+    } catch (err) {
+      console.error(err);
+      msgEl.textContent = "Impossible d'enregistrer cette fiche. Réessaie.";
+      msgEl.className = 'form-msg err';
+    } finally { submitBtn.disabled = false; }
+  });
+
+  clientsSearchInput.addEventListener('input', renderClients);
+  clientsSortSelect.addEventListener('change', renderClients);
+  document.getElementById('clients-favorites-only').addEventListener('change', renderClients);
+  document.getElementById('clients-dormant-only').addEventListener('change', renderClients);
+
+  function openClientEditForm(id) {
+    const client = cachedClients.find(c => c.id === id);
+    if (!client) return;
+    document.getElementById('c-edit-id').value = client.id;
+    document.getElementById('c-firstname').value = client.firstName || '';
+    document.getElementById('c-lastname').value = client.lastName || '';
+    document.getElementById('c-address').value = client.address || '';
+    document.getElementById('c-postcode').value = client.postcode || '';
+    document.getElementById('c-city').value = client.city || '';
+    document.getElementById('c-phone').value = client.phone || '';
+    document.getElementById('c-email').value = client.email || '';
+    document.getElementById('c-hairtype').value = client.hairType || 'Raides';
+    document.getElementById('c-thickness').value = client.thickness || 'Moyens';
+    document.getElementById('c-density').value = client.density || 'Moyenne';
+    document.getElementById('c-length').value = client.length || 'Mi-long';
+    document.getElementById('c-porosity').value = client.porosity || 'Normale';
+    document.getElementById('c-elasticity').value = client.elasticity || 'Bonne';
+    document.getElementById('c-scalp').value = client.scalp || 'Normal';
+    document.getElementById('c-hairstate').value = client.hairState || 'Naturel';
+    document.getElementById('c-colored').value = client.colored || 'Non';
+    document.getElementById('c-history').value = client.history || 'Aucun';
+    document.getElementById('c-henna').value = client.henna || 'Non';
+    document.getElementById('c-patchtest').value = client.patchTest || 'Non fait';
+    document.getElementById('c-allergies').value = client.allergies || 'Aucune connue';
+    document.getElementById('c-pregnancy').value = client.pregnancy || 'Non concerné';
+    document.getElementById('c-medical').value = client.medical || 'Non';
+    document.getElementById('c-notes').value = client.notes || '';
+    document.getElementById('client-submit-btn').textContent = 'Mettre à jour la fiche';
+    document.getElementById('delete-client-btn').style.display = 'block';
+    clientForm.style.display = 'block';
+    try { clientForm.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
+  }
+
+  // ---------- full client fiche (click a card to see everything) ----------
+  const ficheOverlay = document.getElementById('fiche-overlay');
+  const ficheClientName = document.getElementById('fiche-client-name');
+  const ficheBody = document.getElementById('fiche-body');
+  let ficheCurrentId = null;
+
+  function ficheRow(label, value, alert) {
+    if (!value) return '';
+    return `<div class="fiche-row"><span class="k">${escapeHtml(label)}</span><span class="v${alert ? ' alert' : ''}">${escapeHtml(value)}</span></div>`;
+  }
+
+  function isPastOrToday(dateStr) {
+    return !!dateStr && dateStr <= todayLocalISO();
+  }
+  function getRealizedCount(client) {
+    return getClientHistoryItems(client).filter(it => isPastOrToday(it.date)).length;
+  }
+  function getLoyaltyRank(client) {
+    const counts = cachedClients.map(c => ({ id: c.id, count: getRealizedCount(c) }));
+    counts.sort((a, b) => b.count - a.count);
+    const rank = counts.findIndex(c => c.id === client.id) + 1;
+    return { rank, total: counts.length };
+  }
+  function formatOrdinalFem(n) { return n === 1 ? '1ère' : `${n}ème`; }
+
+  function openClientFiche(id) {
+    const c = cachedClients.find(x => x.id === id);
+    if (!c) return;
+    ficheCurrentId = id;
+    ficheClientName.innerHTML = `${escapeHtml(c.firstName)} ${escapeHtml(c.lastName)}` + (c.isDemo ? '' : ` <button id="fiche-favorite-btn" title="${c.favorite ? 'Retirer des favorites' : 'Marquer comme favorite'}" style="background:none; border:none; font-size:1rem; cursor:pointer; vertical-align:middle;">${c.favorite ? '⭐' : '☆'}</button>`);
+    if (!c.isDemo) document.getElementById('fiche-favorite-btn').addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const updated = cachedClients.map(x => x.id === id ? { ...x, favorite: !x.favorite } : x);
+      const result = await saveIndexed(CLIENTS_KEY, updated.filter(x => !x.isDemo));
+      if (!result) return;
+      cachedClients = updated;
+      refreshDemoVisibility();
+      autoBackup();
+      openClientFiche(id);
+      renderClients();
+    });
+
+    const realizedCount = getRealizedCount(c);
+    const { rank, total } = getLoyaltyRank(c);
+    let html = `<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+      <div style="background:#F6EFE3; border:1px solid #E7DAC0; border-radius:20px; padding:8px 14px; font-size:.82rem; color:#241820; display:flex; align-items:center; gap:6px;">
+        <strong style="color:#93374A;">${realizedCount}</strong> rendez-vous réalisé${realizedCount > 1 ? 's' : ''}
+      </div>
+      <div style="background:#F6EFE3; border:1px solid #E7DAC0; border-radius:20px; padding:8px 14px; font-size:.82rem; color:#241820; display:flex; align-items:center; gap:6px;">
+        🏆 <strong style="color:#93374A;">${formatOrdinalFem(rank)}</strong> cliente la plus fidèle sur ${total}
+      </div>
+    </div>`;
+
+    html += '<div class="fiche-section"><h4>Coordonnées</h4>';
+    html += ficheRow('Adresse', formatFullAddress(c));
+    html += ficheRow('Téléphone', c.phone);
+    html += ficheRow('Email', c.email);
+    html += '</div>';
+
+    html += '<div class="fiche-section"><h4>Fiche technique capillaire</h4>';
+    html += ficheRow('Nature du cheveu', c.hairType);
+    html += ficheRow('Épaisseur (diamètre)', c.thickness);
+    html += ficheRow('Densité', c.density);
+    html += ficheRow('Longueur', c.length);
+    html += ficheRow('Porosité', c.porosity);
+    html += ficheRow('Élasticité', c.elasticity, c.elasticity === 'Faible (casse)');
+    html += ficheRow('Cuir chevelu', c.scalp, c.scalp && !['Normal'].includes(c.scalp));
+    html += ficheRow('État du cheveu', c.hairState);
+    html += ficheRow('Cheveux colorés', c.colored);
+    html += ficheRow('Antécédents techniques', c.history);
+    html += ficheRow('Henné / coloration végétale', c.henna, c.henna === 'Oui');
+    html += ficheRow('Test de sensibilisation', c.patchTest, c.patchTest === 'Positif');
+    html += ficheRow('Allergies connues', c.allergies, c.allergies && c.allergies !== 'Aucune connue');
+    html += ficheRow('Grossesse / allaitement', c.pregnancy, c.pregnancy === 'Oui');
+    html += ficheRow('Traitement médical en cours', c.medical, c.medical && c.medical !== 'Non');
+    html += '</div>';
+
+    html += `<div class="fiche-section"><h4>Historique des rendez-vous</h4>${historyTableHtml(getClientHistoryItems(c))}</div>`;
+
+    html += `<div class="fiche-section"><h4>Notes</h4>
+      <textarea id="fiche-notes-input" rows="4" placeholder="Préférences, habitudes, remarques à retenir…">${escapeHtml(c.notes || '')}</textarea>
+      <div class="form-actions" style="margin-top:8px;">
+        <button type="button" class="btn-text" id="fiche-notes-save" style="color:#93374A;">Enregistrer la note</button>
+      </div>
+    </div>`;
+
+    if (c.autoCreated) html += '<p class="admin-note" style="margin-top:12px;">Fiche créée automatiquement depuis un rendez-vous.</p>';
+
+    ficheBody.innerHTML = html;
+    ficheOverlay.classList.add('open');
+
+    document.getElementById('fiche-notes-save').addEventListener('click', async () => {
+      await saveFicheNotes(id, true);
+    });
+    document.getElementById('fiche-notes-input').addEventListener('input', debounce(() => saveFicheNotes(id, false), 800));
+    document.getElementById('fiche-notes-input').addEventListener('blur', () => saveFicheNotes(id, false));
+  }
+
+  async function saveFicheNotes(id, showConfirmation) {
+    const input = document.getElementById('fiche-notes-input');
+    if (!input) return;
+    const newNotes = input.value.trim();
+    const updated = cachedClients.map(x => x.id === id ? { ...x, notes: newNotes } : x);
+    const result = await saveIndexed(CLIENTS_KEY, updated.filter(x => !x.isDemo));
+    if (!result) { if (showConfirmation) alert("Impossible d'enregistrer la note pour le moment."); return; }
+    cachedClients = updated;
+    refreshDemoVisibility();
+    autoBackup();
+    if (showConfirmation) showToast('Note enregistrée');
+    renderClients();
+  }
+
+  document.getElementById('close-fiche').addEventListener('click', () => ficheOverlay.classList.remove('open'));
+  ficheOverlay.addEventListener('click', (e) => { if (e.target === ficheOverlay) ficheOverlay.classList.remove('open'); });
+  document.getElementById('fiche-edit-btn').addEventListener('click', () => {
+    ficheOverlay.classList.remove('open');
+    if (ficheCurrentId) openClientEditForm(ficheCurrentId);
+  });
+
+  function renderClients() {
+    const query = clientsSearchInput.value.trim().toLowerCase();
+    const queryDigits = query.replace(/[\s.\-]/g, '');
+    const sortField = clientsSortSelect.value || 'lastName';
+    const favoritesOnly = document.getElementById('clients-favorites-only').checked;
+    const dormantOnly = document.getElementById('clients-dormant-only').checked;
+    let base = query ? cachedClients.filter(c => {
+      const nameMatch = `${c.firstName} ${c.lastName}`.toLowerCase().includes(query);
+      const phoneDigits = (c.phone || '').replace(/[\s.\-]/g, '');
+      const phoneMatch = queryDigits && phoneDigits.includes(queryDigits);
+      return nameMatch || phoneMatch;
+    }) : cachedClients;
+    if (favoritesOnly) base = base.filter(c => c.favorite);
+    if (dormantOnly) base = base.filter(c => isDormantClient(c) != null);
+
+    const sorted = sortField === 'loyalty'
+      ? base.slice().sort((a, b) => getClientHistoryItems(b).length - getClientHistoryItems(a).length)
+      : base.slice().sort((a, b) => (a[sortField] || '').localeCompare(b[sortField] || '', 'fr'));
+
+    // Favorites always float to the top, regardless of the chosen sort.
+    const filtered = [...sorted.filter(c => c.favorite), ...sorted.filter(c => !c.favorite)];
+
+    clientsCountEl.textContent = cachedClients.length === 0 ? '0 fiche' : `${cachedClients.length} fiche${cachedClients.length > 1 ? 's' : ''}` + (query || favoritesOnly || dormantOnly ? ` · ${filtered.length} affichée${filtered.length > 1 ? 's' : ''}` : '');
+
+    if (filtered.length === 0) {
+      clientsList.innerHTML = `<p class="admin-empty">${cachedClients.length === 0 ? 'Aucune fiche cliente pour le moment.' : 'Aucun résultat pour cette recherche.'}</p>`;
+      renderBroadcastChecks();
+      return;
+    }
+    clientsList.innerHTML = '';
+    filtered.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'client-card';
+      card.setAttribute('data-client-id', c.id);
+      card.style.position = 'relative';
+      card.innerHTML = `
+        ${c.isDemo ? '' : `<button class="action-favorite" data-id="${c.id}" title="${c.favorite ? 'Retirer des favorites' : 'Marquer comme favorite'}" style="position:absolute; top:2px; right:2px; background:none; border:none; font-size:1.2rem; cursor:pointer; line-height:1; width:40px; height:40px; display:flex; align-items:center; justify-content:center;">${c.favorite ? '⭐' : '☆'}</button>`}
+        <div>
+          <b>${escapeHtml(c.firstName)} ${escapeHtml(c.lastName)}</b>
+          ${formatFullAddress(c) ? `<span>📍 ${escapeHtml(formatFullAddress(c))}</span>` : ''}
+          ${c.phone ? `<span>📞 ${escapeHtml(c.phone)}</span>` : ''}
+          ${c.email ? `<span>✉️ ${escapeHtml(c.email)}</span>` : ''}
+          ${formatHairTags(c)}
+        </div>
+        <div class="client-actions">
+          <button class="action-history" data-id="${c.id}">Historique</button>
+          <button class="action-edit" data-id="${c.id}">Modifier</button>
+        </div>`;
+      clientsList.appendChild(card);
+    });
+
+    clientsList.querySelectorAll('.client-card').forEach(card => {
+      card.addEventListener('click', () => openClientFiche(card.getAttribute('data-client-id')));
+    });
+
+    clientsList.querySelectorAll('.action-history').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); openClientFiche(btn.getAttribute('data-id')); }));
+    clientsList.querySelectorAll('.action-edit').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); openClientEditForm(btn.getAttribute('data-id')); });
+    });
+    clientsList.querySelectorAll('.action-favorite').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        const updated = cachedClients.map(c => c.id === id ? { ...c, favorite: !c.favorite } : c);
+        const result = await saveIndexed(CLIENTS_KEY, updated.filter(c => !c.isDemo));
+        if (!result) return;
+        cachedClients = updated;
+        refreshDemoVisibility();
+        autoBackup();
+        renderClients();
+      });
+    });
+
+    renderBroadcastChecks();
+  }
+
+  // ---------- collective messaging ----------
+  const toggleBroadcastBtn = document.getElementById('toggle-broadcast');
+  const broadcastBody = document.getElementById('broadcast-body');
+  const broadcastChecksEl = document.getElementById('broadcast-client-checks');
+  const broadcastSelectAll = document.getElementById('broadcast-select-all');
+  const broadcastSubject = document.getElementById('broadcast-subject');
+  const broadcastMessage = document.getElementById('broadcast-message');
+  const broadcastMsgEl = document.getElementById('broadcast-msg');
+  let broadcastSelectedIds = new Set();
+
+  toggleBroadcastBtn.addEventListener('click', () => { broadcastBody.style.display = broadcastBody.style.display !== 'none' ? 'none' : 'block'; });
+  document.getElementById('tpl-promo').addEventListener('click', () => {
+    broadcastSubject.value = 'Une offre spéciale chez Melissa Lefèvre ✨';
+    broadcastMessage.value = "Bonjour,\n\nJ'ai le plaisir de vous proposer une offre spéciale ce mois-ci sur [prestation]. N'hésitez pas à me contacter pour réserver votre créneau.\n\nÀ très vite,\nMelissa";
+  });
+  document.getElementById('tpl-conges').addEventListener('click', () => {
+    broadcastSubject.value = 'Fermeture pour congés';
+    broadcastMessage.value = "Bonjour,\n\nJe vous informe que je serai en congés du [date] au [date]. Les rendez-vous reprendront normalement dès mon retour.\n\nMerci de votre compréhension,\nMelissa";
+  });
+
+  function renderBroadcastChecks() {
+    if (cachedClients.length === 0) { broadcastChecksEl.innerHTML = '<p class="admin-empty" style="padding:8px 0;">Aucune fiche cliente pour le moment.</p>'; return; }
+    const previousIds = new Set(cachedClients.map(c => c.id));
+    broadcastSelectedIds.forEach(id => { if (!previousIds.has(id)) broadcastSelectedIds.delete(id); });
+    if (broadcastSelectedIds.size === 0) cachedClients.forEach(c => broadcastSelectedIds.add(c.id));
+
+    broadcastChecksEl.innerHTML = '';
+    cachedClients.forEach(c => {
+      const row = document.createElement('label');
+      row.className = 'broadcast-check-row';
+      const hasContact = c.email || c.phone;
+      row.innerHTML = `<input type="checkbox" data-id="${c.id}" ${broadcastSelectedIds.has(c.id) ? 'checked' : ''}> ${escapeHtml(c.firstName)} ${escapeHtml(c.lastName)} <span class="dim">${c.email ? '· ' + escapeHtml(c.email) : ''}${!c.email && c.phone ? '· ' + escapeHtml(c.phone) : ''}${!hasContact ? '· aucun contact' : ''}</span>`;
+      broadcastChecksEl.appendChild(row);
+    });
+    broadcastChecksEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const id = cb.getAttribute('data-id');
+        if (cb.checked) broadcastSelectedIds.add(id); else broadcastSelectedIds.delete(id);
+        broadcastSelectAll.checked = broadcastSelectedIds.size === cachedClients.length;
+      });
+    });
+    broadcastSelectAll.checked = broadcastSelectedIds.size === cachedClients.length;
+  }
+  broadcastSelectAll.addEventListener('change', () => {
+    broadcastSelectedIds = new Set();
+    if (broadcastSelectAll.checked) cachedClients.forEach(c => broadcastSelectedIds.add(c.id));
+    renderBroadcastChecks();
+  });
+  function getSelectedClients() { return cachedClients.filter(c => broadcastSelectedIds.has(c.id)); }
+
+  document.getElementById('broadcast-send-email').addEventListener('click', () => {
+    const emails = getSelectedClients().map(c => c.email).filter(Boolean);
+    if (emails.length === 0) { broadcastMsgEl.textContent = 'Aucune adresse email parmi les clientes sélectionnées.'; broadcastMsgEl.className = 'form-msg err'; return; }
+    const mailto = `mailto:?bcc=${encodeURIComponent(emails.join(','))}&subject=${encodeURIComponent(broadcastSubject.value.trim())}&body=${encodeURIComponent(broadcastMessage.value.trim())}`;
+    window.location.href = mailto;
+    broadcastMsgEl.textContent = `Ton application email va s'ouvrir avec ${emails.length} destinataire(s) en copie cachée.`;
+    broadcastMsgEl.className = 'form-msg ok';
+  });
+  document.getElementById('broadcast-copy-phones').addEventListener('click', async () => {
+    const phones = getSelectedClients().map(c => c.phone).filter(Boolean);
+    if (phones.length === 0) { broadcastMsgEl.textContent = 'Aucun numéro parmi les clientes sélectionnées.'; broadcastMsgEl.className = 'form-msg err'; return; }
+    try { await navigator.clipboard.writeText(phones.join(', ')); broadcastMsgEl.textContent = `${phones.length} numéro(s) copié(s).`; broadcastMsgEl.className = 'form-msg ok'; }
+    catch (err) { broadcastMsgEl.textContent = phones.join(', '); broadcastMsgEl.className = 'form-msg'; }
+  });
+  document.getElementById('broadcast-copy-emails').addEventListener('click', async () => {
+    const emails = getSelectedClients().map(c => c.email).filter(Boolean);
+    if (emails.length === 0) { broadcastMsgEl.textContent = 'Aucune adresse email parmi les clientes sélectionnées.'; broadcastMsgEl.className = 'form-msg err'; return; }
+    try { await navigator.clipboard.writeText(emails.join(', ')); broadcastMsgEl.textContent = `${emails.length} email(s) copié(s).`; broadcastMsgEl.className = 'form-msg ok'; }
+    catch (err) { broadcastMsgEl.textContent = emails.join(', '); broadcastMsgEl.className = 'form-msg'; }
+  });
+
+  // =========================================================
+  // CLIENT HISTORY (rendered inside the fiche, see openClientFiche)
+  // =========================================================
+  function formatHistoryDate(dateStr) {
+    if (!dateStr) return '—';
+    return new Date(dateStr + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function getClientHistoryItems(client) {
+    const phoneKey = normalizePhone(client.phone);
+    const items = cachedPlanning.filter(p => p.clientId === client.id || (phoneKey && normalizePhone(p.phone) === phoneKey))
+      .map(p => ({ date: p.date, time: p.time || '', service: p.service || '—' }));
+    items.sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.time || '').localeCompare(a.time || ''));
+    return items;
+  }
+
+  function historyTableHtml(items) {
+    if (items.length === 0) return '<p class="admin-note" style="margin-top:0;">Aucun rendez-vous enregistré pour cette cliente.</p>';
+    return `
+      <p class="admin-note" style="margin-top:0;">${items.length} rendez-vous enregistré${items.length > 1 ? 's' : ''}.</p>
+      <table class="history-table">
+        <thead><tr><th>Date</th><th>Prestation</th></tr></thead>
+        <tbody>${items.map(it => `<tr><td>${formatHistoryDate(it.date)}${it.time ? `<br><span class="history-source">${escapeHtml(it.time)}</span>` : ''}</td><td>${escapeHtml(it.service)}</td></tr>`).join('')}</tbody>
+      </table>`;
+  }
+
+  // =========================================================
+  // Login gate — shows the app only once authenticated. Uses real Firebase
+  // accounts if a project is configured; otherwise falls back to a local
+  // 4-digit PIN system (admin / Melissa). This is always the login screen —
+  // Firebase, when configured, is used purely as a background sync backend
+  // (via an anonymous session satisfying Firestore's security rules), never
+  // as a second login mechanism. One gate, one place to manage codes.
+  // =========================================================
+  const loginOverlay = document.getElementById('login-overlay');
+  const appEl = document.getElementById('app');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  // Keeps the tab bar stuck right under the header, whatever its actual
+  // height ends up being (varies slightly with safe-area insets on
+  // notched iPhones) — avoids any gap or overlap.
+  function updateHeaderHeightVar() {
+    const headerEl = document.querySelector('header');
+    if (headerEl) document.documentElement.style.setProperty('--header-height', headerEl.offsetHeight + 'px');
+  }
+  window.addEventListener('load', updateHeaderHeightVar);
+  window.addEventListener('resize', updateHeaderHeightVar);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateHeaderHeightVar);
+  updateHeaderHeightVar();
+
+  const headerMenuBtn = document.getElementById('header-menu-btn');
+  const headerMenuPanel = document.getElementById('header-menu-panel');
+  headerMenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    headerMenuPanel.style.display = headerMenuPanel.style.display === 'block' ? 'none' : 'block';
+  });
+  document.addEventListener('click', (e) => {
+    if (headerMenuPanel.style.display === 'block' && !headerMenuPanel.contains(e.target) && e.target !== headerMenuBtn) {
+      headerMenuPanel.style.display = 'none';
+    }
+  });
+  headerMenuPanel.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => { headerMenuPanel.style.display = 'none'; });
+  });
+
+  initPinAuth();
+
+  // =========================================================
+  // Local PIN auth (admin / Melissa) — no server, no internet required.
+  // Codes are stored on this device only (localStorage). Recovery works via
+  // the Admin account: log in as admin, then use "Codes d'accès" to reset
+  // Melissa's code if she forgets it.
+  // =========================================================
+  const PIN_ACCOUNTS_KEY = 'ml_pin_accounts';
+  const PIN_SESSION_KEY = 'ml_pin_session';
+
+  function loadPinAccounts() {
+    try {
+      const raw = localStorage.getItem(PIN_ACCOUNTS_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    const defaults = [
+      { id: 'admin', pin: '0000', role: 'admin' },
+      { id: 'Melissa', pin: '2026', role: 'user' }
+    ];
+    try { localStorage.setItem(PIN_ACCOUNTS_KEY, JSON.stringify(defaults)); } catch (e) {}
+    return defaults;
+  }
+  function savePinAccounts(accounts) {
+    try { localStorage.setItem(PIN_ACCOUNTS_KEY, JSON.stringify(accounts)); } catch (e) {}
+  }
+
+  let pinAccounts = loadPinAccounts();
+  let pinCurrentUser = null; // { id, role }
+  let pinSelectedId = null;
+  let pinBuffer = '';
+
+  function shuffledDigits() {
+    const digits = ['0','1','2','3','4','5','6','7','8','9'];
+    for (let i = digits.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [digits[i], digits[j]] = [digits[j], digits[i]];
+    }
+    return digits;
+  }
+
+  function renderPinKeypad() {
+    const keypad = document.getElementById('pin-keypad');
+    keypad.innerHTML = '';
+    const digits = shuffledDigits();
+    digits.forEach(d => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = d;
+      btn.style.cssText = 'padding:16px 0; font-size:1.2rem; font-weight:600; border-radius:8px; border:1px solid #D8C9B0; background:#fff; color:#241820; cursor:pointer;';
+      btn.addEventListener('click', () => pinDigitPressed(d));
+      keypad.appendChild(btn);
+    });
+    const delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.textContent = '⌫';
+    delBtn.style.cssText = 'padding:16px 0; font-size:1.1rem; border-radius:8px; border:1px solid #D8C9B0; background:#F6EFE3; color:#93374A; cursor:pointer;';
+    delBtn.addEventListener('click', () => { pinBuffer = pinBuffer.slice(0, -1); updatePinDots(); });
+    keypad.appendChild(delBtn);
+  }
+
+  function updatePinDots() {
+    const dotsEl = document.getElementById('pin-dots');
+    dotsEl.innerHTML = '';
+    for (let i = 0; i < 4; i++) {
+      const dot = document.createElement('span');
+      const filled = i < pinBuffer.length;
+      dot.style.cssText = `width:14px; height:14px; border-radius:50%; border:1.5px solid #93374A; background:${filled ? '#93374A' : 'transparent'};`;
+      dotsEl.appendChild(dot);
+    }
+  }
+
+  function pinDigitPressed(d) {
+    if (pinBuffer.length >= 4) return;
+    pinBuffer += d;
+    updatePinDots();
+    if (pinBuffer.length === 4) {
+      setTimeout(() => checkPinEntry(), 150);
+    }
+  }
+
+  function checkPinEntry() {
+    const pinMsg = document.getElementById('pin-msg');
+    const account = pinAccounts.find(a => a.id === pinSelectedId);
+    if (account && account.pin === pinBuffer) {
+      pinCurrentUser = { id: account.id, role: account.role };
+      try { localStorage.setItem(PIN_SESSION_KEY, JSON.stringify(pinCurrentUser)); } catch (e) {}
+      unlockWithPin();
+    } else {
+      pinMsg.textContent = 'Code incorrect, réessaie.';
+      pinMsg.className = 'form-msg err';
+      pinBuffer = '';
+      updatePinDots();
+      renderPinKeypad(); // reshuffle after a failed attempt
+    }
+  }
+
+  function showPinIdSelect() {
+    document.getElementById('pin-id-select').style.display = 'flex';
+    document.getElementById('pin-entry').style.display = 'none';
+    document.getElementById('pin-msg').textContent = '';
+  }
+
+  function showPinEntry(id) {
+    pinSelectedId = id;
+    pinBuffer = '';
+    document.getElementById('pin-id-select').style.display = 'none';
+    document.getElementById('pin-entry').style.display = 'block';
+    document.getElementById('pin-entry-label').textContent = 'Code de ' + id;
+    document.getElementById('pin-msg').textContent = '';
+    updatePinDots();
+    renderPinKeypad();
+  }
+
+  document.querySelectorAll('[data-pin-id]').forEach(btn => {
+    btn.addEventListener('click', () => showPinEntry(btn.getAttribute('data-pin-id')));
+  });
+  document.getElementById('pin-back').addEventListener('click', showPinIdSelect);
+
+  function unlockWithPin() {
+    loginOverlay.style.display = 'none';
+    updateWhoAmI();
+    if (logoutBtn) logoutBtn.style.display = '';
+
+    // The Admin account is a recovery-only account — it never sees client
+    // data, planning, or backups. It exists solely to reset Melissa's code
+    // if she forgets it.
+    if (pinCurrentUser.role === 'admin') {
+      appEl.style.display = 'none';
+      document.getElementById('admin-home-view').style.display = 'block';
+      document.getElementById('backup-btn').style.display = 'none';
+      document.getElementById('pin-manage-btn').style.display = 'none';
+      document.getElementById('sync-indicator').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('admin-home-view').style.display = 'none';
+    appEl.style.display = '';
+    const warningEl = document.getElementById('storage-warning');
+    if (warningEl) warningEl.style.display = storageAvailable ? 'none' : 'block';
+    const pinManageBtn = document.getElementById('pin-manage-btn');
+    if (pinManageBtn) pinManageBtn.style.display = '';
+    document.getElementById('backup-btn').style.display = '';
+
+    const backups = loadAutoBackups();
+    const lbEl = document.getElementById('last-backup-time');
+    if (lbEl) {
+      lbEl.textContent = backups.length > 0
+        ? 'Dernière sauvegarde automatique : ' + new Date(backups[0].timestamp).toLocaleString('fr-FR', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' })
+        : 'Dernière sauvegarde automatique : —';
+    }
+
+    if (fbReady) {
+      // Firebase, when configured, only ever runs in the background here —
+      // an anonymous session simply satisfies Firestore's security rules so
+      // multi-device sync can work. It is never a second login screen.
+      fbAuth.signInAnonymously()
+        .then(() => { attachRealtimeListeners(); updateSyncIndicator(); })
+        .catch(err => {
+          console.error('Firebase anonymous sign-in failed, staying local-only for this session', err);
+          loadAll();
+        });
+    } else {
+      loadAll();
+    }
+  }
+
+  document.getElementById('admin-open-reset-btn').addEventListener('click', () => {
+    document.getElementById('pin-manage-btn').click();
+  });
+
+  function updateWhoAmI() {
+    const el = document.getElementById('whoami-indicator');
+    if (!el || !pinCurrentUser) return;
+    el.textContent = `Connecté(e) : ${pinCurrentUser.id}`;
+  }
+
+  function initPinAuth() {
+    let existingSession = null;
+    try { existingSession = JSON.parse(localStorage.getItem(PIN_SESSION_KEY) || 'null'); } catch (e) {}
+    if (existingSession && pinAccounts.find(a => a.id === existingSession.id)) {
+      pinCurrentUser = existingSession;
+      unlockWithPin();
+      return;
+    }
+    loginOverlay.style.display = 'flex';
+    appEl.style.display = 'none';
+    showPinIdSelect();
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        try { localStorage.removeItem(PIN_SESSION_KEY); } catch (e) {}
+        pinCurrentUser = null;
+        detachRealtimeListeners();
+        if (fbReady && fbAuth && fbAuth.currentUser) { fbAuth.signOut().catch(() => {}); }
+        location.reload();
+      });
+    }
+  }
+
+  // ---------- manage / recover PIN codes ----------
+  const pinManageOverlay = document.getElementById('pin-manage-overlay');
+  document.getElementById('pin-manage-btn').addEventListener('click', () => {
+    if (!pinCurrentUser) return;
+    document.getElementById('pin-manage-current').textContent = `Connecté(e) en tant que ${pinCurrentUser.id}.`;
+    document.getElementById('pin-manage-own-name').textContent = pinCurrentUser.id;
+    document.getElementById('pin-new-1').value = '';
+    document.getElementById('pin-new-2').value = '';
+    document.getElementById('pin-manage-own-msg').textContent = '';
+
+    const adminSection = document.getElementById('pin-manage-admin-section');
+    if (pinCurrentUser.role === 'admin') {
+      adminSection.style.display = 'block';
+      const targetSel = document.getElementById('pin-manage-target');
+      targetSel.innerHTML = pinAccounts.filter(a => a.id !== pinCurrentUser.id).map(a => `<option value="${a.id}">${a.id}</option>`).join('');
+      document.getElementById('pin-reset-1').value = '';
+      document.getElementById('pin-reset-2').value = '';
+      document.getElementById('pin-manage-reset-msg').textContent = '';
+    } else {
+      adminSection.style.display = 'none';
+    }
+
+    pinManageOverlay.classList.add('open');
+  });
+  document.getElementById('close-pin-manage').addEventListener('click', () => pinManageOverlay.classList.remove('open'));
+  pinManageOverlay.addEventListener('click', (e) => { if (e.target === pinManageOverlay) pinManageOverlay.classList.remove('open'); });
+
+  document.getElementById('pin-manage-save-own').addEventListener('click', () => {
+    const msgEl = document.getElementById('pin-manage-own-msg');
+    const p1 = document.getElementById('pin-new-1').value.trim();
+    const p2 = document.getElementById('pin-new-2').value.trim();
+    if (!/^\d{4}$/.test(p1)) { msgEl.textContent = 'Le code doit contenir exactement 4 chiffres.'; msgEl.className = 'form-msg err'; return; }
+    if (p1 !== p2) { msgEl.textContent = 'Les deux codes ne correspondent pas.'; msgEl.className = 'form-msg err'; return; }
+    pinAccounts = pinAccounts.map(a => a.id === pinCurrentUser.id ? { ...a, pin: p1 } : a);
+    savePinAccounts(pinAccounts);
+    msgEl.textContent = '✓ Code mis à jour.';
+    msgEl.className = 'form-msg ok';
+    document.getElementById('pin-new-1').value = '';
+    document.getElementById('pin-new-2').value = '';
+  });
+
+  document.getElementById('pin-manage-save-reset').addEventListener('click', () => {
+    const msgEl = document.getElementById('pin-manage-reset-msg');
+    const target = document.getElementById('pin-manage-target').value;
+    const p1 = document.getElementById('pin-reset-1').value.trim();
+    const p2 = document.getElementById('pin-reset-2').value.trim();
+    if (!/^\d{4}$/.test(p1)) { msgEl.textContent = 'Le code doit contenir exactement 4 chiffres.'; msgEl.className = 'form-msg err'; return; }
+    if (p1 !== p2) { msgEl.textContent = 'Les deux codes ne correspondent pas.'; msgEl.className = 'form-msg err'; return; }
+    pinAccounts = pinAccounts.map(a => a.id === target ? { ...a, pin: p1 } : a);
+    savePinAccounts(pinAccounts);
+    msgEl.textContent = `✓ Code de ${target} réinitialisé.`;
+    msgEl.className = 'form-msg ok';
+    document.getElementById('pin-reset-1').value = '';
+    document.getElementById('pin-reset-2').value = '';
+  });
+</script>
+
+</body>
+</html>
