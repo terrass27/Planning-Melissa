@@ -206,6 +206,10 @@
     font-size:.72rem; line-height:1.3; color:#fff; background:var(--berry); box-shadow:0 2px 6px rgba(0,0,0,0.12);
   }
   .timeline-block b{display:block; font-size:.74rem;}
+  .timeline-block.timeline-block-personal{
+    background:repeating-linear-gradient(135deg, #6E5F63, #6E5F63 6px, #5A4E51 6px, #5A4E51 12px);
+    cursor:pointer;
+  }
   .planning-empty-day{font-size:.85rem; color:#8A7A70; text-align:center; padding:30px 0;}
   .agenda-item{
     display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;
@@ -258,6 +262,11 @@
     align-items:flex-start; justify-content:center; padding:calc(env(safe-area-inset-top, 0px) + 16px) 16px 16px; overflow-y:auto;
   }
   #pin-manage-overlay.open{display:flex;}
+  #home-address-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:110; display:none;
+    align-items:flex-start; justify-content:center; padding:calc(env(safe-area-inset-top, 0px) + 16px) 16px 16px; overflow-y:auto;
+  }
+  #home-address-overlay.open{display:flex;}
   .backup-modal{background:#F6EFE3; color:#241820; border-radius:8px; max-width:520px; width:100%; padding:26px; position:relative;}
   .backup-modal h3{color:#241820;}
   .backup-modal label{
@@ -333,6 +342,7 @@
       <div id="header-menu-panel" style="display:none; position:absolute; top:calc(100% + 8px); right:0; background:#F6EFE3; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.35); padding:10px; min-width:220px; z-index:50;">
         <div id="whoami-indicator" style="font-size:.76rem; color:#8A7A70; font-weight:500; padding:8px 10px;"></div>
         <button class="header-menu-item" id="pin-manage-btn" style="display:none;">🔑 Codes d'accès</button>
+        <button class="header-menu-item" id="home-address-btn">🏠 Mon adresse</button>
         <button class="header-menu-item" id="backup-btn">💾 Sauvegarde</button>
         <button class="header-menu-item" id="logout-btn" style="display:none; color:#B14A5E;">Déconnexion</button>
       </div>
@@ -379,6 +389,15 @@
       <label class="broadcast-select-all" style="margin:0;"><input type="checkbox" id="import-merge" checked> Fusionner avec les données existantes (décoche pour tout remplacer)</label>
     </div>
     <p class="form-msg" id="backup-msg"></p>
+
+    <hr style="border:none; border-top:1px solid #E7DAC0; margin:20px 0;">
+    <h4 style="color:#B98A2E; margin:0 0 8px;">🗄️ Archiver un mois de rendez-vous</h4>
+    <p class="admin-note">Utile pour garder l'application légère sur la durée : choisis un mois passé, et ses rendez-vous seront <strong>d'abord exportés en Excel</strong>, puis supprimés définitivement — les fiches clientes ne sont jamais touchées.</p>
+    <div class="form-actions" style="margin-top:8px; align-items:center;">
+      <input type="month" id="archive-month-input" style="max-width:170px;">
+      <button type="button" class="btn-text" id="archive-month-btn" style="color:#B98A2E;">📦 Exporter puis supprimer ce mois</button>
+    </div>
+    <p class="form-msg" id="archive-month-msg"></p>
 
     <hr style="border:none; border-top:1px solid #E7DAC0; margin:20px 0;">
     <h4 style="color:#B14A5E; margin:0 0 8px;">Zone dangereuse</h4>
@@ -437,6 +456,40 @@
   </div>
 </div>
 
+<div id="home-address-overlay">
+  <div class="backup-modal">
+    <button class="history-close" id="close-home-address" aria-label="Fermer">×</button>
+    <h3>🏠 Mon adresse</h3>
+    <p class="admin-note" style="margin:4px 0 18px;">Sert de point de départ et de retour pour calculer le nombre de kilomètres parcourus chaque jour. À modifier ici en cas de déménagement.</p>
+
+    <label for="home-address">Adresse (n° et rue)</label>
+    <div class="addr-wrap">
+      <input type="text" id="home-address" placeholder="Ex : 4 rue de la Cité Nouvelle" autocomplete="off">
+      <div id="home-address-results" class="addr-results" style="display:none;"></div>
+    </div>
+    <div class="field-row">
+      <div>
+        <label for="home-postcode">Code postal</label>
+        <div class="addr-wrap">
+          <input type="text" id="home-postcode" inputmode="numeric" placeholder="27490" autocomplete="off">
+          <div id="home-postcode-results" class="addr-results" style="display:none;"></div>
+        </div>
+      </div>
+      <div>
+        <label for="home-city">Ville</label>
+        <div class="addr-wrap">
+          <input type="text" id="home-city" placeholder="Ex : Elbeuf" autocomplete="off">
+          <div id="home-city-results" class="addr-results" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions" style="margin-top:10px;">
+      <button type="button" class="btn berry" id="home-address-save">Enregistrer mon adresse</button>
+    </div>
+    <p class="form-msg" id="home-address-msg"></p>
+  </div>
+</div>
+
 <div id="admin-home-view" style="display:none;">
   <main class="container" style="max-width:420px; margin:60px auto 0;">
     <div class="panel" style="text-align:center;">
@@ -459,6 +512,10 @@
       <button class="tab" data-tab="clients">
         <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5"/><circle cx="17" cy="8.5" r="2.4"/><path d="M15.5 13.6c2.2.4 3.9 2.3 3.9 5.4"/></svg>
         Clientes
+      </button>
+      <button class="tab" data-tab="manuel">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5.5C4 4.4 4.9 3.5 6 3.5h11.5a1 1 0 0 1 1 1V19a1 1 0 0 1-1 1H6c-1.1 0-2-.9-2-2z"/><path d="M4 5.5v13c0 1.1.9 2 2 2h11.5"/><path d="M8 8h7M8 11.5h7M8 15h4"/></svg>
+        Manuel
       </button>
     </div>
 
@@ -498,7 +555,43 @@
           <button type="button" class="planning-nav-btn" id="planning-next" aria-label="Jour suivant">›</button>
         </div>
 
-        <button class="btn berry" id="new-planning-btn" style="margin:16px 0;">+ Nouveau rendez-vous</button>
+        <div id="day-km-summary" style="display:none; background:#F6EFE3; border:1px solid #E7DAC0; border-radius:8px; padding:10px 14px; margin-top:10px; font-size:.82rem; color:#241820; text-align:center;"></div>
+
+        <div style="display:flex; gap:10px; margin:16px 0; flex-wrap:wrap;">
+          <button class="btn berry" id="new-planning-btn" style="flex:1; min-width:180px;">+ Nouveau rendez-vous</button>
+          <button type="button" class="btn-text" id="new-block-btn" style="color:#6E5F63; border:1px solid #E7DAC0; border-radius:8px; padding:0 16px;">🚫 Bloquer un créneau</button>
+        </div>
+
+        <form id="block-form" style="display:none;">
+          <input type="hidden" id="b-edit-id" value="">
+          <h4 style="margin:0 0 10px; color:#6E5F63;">Créneau personnel indisponible</h4>
+          <label for="b-date">Date</label>
+          <input type="date" id="b-date" required>
+          <div class="field-row">
+            <div>
+              <label for="b-start-hour">Début</label>
+              <div style="display:flex; gap:8px;">
+                <select id="b-start-hour" style="flex:1;"></select>
+                <select id="b-start-minute" style="flex:1;"></select>
+              </div>
+            </div>
+            <div>
+              <label for="b-end-hour">Fin</label>
+              <div style="display:flex; gap:8px;">
+                <select id="b-end-hour" style="flex:1;"></select>
+                <select id="b-end-minute" style="flex:1;"></select>
+              </div>
+            </div>
+          </div>
+          <label for="b-label">Motif (optionnel)</label>
+          <input type="text" id="b-label" placeholder="Ex : Rendez-vous médical, école, pause…">
+          <p class="form-msg" id="block-form-msg"></p>
+          <div class="form-actions" style="margin-top:10px;">
+            <button type="submit" class="btn-text" style="color:#6E5F63; border:1px solid #E7DAC0; border-radius:8px; padding:10px 16px;">Enregistrer ce créneau</button>
+            <button type="button" class="btn-text" id="block-delete-btn" style="display:none; color:#B14A5E;">Supprimer</button>
+            <button type="button" class="btn-text" id="cancel-block">Annuler</button>
+          </div>
+        </form>
 
         <form id="planning-form" style="display:none;">
           <input type="hidden" id="p-edit-id" value="">
@@ -559,6 +652,12 @@
             <option>Chignon & Coiffure événement</option>
           </select>
 
+          <div id="p-color-formula-wrap" style="display:none;">
+            <label for="p-color-formula">Formule de coloration</label>
+            <textarea id="p-color-formula" rows="2" placeholder="Ex : L'Oréal 6.3 + 20 vol, 1/1, 35 min"></textarea>
+            <div id="p-color-formula-hint" style="display:none; font-size:.78rem; color:#8A7A70; margin:-6px 0 12px; padding:8px 10px; background:#F6EFE3; border:1px solid #E7DAC0; border-radius:6px;"></div>
+          </div>
+
           <div class="field-row">
             <div><label for="p-date">Date</label><input type="date" id="p-date" required></div>
             <div>
@@ -570,6 +669,8 @@
               <input type="hidden" id="p-time">
             </div>
           </div>
+
+          <div id="p-slots-info" style="display:none; font-size:.78rem; color:#8A7A70; margin:-6px 0 14px; padding:8px 10px; background:#F6EFE3; border:1px solid #E7DAC0; border-radius:6px;"></div>
 
           <label class="broadcast-select-all" style="margin-top:12px;"><input type="checkbox" id="p-addr-override-check"> Adresse différente pour ce rendez-vous</label>
           <div id="p-addr-override-fields" style="display:none;">
@@ -801,7 +902,88 @@
         <div id="clients-list"></div>
       </div>
     </div>
+
+    <!-- ================= MANUEL ================= -->
+    <div class="view" id="view-manuel">
+      <div class="panel">
+        <h3 style="margin-top:0;">📖 Manuel d'utilisation</h3>
+        <p class="admin-note" style="margin-top:0;">Ce guide reste toujours accessible dans l'app, même hors ligne — pas besoin de le chercher ailleurs.</p>
+
+        <div class="fiche-section">
+          <h4>Bloquer un créneau personnel</h4>
+          <p>Bouton <strong>« 🚫 Bloquer un créneau »</strong>, à côté de « + Nouveau rendez-vous » : choisis une date, une plage horaire (ex : 10/08/2026 de 8h00 à 12h00) et un motif optionnel. Ce créneau apparaît alors grisé sur le planning, exactement comme un rendez-vous — impossible d'y caler une cliente par erreur. Touche le créneau grisé pour le modifier ou le supprimer.</p>
+          <p>Ces créneaux sont automatiquement exclus des <strong>plages disponibles</strong> affichées dans le formulaire de rendez-vous.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Voir les créneaux disponibles et l'horaire suggéré</h4>
+          <p>Dès qu'une date est choisie dans le formulaire de rendez-vous, un encart affiche les <strong>créneaux libres</strong> de la journée (rendez-vous existants et créneaux bloqués déjà retirés), ainsi qu'une <strong>suggestion du prochain horaire possible</strong> selon la durée de la prestation — avec un bouton « Utiliser ce créneau » pour le préremplir en un tap. L'horaire reste toujours modifiable ensuite.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Kilomètres parcourus</h4>
+          <p>Renseigne ton adresse personnelle dans <strong>menu ⋯ > 🏠 Mon adresse</strong> (à modifier ici en cas de déménagement). Une fois renseignée, le nombre de kilomètres réalisés chaque jour s'affiche automatiquement dans le Planning, juste au-dessus du bouton « + Nouveau rendez-vous » — calculé domicile → chaque rendez-vous dans l'ordre → retour au domicile.</p>
+          <p>Ce total apparaît aussi dans les rapports Excel (semaine/mois), avec le détail jour par jour.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Prendre un rendez-vous</h4>
+          <p>Depuis l'onglet <strong>Planning</strong>, touche <strong>« + Nouveau rendez-vous »</strong>. Recherche la cliente par son nom ou son numéro — si elle n'existe pas encore, choisis <strong>« + Nouvelle cliente »</strong> directement dans les résultats, pas besoin de sortir du formulaire.</p>
+          <p>Un avertissement (non bloquant) apparaît si deux rendez-vous se chevauchent, ou si le trajet depuis le rendez-vous précédent semble trop juste.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>La formule de coloration</h4>
+          <p>Quand la prestation choisie est <strong>Coloration</strong>, un champ « Formule de coloration » apparaît. Si la cliente a déjà eu une coloration avant, sa dernière formule est proposée avec un bouton <strong>« Réutiliser »</strong> — utile pour les clientes qui gardent toujours la même teinte.</p>
+          <p>La formule reste ensuite visible directement dans l'historique de la cliente, sans avoir besoin d'ouvrir chaque rendez-vous.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Gérer les fiches clientes</h4>
+          <p>Onglet <strong>Clientes</strong> : recherche, tri (alphabétique, fidélité), filtre « Favorites » ou « À relancer » (clientes sans rendez-vous depuis 60 jours). Touche une fiche pour voir tous les détails, modifier, ou consulter son historique complet.</p>
+          <p><strong>Historique cliquable :</strong> dans la fiche d'une cliente, touche n'importe quelle ligne de son historique pour revoir le détail complet de ce rendez-vous-là (y compris la formule de coloration utilisée ce jour-là).</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Le bandeau de connexion</h4>
+          <p>Un bandeau orange apparaît en haut de l'écran uniquement s'il y a un souci : <strong>« 📴 Hors ligne »</strong> ou <strong>« 🔄 Synchronisation en cours »</strong>. Dans les deux cas, tes données sont déjà enregistrées sur ce téléphone — rien n'est perdu, ça se synchronise tout seul dès que le réseau revient. Le bandeau disparaît de lui-même quand tout est à jour.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Si l'app se ferme avant d'enregistrer</h4>
+          <p>Si tu remplis une fiche ou un rendez-vous et que l'app se ferme ou se recharge avant que tu aies touché « Enregistrer », un message te propose de <strong>récupérer ta saisie</strong> la prochaine fois que tu rouvres l'app. Accepte pour tout retrouver exactement comme tu l'avais tapé.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Messages aux clientes</h4>
+          <p>Depuis l'onglet Planning, le bouton de message collectif permet de sélectionner plusieurs clientes et de préparer un SMS ou copier leurs numéros/emails en un clic.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Sauvegarde et export</h4>
+          <p>Menu <strong>⋯ en haut à droite > 💾 Sauvegarde</strong> : exporte tes données en Excel (à envoyer par email comme copie de secours) ou en fichier .json (pour transférer vers un autre appareil). Une sauvegarde automatique se crée aussi à chaque modification — les 10 dernières sont restaurables en un clic.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Archiver un mois de rendez-vous</h4>
+          <p>Toujours dans <strong>💾 Sauvegarde</strong>, la section « 🗄️ Archiver un mois de rendez-vous » permet de choisir un mois passé : ses rendez-vous sont d'abord exportés en Excel, puis supprimés de l'app pour la garder légère sur la durée. Les fiches clientes ne sont jamais concernées.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>Installer l'app sur l'écran d'accueil (iPhone)</h4>
+          <p>Ouvre le site dans <strong>Safari</strong> (pas Chrome) → icône de partage (carré avec une flèche) → <strong>« Sur l'écran d'accueil »</strong>. L'app s'ouvre alors en plein écran, comme une vraie application.</p>
+        </div>
+
+        <div class="fiche-section">
+          <h4>En cas de problème</h4>
+          <p>Rien n'est jamais perdu définitivement : toutes tes données existent en double (sur cet appareil <em>et</em> dans le cloud), avec en plus les sauvegardes automatiques et les exports Excel. En cas de doute, exporte une sauvegarde avant toute manipulation importante.</p>
+        </div>
+      </div>
+    </div>
   </main>
+  <footer id="app-version-footer" style="text-align:center; padding:18px 10px calc(18px + env(safe-area-inset-bottom, 0px)); font-size:.72rem; color:#B3A38F;">
+    Melissa Lefèvre — Planning &amp; Clients · <span id="app-version-label"></span>
+  </footer>
 </div>
 
 <div id="save-toast"></div>
@@ -832,6 +1014,20 @@
 
 <script>
   // =========================================================
+  // Version — bumped by hand on every delivered update, shown at the very
+  // bottom of the app so it's obvious (a glance, no menu digging) whether a
+  // freshly uploaded index.html actually replaced the previous one — this
+  // was the simplest way to make a GitHub Pages / cache-refresh issue
+  // impossible to miss.
+  // =========================================================
+  const APP_VERSION = '1.7.0';
+  const APP_VERSION_DATE = '21 août 2026';
+  (function showAppVersion() {
+    const el = document.getElementById('app-version-label');
+    if (el) el.textContent = `v${APP_VERSION} · ${APP_VERSION_DATE}`;
+  })();
+
+  // =========================================================
   // Storage — 100% local to this browser (localStorage), no dependency on
   // Claude, no internet connection required. Data stays on this device only,
   // which is why there's an export/import system below to move it between
@@ -840,6 +1036,8 @@
   const CLIENTS_KEY = 'ml_clients_index';
   const PLANNING_KEY = 'ml_planning_index';
   const NOTES_KEY = 'ml_daily_notes';
+  const HOME_ADDRESS_KEY = 'ml_home_address';
+  const BLOCKS_KEY = 'ml_unavailability_blocks';
 
   // Safari refuses localStorage entirely when a page is opened as a local file
   // (file:// URLs get an "opaque origin", and WebKit blocks Storage APIs for
@@ -893,12 +1091,14 @@
     fbReady = false;
   }
 
-  const FB_DOC_NAMES = { [CLIENTS_KEY]: 'clients', [PLANNING_KEY]: 'planning', [NOTES_KEY]: 'dailyNotes' };
+  const FB_DOC_NAMES = { [CLIENTS_KEY]: 'clients', [PLANNING_KEY]: 'planning', [NOTES_KEY]: 'dailyNotes', [HOME_ADDRESS_KEY]: 'homeAddress', [BLOCKS_KEY]: 'blocks' };
   const FB_DOC = (key) => fbDb.collection('melissa_app').doc(FB_DOC_NAMES[key] || key);
   let fbListenersAttached = false;
-  let unsubClients = null, unsubPlanning = null, unsubNotes = null;
+  let unsubClients = null, unsubPlanning = null, unsubNotes = null, unsubHomeAddress = null, unsubBlocks = null;
 
   let cachedDailyNotes = {};
+  let cachedHomeAddress = { address: '', postcode: '', city: '' };
+  let cachedBlocks = [];
 
   function loadIndexed(key) {
     if (!storageAvailable) return memoryStore[key] ? JSON.parse(memoryStore[key]) : [];
@@ -911,6 +1111,11 @@
   function loadDailyNotesLocal() {
     const raw = loadIndexed(NOTES_KEY);
     return (raw && typeof raw === 'object' && !Array.isArray(raw)) ? raw : {};
+  }
+
+  function loadHomeAddressLocal() {
+    const raw = loadIndexed(HOME_ADDRESS_KEY);
+    return (raw && typeof raw === 'object' && !Array.isArray(raw)) ? raw : { address: '', postcode: '', city: '' };
   }
 
   // Keys with local changes not yet confirmed synced to Firestore (e.g. the
@@ -1153,12 +1358,28 @@
       cachedDailyNotes = data;
       if (typeof renderDailyNoteBox === 'function') renderDailyNoteBox();
     }, err => console.error('notes listener error', err));
+
+    unsubHomeAddress = FB_DOC(HOME_ADDRESS_KEY).onSnapshot(snap => {
+      const data = snap.exists && snap.data().items && typeof snap.data().items === 'object' ? snap.data().items : { address: '', postcode: '', city: '' };
+      try { localStorage.setItem(HOME_ADDRESS_KEY, JSON.stringify(data)); } catch (e) {}
+      cachedHomeAddress = data;
+      if (typeof renderDayKmSummary === 'function') renderDayKmSummary();
+    }, err => console.error('home address listener error', err));
+
+    unsubBlocks = FB_DOC(BLOCKS_KEY).onSnapshot(snap => {
+      const data = snap.exists ? (snap.data().items || []) : [];
+      try { localStorage.setItem(BLOCKS_KEY, JSON.stringify(data)); } catch (e) {}
+      cachedBlocks = data;
+      if (typeof renderPlanningDay === 'function') renderPlanningDay();
+    }, err => console.error('blocks listener error', err));
   }
 
   function detachRealtimeListeners() {
     if (unsubClients) { unsubClients(); unsubClients = null; }
     if (unsubPlanning) { unsubPlanning(); unsubPlanning = null; }
     if (unsubNotes) { unsubNotes(); unsubNotes = null; }
+    if (unsubHomeAddress) { unsubHomeAddress(); unsubHomeAddress = null; }
+    if (unsubBlocks) { unsubBlocks(); unsubBlocks = null; }
     fbListenersAttached = false;
   }
 
@@ -1575,6 +1796,55 @@
     }
   });
 
+  document.getElementById('archive-month-btn').addEventListener('click', async () => {
+    const msgEl = document.getElementById('archive-month-msg');
+    const monthPrefix = document.getElementById('archive-month-input').value; // "YYYY-MM"
+    msgEl.textContent = '';
+    msgEl.className = 'form-msg';
+
+    if (!monthPrefix) {
+      msgEl.textContent = 'Choisis d\'abord un mois.';
+      msgEl.className = 'form-msg err';
+      return;
+    }
+
+    const monthLabel = new Date(parseInt(monthPrefix.slice(0, 4), 10), parseInt(monthPrefix.slice(5, 7), 10) - 1, 1)
+      .toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+    const matching = cachedPlanning.filter(p => p.date && p.date.startsWith(monthPrefix) && !p.isDemo);
+
+    if (matching.length === 0) {
+      msgEl.textContent = `Aucun rendez-vous enregistré pour ${monthLabel} — rien à supprimer.`;
+      return;
+    }
+
+    if (!confirm(`${matching.length} rendez-vous de ${monthLabel} vont être exportés en Excel puis supprimés définitivement. Continuer ?`)) return;
+
+    try {
+      await exportXlsxRange(`${monthPrefix}-01`, `${monthPrefix}-31`, `archive-${monthPrefix}`, `Archive du mois de ${monthLabel}`, 'Aucun rendez-vous enregistré pour ce mois.');
+    } catch (err) {
+      console.error('export before archive failed', err);
+      if (!confirm("L'export Excel a échoué. Supprimer quand même ces rendez-vous sans sauvegarde ? (déconseillé)")) return;
+    }
+
+    try {
+      const remaining = cachedPlanning.filter(p => p.isDemo || !(p.date && p.date.startsWith(monthPrefix)));
+      const result = await saveIndexed(PLANNING_KEY, remaining.filter(p => !p.isDemo));
+      if (!result) throw new Error('save failed');
+      cachedPlanning = remaining;
+      refreshDemoVisibility();
+      renderPlanningDay();
+      renderReminders();
+      autoBackup();
+      document.getElementById('archive-month-input').value = '';
+      msgEl.textContent = `✓ ${matching.length} rendez-vous de ${monthLabel} supprimés (fichier Excel exporté juste avant).`;
+      msgEl.className = 'form-msg ok';
+    } catch (err) {
+      console.error(err);
+      msgEl.textContent = "Une erreur est survenue pendant la suppression.";
+      msgEl.className = 'form-msg err';
+    }
+  });
+
   function renderAutoBackupList() {
     const listEl = document.getElementById('auto-backup-list');
     const backups = loadAutoBackups();
@@ -1631,6 +1901,8 @@
     cachedClients = loadIndexed(CLIENTS_KEY);
     cachedPlanning = loadIndexed(PLANNING_KEY);
     cachedDailyNotes = loadDailyNotesLocal();
+    cachedHomeAddress = loadHomeAddressLocal();
+    cachedBlocks = loadIndexed(BLOCKS_KEY);
 
     // Sample data only shows up on a genuinely empty install (see withDemoData).
     const merged = withDemoData(cachedClients.filter(c => !c.isDemo), cachedPlanning.filter(p => !p.isDemo));
@@ -1652,9 +1924,49 @@
 
   setupAddressAutocomplete('c-address', 'c-postcode', 'c-city');
   setupAddressAutocomplete('p-addr-override', 'p-postcode-override', 'p-city-override');
+  setupAddressAutocomplete('home-address', 'home-postcode', 'home-city');
 
   document.getElementById('p-addr-override-check').addEventListener('change', (e) => {
     document.getElementById('p-addr-override-fields').style.display = e.target.checked ? 'block' : 'none';
+  });
+
+  // ---------- home address (start/end point for the daily km calculation) ----------
+  const homeAddressOverlay = document.getElementById('home-address-overlay');
+  document.getElementById('home-address-btn').addEventListener('click', () => {
+    document.getElementById('home-address').value = cachedHomeAddress.address || '';
+    document.getElementById('home-postcode').value = cachedHomeAddress.postcode || '';
+    document.getElementById('home-city').value = cachedHomeAddress.city || '';
+    document.getElementById('home-address-msg').textContent = '';
+    homeAddressOverlay.classList.add('open');
+  });
+  document.getElementById('close-home-address').addEventListener('click', () => homeAddressOverlay.classList.remove('open'));
+  homeAddressOverlay.addEventListener('click', (e) => { if (e.target === homeAddressOverlay) homeAddressOverlay.classList.remove('open'); });
+
+  document.getElementById('home-address-save').addEventListener('click', async () => {
+    const msgEl = document.getElementById('home-address-msg');
+    const updated = {
+      address: document.getElementById('home-address').value.trim(),
+      postcode: document.getElementById('home-postcode').value.trim(),
+      city: document.getElementById('home-city').value.trim()
+    };
+    if (!updated.address || !updated.city) {
+      msgEl.textContent = 'Renseigne au moins la rue et la ville.';
+      msgEl.className = 'form-msg err';
+      return;
+    }
+    try {
+      const result = await saveIndexed(HOME_ADDRESS_KEY, updated);
+      if (!result) throw new Error('save failed');
+      cachedHomeAddress = updated;
+      msgEl.textContent = '✓ Adresse enregistrée.';
+      msgEl.className = 'form-msg ok';
+      renderDayKmSummary();
+      setTimeout(() => homeAddressOverlay.classList.remove('open'), 700);
+    } catch (err) {
+      console.error(err);
+      msgEl.textContent = "Une erreur est survenue pendant l'enregistrement.";
+      msgEl.className = 'form-msg err';
+    }
   });
 
   // =========================================================
@@ -1846,8 +2158,8 @@
     ws.autoFilter = { from: 'A3', to: 'I3' };
 
     // ---- indicative total (personal tracking only, not an official accounting figure) ----
+    let totalRowIdx = 4 + rows.length;
     if (priceCount > 0) {
-      const totalRowIdx = 4 + rows.length;
       ws.mergeCells(`A${totalRowIdx}:E${totalRowIdx}`);
       const totalLabel = ws.getCell(`A${totalRowIdx}`);
       totalLabel.value = 'Total indicatif (suivi personnel, ne remplace pas une facturation officielle)';
@@ -1858,6 +2170,53 @@
       totalValue.numFmt = '0.00 €';
       totalValue.font = { bold: true, size: 10.5, color: { argb: BERRY } };
       ws.getRow(totalRowIdx).height = 20;
+      totalRowIdx += 1;
+    }
+
+    // ---- daily mileage (home → each appointment in order → home) ----
+    if (cachedHomeAddress && fullAddressOf(cachedHomeAddress)) {
+      const uniqueDates = [...new Set(rows.map(r => r.date))].sort();
+      const kmByDate = {};
+      let kmTotal = 0, kmUnknownDays = 0;
+      for (const d of uniqueDates) {
+        const result = await computeDayKm(d);
+        if (result.status === 'ok') { kmByDate[d] = result.km; kmTotal += result.km; }
+        else { kmUnknownDays++; }
+      }
+
+      totalRowIdx += 1; // blank spacer row
+      const kmHeaderIdx = totalRowIdx + 1;
+      ws.mergeCells(`A${kmHeaderIdx}:I${kmHeaderIdx}`);
+      const kmHeaderCell = ws.getCell(`A${kmHeaderIdx}`);
+      kmHeaderCell.value = '🚗 Kilométrage professionnel (aller-retour domicile compris chaque jour)';
+      kmHeaderCell.font = { bold: true, size: 11, color: { argb: NOIR } };
+      kmHeaderCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: GOLD } };
+      kmHeaderCell.alignment = { vertical: 'middle' };
+      ws.getRow(kmHeaderIdx).height = 20;
+
+      let kmRowIdx = kmHeaderIdx + 1;
+      uniqueDates.forEach(d => {
+        const row = ws.getRow(kmRowIdx);
+        row.getCell(1).value = formatReportDate(d);
+        row.getCell(1).font = { size: 10, color: { argb: 'FF241820' } };
+        if (kmByDate[d] != null) {
+          row.getCell(2).value = kmByDate[d];
+          row.getCell(2).numFmt = '0.0 "km"';
+        } else {
+          row.getCell(2).value = 'non calculable';
+          row.getCell(2).font = { italic: true, size: 9.5, color: { argb: 'FF6E5F63' } };
+        }
+        kmRowIdx++;
+      });
+
+      ws.mergeCells(`A${kmRowIdx}:B${kmRowIdx}`);
+      const kmTotalLabel = ws.getCell(`A${kmRowIdx}`);
+      kmTotalLabel.value = 'Total kilométrage' + (kmUnknownDays > 0 ? ` (${kmUnknownDays} jour(s) non calculable(s), non inclus)` : '');
+      kmTotalLabel.font = { bold: true, italic: kmUnknownDays > 0, size: 10, color: { argb: BERRY } };
+      const kmTotalValue = ws.getCell(`C${kmRowIdx}`);
+      kmTotalValue.value = kmTotal;
+      kmTotalValue.numFmt = '0.0 "km"';
+      kmTotalValue.font = { bold: true, size: 11, color: { argb: BERRY } };
     }
 
     const buffer = await wb.xlsx.writeBuffer();
@@ -1920,11 +2279,21 @@
 
     const items = getDayItems(selectedPlanningDate);
     const withTime = items.filter(i => i.time).sort((a, b) => a.time.localeCompare(b.time));
+    const dayBlocks = cachedBlocks.filter(b => b.date === selectedPlanningDate);
 
     let html = '';
     for (let h = TIMELINE_START_HOUR; h <= TIMELINE_END_HOUR; h++) {
       html += `<div class="timeline-hour" style="top:${(h - TIMELINE_START_HOUR) * HOUR_HEIGHT}px;"><span>${h}:00</span></div>`;
     }
+
+    dayBlocks.forEach(b => {
+      const [hh, mm] = b.startTime.split(':').map(Number);
+      const durationMin = Math.max(5, timeToMinutes(b.endTime) - timeToMinutes(b.startTime));
+      let startMin = Math.max(0, Math.min((hh - TIMELINE_START_HOUR) * 60 + mm, (TIMELINE_END_HOUR - TIMELINE_START_HOUR) * 60 - 20));
+      const top = (startMin / 60) * HOUR_HEIGHT;
+      const height = Math.max(24, (durationMin / 60) * HOUR_HEIGHT - 3);
+      html += `<div class="timeline-block timeline-block-personal" data-block-id="${b.id}" style="top:${top}px; height:${height}px;"><b>🚫 ${escapeHtml(b.startTime)}–${escapeHtml(b.endTime)}</b>${escapeHtml(b.label || 'Indisponible')}</div>`;
+    });
 
     const blockGeometry = {}; // id -> { top, height, bottom }
     withTime.forEach(it => {
@@ -1950,15 +2319,19 @@
     }
 
     timelineEl.innerHTML = html;
-    timelineEl.querySelectorAll('.timeline-block').forEach(el => {
+    timelineEl.querySelectorAll('.timeline-block[data-id]').forEach(el => {
       el.addEventListener('click', () => openAppointmentDetail(el.getAttribute('data-id')));
     });
+    timelineEl.querySelectorAll('.timeline-block[data-block-id]').forEach(el => {
+      el.addEventListener('click', () => openBlockEdit(el.getAttribute('data-block-id')));
+    });
 
-    if (withTime.length === 0) {
+    if (withTime.length === 0 && dayBlocks.length === 0) {
       timelineEl.insertAdjacentHTML('beforeend', '<p class="planning-empty-day" style="position:absolute; top:50%; left:0; right:0; transform:translateY(-50%);">Aucun rendez-vous ce jour-là.</p>');
     }
 
     populateTravelBadges(withTime);
+    renderDayKmSummary();
   }
 
   async function populateTravelBadges(withTime) {
@@ -2074,6 +2447,7 @@
     html += '<div class="fiche-section">';
     html += apptRow('Cliente', p.clientName);
     html += apptRow('Prestation', p.service);
+    html += apptRow('Formule de coloration', p.colorFormula);
     html += apptRow('Date', formatSmsDate(p.date));
     html += apptRow('Heure', p.time);
     html += apptRow('Durée', p.duration ? `${p.duration} min` : '');
@@ -2143,24 +2517,27 @@
   const pClientInfo = document.getElementById('p-client-info');
 
   // ---------- p-time: hour/minute dropdowns (5-minute steps) ----------
+  function populateHourMinuteSelects(hourSelect, minuteSelect) {
+    for (let h = 0; h < 24; h++) {
+      const opt = document.createElement('option');
+      const hh = String(h).padStart(2, '0');
+      opt.value = hh;
+      opt.textContent = hh + ' h';
+      hourSelect.appendChild(opt);
+    }
+    for (let m = 0; m < 60; m += 5) {
+      const opt = document.createElement('option');
+      const mm = String(m).padStart(2, '0');
+      opt.value = mm;
+      opt.textContent = mm;
+      minuteSelect.appendChild(opt);
+    }
+  }
+
   const pTimeHour = document.getElementById('p-time-hour');
   const pTimeMinute = document.getElementById('p-time-minute');
   const pTimeHidden = document.getElementById('p-time');
-
-  for (let h = 0; h < 24; h++) {
-    const opt = document.createElement('option');
-    const hh = String(h).padStart(2, '0');
-    opt.value = hh;
-    opt.textContent = hh + ' h';
-    pTimeHour.appendChild(opt);
-  }
-  for (let m = 0; m < 60; m += 5) {
-    const opt = document.createElement('option');
-    const mm = String(m).padStart(2, '0');
-    opt.value = mm;
-    opt.textContent = mm;
-    pTimeMinute.appendChild(opt);
-  }
+  populateHourMinuteSelects(pTimeHour, pTimeMinute);
 
   function syncPTimeFromSelects() {
     pTimeHidden.value = pTimeHour.value + ':' + pTimeMinute.value;
@@ -2187,12 +2564,143 @@
   setPTime('09:00'); // default shown before any interaction
 
   function renderClientSelect() { pClientEmpty.style.display = cachedClients.length === 0 ? 'block' : 'none'; }
+
+  // ---------- color formula: shown only for "Coloration", with a one-tap
+  // suggestion of the client's last formula so a regular shade is never
+  // retyped or misremembered ----------
+  const pColorFormulaWrap = document.getElementById('p-color-formula-wrap');
+  const pColorFormula = document.getElementById('p-color-formula');
+  const pColorFormulaHint = document.getElementById('p-color-formula-hint');
+
+  function getLastColorFormula(clientId) {
+    if (!clientId) return null;
+    const past = cachedPlanning
+      .filter(p => p.clientId === clientId && p.service === 'Coloration' && p.colorFormula && p.id !== document.getElementById('p-edit-id').value)
+      .sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.time || '').localeCompare(a.time || ''));
+    return past[0] || null;
+  }
+
+  function refreshColorFormulaUI() {
+    const isColoration = document.getElementById('p-service').value === 'Coloration';
+    pColorFormulaWrap.style.display = isColoration ? 'block' : 'none';
+    if (!isColoration) { pColorFormulaHint.style.display = 'none'; return; }
+    const last = getLastColorFormula(pClientIdInput.value);
+    if (last) {
+      pColorFormulaHint.innerHTML = `🎨 Dernière formule utilisée (${escapeHtml(formatHistoryDate(last.date))}) : <strong>${escapeHtml(last.colorFormula)}</strong> — <button type="button" id="p-use-last-formula" style="background:none; border:none; color:#93374A; font-weight:600; text-decoration:underline; cursor:pointer; padding:0; font-size:inherit;">Réutiliser</button>`;
+      pColorFormulaHint.style.display = 'block';
+      document.getElementById('p-use-last-formula').addEventListener('click', () => { pColorFormula.value = last.colorFormula; });
+    } else {
+      pColorFormulaHint.style.display = 'none';
+    }
+  }
+  document.getElementById('p-service').addEventListener('change', refreshColorFormulaUI);
+  document.getElementById('p-date').addEventListener('change', refreshSlotsInfo);
+  document.getElementById('p-duration').addEventListener('change', refreshSlotsInfo);
+
+  // =========================================================
+  // Personal unavailability blocks — time ranges with no client, used to
+  // keep those hours out of both the "free ranges" hint and the overlap
+  // check, exactly like a real appointment would.
+  // =========================================================
+  const blockForm = document.getElementById('block-form');
+  const newBlockBtn = document.getElementById('new-block-btn');
+  const bStartHour = document.getElementById('b-start-hour'), bStartMinute = document.getElementById('b-start-minute');
+  const bEndHour = document.getElementById('b-end-hour'), bEndMinute = document.getElementById('b-end-minute');
+  populateHourMinuteSelects(bStartHour, bStartMinute);
+  populateHourMinuteSelects(bEndHour, bEndMinute);
+  bStartHour.value = '08'; bStartMinute.value = '00'; bEndHour.value = '12'; bEndMinute.value = '00';
+
+  function closeBlockForm() {
+    blockForm.style.display = 'none';
+    blockForm.reset();
+    document.getElementById('b-edit-id').value = '';
+    document.getElementById('block-delete-btn').style.display = 'none';
+    document.getElementById('block-form-msg').textContent = '';
+    bStartHour.value = '08'; bStartMinute.value = '00'; bEndHour.value = '12'; bEndMinute.value = '00';
+  }
+
+  newBlockBtn.addEventListener('click', () => {
+    const showing = blockForm.style.display !== 'none';
+    if (showing) { closeBlockForm(); return; }
+    planningForm.style.display = 'none';
+    document.getElementById('b-edit-id').value = '';
+    document.getElementById('b-date').value = selectedPlanningDate;
+    document.getElementById('block-delete-btn').style.display = 'none';
+    document.getElementById('block-form-msg').textContent = '';
+    blockForm.style.display = 'block';
+    try { blockForm.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
+  });
+  document.getElementById('cancel-block').addEventListener('click', closeBlockForm);
+
+  function openBlockEdit(id) {
+    const b = cachedBlocks.find(x => x.id === id);
+    if (!b) return;
+    planningForm.style.display = 'none';
+    document.getElementById('b-edit-id').value = b.id;
+    document.getElementById('b-date').value = b.date;
+    [bStartHour.value, bStartMinute.value] = b.startTime.split(':');
+    [bEndHour.value, bEndMinute.value] = b.endTime.split(':');
+    document.getElementById('b-label').value = b.label || '';
+    document.getElementById('block-delete-btn').style.display = 'inline-block';
+    document.getElementById('block-form-msg').textContent = '';
+    blockForm.style.display = 'block';
+    try { blockForm.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
+  }
+
+  document.getElementById('block-delete-btn').addEventListener('click', async () => {
+    const id = document.getElementById('b-edit-id').value;
+    if (!id) return;
+    if (!confirm('Supprimer ce créneau bloqué ?')) return;
+    const updated = cachedBlocks.filter(b => b.id !== id);
+    const result = await saveIndexed(BLOCKS_KEY, updated);
+    if (!result) { alert('Impossible de supprimer ce créneau pour le moment.'); return; }
+    cachedBlocks = updated;
+    closeBlockForm();
+    renderPlanningDay();
+    showToast('Créneau bloqué supprimé');
+  });
+
+  blockForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msgEl = document.getElementById('block-form-msg');
+    const date = document.getElementById('b-date').value;
+    const startTime = `${bStartHour.value}:${bStartMinute.value}`;
+    const endTime = `${bEndHour.value}:${bEndMinute.value}`;
+    if (!date) { msgEl.textContent = 'Choisis une date.'; msgEl.className = 'form-msg err'; return; }
+    if (timeToMinutes(endTime) <= timeToMinutes(startTime)) {
+      msgEl.textContent = "L'heure de fin doit être après l'heure de début.";
+      msgEl.className = 'form-msg err';
+      return;
+    }
+    const editId = document.getElementById('b-edit-id').value;
+    const startMin = timeToMinutes(startTime), endMin = timeToMinutes(endTime);
+    const overlapAppt = cachedPlanning.some(p => {
+      if (p.date !== date || p.isDemo) return false;
+      const pStart = timeToMinutes(p.time), pEnd = pStart + (parseInt(p.duration, 10) || 45);
+      return pStart < endMin && startMin < pEnd;
+    });
+    if (overlapAppt && !confirm('Un rendez-vous existe déjà sur une partie de ce créneau. Bloquer quand même (le rendez-vous restera inchangé) ?')) return;
+
+    const entry = {
+      id: editId || ('b_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7)),
+      date, startTime, endTime,
+      label: document.getElementById('b-label').value.trim()
+    };
+    const updated = editId ? cachedBlocks.map(b => b.id === editId ? entry : b) : [...cachedBlocks, entry];
+    const result = await saveIndexed(BLOCKS_KEY, updated);
+    if (!result) { msgEl.textContent = "Une erreur est survenue pendant l'enregistrement."; msgEl.className = 'form-msg err'; return; }
+    cachedBlocks = updated;
+    closeBlockForm();
+    renderPlanningDay();
+    showToast(editId ? 'Créneau bloqué mis à jour' : 'Créneau bloqué enregistré');
+  });
+
   function showClientInfo(client) {
     const fullAddress = formatFullAddress(client);
     pClientInfo.innerHTML = `<b>${escapeHtml(client.firstName)} ${escapeHtml(client.lastName)}</b>${fullAddress ? `📍 ${escapeHtml(fullAddress)}<br>` : ''}${client.phone ? `📞 ${escapeHtml(client.phone)} ` : ''}${client.email ? `· ✉️ ${escapeHtml(client.email)}` : ''}`;
     pClientInfo.style.display = 'block';
   }
-  function selectClient(client) { pClientIdInput.value = client.id; pClientSearch.value = `${client.firstName} ${client.lastName}`; pClientResults.style.display = 'none'; showClientInfo(client); }
+  function selectClient(client) { pClientIdInput.value = client.id; pClientSearch.value = `${client.firstName} ${client.lastName}`; pClientResults.style.display = 'none'; showClientInfo(client); refreshColorFormulaUI(); refreshSlotsInfo(); }
   function clearClientSelection() { pClientIdInput.value = ''; pClientInfo.style.display = 'none'; }
 
   pClientSearch.addEventListener('input', () => {
@@ -2289,6 +2797,7 @@
   newPlanningBtn.addEventListener('click', () => {
     const showing = planningForm.style.display !== 'none';
     if (showing) { planningForm.style.display = 'none'; return; }
+    closeBlockForm();
     renderClientSelect();
     planningForm.reset();
     setPTime('09:00');
@@ -2299,6 +2808,8 @@
     clearClientSelection();
     pClientSearch.value = '';
     document.getElementById('p-date').value = selectedPlanningDate;
+    refreshColorFormulaUI();
+    refreshSlotsInfo();
     planningForm.style.display = 'block';
   });
   cancelPlanningBtn.addEventListener('click', () => {
@@ -2310,6 +2821,8 @@
     document.getElementById('planning-submit-btn').textContent = 'Ajouter au planning';
     clearClientSelection();
     pClientResults.style.display = 'none';
+    refreshColorFormulaUI();
+    document.getElementById('p-slots-info').style.display = 'none';
     planningForm.style.display = 'none';
     clearDraft(DRAFT_PLANNING_KEY);
   });
@@ -2397,6 +2910,7 @@
   function openPlanningEdit(id) {
     const entry = cachedPlanning.find(p => p.id === id);
     if (!entry) return;
+    closeBlockForm();
     renderClientSelect();
     document.getElementById('p-edit-id').value = entry.id;
     pClientIdInput.value = entry.clientId || '';
@@ -2411,12 +2925,15 @@
     document.getElementById('p-duration').value = String(entry.duration || 45);
     document.getElementById('p-price').value = entry.price != null ? entry.price : '';
     document.getElementById('p-notes').value = entry.notes || '';
+    pColorFormula.value = entry.colorFormula || '';
+    refreshColorFormulaUI();
     document.getElementById('p-addr-override-check').checked = !!entry.addressOverride;
     document.getElementById('p-addr-override-fields').style.display = entry.addressOverride ? 'block' : 'none';
     document.getElementById('p-addr-override').value = entry.addressOverride ? (entry.address || '') : '';
     document.getElementById('p-postcode-override').value = entry.addressOverride ? (entry.postcode || '') : '';
     document.getElementById('p-city-override').value = entry.addressOverride ? (entry.city || '') : '';
     document.getElementById('planning-submit-btn').textContent = 'Mettre à jour le rendez-vous';
+    refreshSlotsInfo();
     planningForm.style.display = 'block';
     try { planningForm.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
   }
@@ -2428,6 +2945,7 @@
   function openPlanningDuplicate(id) {
     const entry = cachedPlanning.find(p => p.id === id);
     if (!entry) return;
+    closeBlockForm();
     renderClientSelect();
     document.getElementById('p-edit-id').value = '';
     pClientIdInput.value = entry.clientId || '';
@@ -2441,12 +2959,15 @@
     document.getElementById('p-duration').value = String(entry.duration || 45);
     document.getElementById('p-price').value = entry.price != null ? entry.price : '';
     document.getElementById('p-notes').value = '';
+    pColorFormula.value = entry.colorFormula || '';
+    refreshColorFormulaUI();
     document.getElementById('p-addr-override-check').checked = !!entry.addressOverride;
     document.getElementById('p-addr-override-fields').style.display = entry.addressOverride ? 'block' : 'none';
     document.getElementById('p-addr-override').value = entry.addressOverride ? (entry.address || '') : '';
     document.getElementById('p-postcode-override').value = entry.addressOverride ? (entry.postcode || '') : '';
     document.getElementById('p-city-override').value = entry.addressOverride ? (entry.city || '') : '';
     document.getElementById('planning-submit-btn').textContent = 'Ajouter au planning';
+    refreshSlotsInfo();
     planningForm.style.display = 'block';
     try { planningForm.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
     showToast('Rendez-vous dupliqué — choisis une nouvelle date/heure');
@@ -2480,11 +3001,11 @@
     } catch (e) { console.error('geocode failed', e); return null; }
   }
 
-  // Driving time via OSRM's public demo routing server (free, no key). This
-  // is a shared demo instance — fine for a handful of lookups a day, but not
-  // guaranteed uptime, so every caller must fail open (skip the check)
-  // rather than block saving when it's unreachable.
-  async function drivingMinutesBetween(addrA, addrB) {
+  // Driving time/distance via OSRM's public demo routing server (free, no
+  // key). This is a shared demo instance — fine for a handful of lookups a
+  // day, but not guaranteed uptime, so every caller must fail open (skip the
+  // check, or report "unknown") rather than block saving when unreachable.
+  async function drivingRouteBetween(addrA, addrB) {
     const [a, b] = await Promise.all([geocodeAddress(addrA), geocodeAddress(addrB)]);
     if (!a || !b) return null;
     try {
@@ -2492,8 +3013,12 @@
       const res = await fetch(url);
       const data = await res.json();
       if (data.code !== 'Ok' || !data.routes || !data.routes[0]) return null;
-      return Math.ceil(data.routes[0].duration / 60);
+      return { minutes: Math.ceil(data.routes[0].duration / 60), km: data.routes[0].distance / 1000 };
     } catch (e) { console.error('routing failed', e); return null; }
+  }
+  async function drivingMinutesBetween(addrA, addrB) {
+    const route = await drivingRouteBetween(addrA, addrB);
+    return route ? route.minutes : null;
   }
 
   function timeToMinutes(hhmm) {
@@ -2508,6 +3033,59 @@
     return [entryLike.address, entryLike.postcode, entryLike.city].filter(Boolean).join(', ');
   }
 
+  // =========================================================
+  // Daily mileage — home → each appointment in order → home. A cache keyed
+  // by date + the exact sequence of addresses avoids re-querying OSRM every
+  // time the day is simply re-rendered (e.g. after an unrelated save).
+  // =========================================================
+  const dayKmCache = {}; // "date|addr1|addr2|..." -> km (number) or null (unknown)
+
+  async function computeDayKm(dateStr) {
+    if (!cachedHomeAddress || !fullAddressOf(cachedHomeAddress)) return { status: 'no-home' };
+    const dayItems = cachedPlanning
+      .filter(p => p.date === dateStr && !p.isDemo && p.time)
+      .sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time));
+    if (dayItems.length === 0) return { status: 'ok', km: 0 };
+
+    const homeAddr = fullAddressOf(cachedHomeAddress);
+    const stops = [homeAddr, ...dayItems.map(fullAddressOf), homeAddr];
+    const cacheKey = dateStr + '|' + stops.join('|');
+    if (dayKmCache[cacheKey] != null) return { status: 'ok', km: dayKmCache[cacheKey] };
+
+    let total = 0;
+    for (let i = 0; i < stops.length - 1; i++) {
+      if (!stops[i] || !stops[i + 1]) return { status: 'unknown' }; // an appointment has no usable address
+      const route = await drivingRouteBetween(stops[i], stops[i + 1]);
+      if (!route) return { status: 'unknown' }; // offline or routing service unreachable right now
+      total += route.km;
+    }
+    dayKmCache[cacheKey] = total;
+    return { status: 'ok', km: total };
+  }
+
+  async function renderDayKmSummary() {
+    const box = document.getElementById('day-km-summary');
+    if (!box) return;
+    if (!cachedHomeAddress || !fullAddressOf(cachedHomeAddress)) {
+      box.style.display = 'none';
+      return;
+    }
+    box.style.display = 'block';
+    box.textContent = 'Calcul des kilomètres…';
+    const dateForThisCall = selectedPlanningDate;
+    const result = await computeDayKm(dateForThisCall);
+    // The person may have flipped to another day while this was in flight —
+    // never overwrite a newer day's box with a stale result.
+    if (dateForThisCall !== selectedPlanningDate) return;
+    if (result.status === 'ok') {
+      box.textContent = result.km === 0
+        ? '🚗 Aucun trajet ce jour-là (aucun rendez-vous).'
+        : `🚗 ${result.km.toFixed(1)} km réalisés ce jour (aller-retour domicile compris)`;
+    } else {
+      box.textContent = '🚗 Km non calculables pour le moment (connexion ou adresse manquante).';
+    }
+  }
+
   function findConflictsAndNeighbors(date, startMin, endMin, excludeId) {
     const sameDay = cachedPlanning.filter(p => p.date === date && p.id !== excludeId);
     let overlap = null, prevNeighbor = null, nextNeighbor = null;
@@ -2518,7 +3096,78 @@
       if (pEnd <= startMin && (!prevNeighbor || pEnd > (timeToMinutes(prevNeighbor.time) + (parseInt(prevNeighbor.duration, 10) || 45)))) prevNeighbor = p;
       if (pStart >= endMin && (!nextNeighbor || pStart < timeToMinutes(nextNeighbor.time))) nextNeighbor = p;
     }
-    return { overlap, prevNeighbor, nextNeighbor };
+    // A personal block overlapping the requested slot is just as blocking as
+    // a double-booking — reuses the exact same "overlap" mechanism so the
+    // save is refused the same way, just with its own message downstream.
+    let blockOverlap = null;
+    for (const b of cachedBlocks.filter(x => x.date === date)) {
+      const bStart = timeToMinutes(b.startTime), bEnd = timeToMinutes(b.endTime);
+      if (bStart < endMin && startMin < bEnd) { blockOverlap = b; break; }
+    }
+    return { overlap, blockOverlap, prevNeighbor, nextNeighbor };
+  }
+
+  // ---------- available slots (used for the "free ranges" hint and the
+  // suggested next slot) — subtracts both existing appointments AND personal
+  // blocks from the working window, merging any overlaps first. ----------
+  function getAvailableSlots(dateStr, excludeApptId) {
+    const dayStart = TIMELINE_START_HOUR * 60, dayEnd = TIMELINE_END_HOUR * 60;
+    const busy = [];
+    cachedPlanning.filter(p => p.date === dateStr && p.id !== excludeApptId && p.time && !p.isDemo).forEach(p => {
+      const start = timeToMinutes(p.time);
+      busy.push([start, start + (parseInt(p.duration, 10) || 45)]);
+    });
+    cachedBlocks.filter(b => b.date === dateStr).forEach(b => {
+      busy.push([timeToMinutes(b.startTime), timeToMinutes(b.endTime)]);
+    });
+    busy.sort((a, b) => a[0] - b[0]);
+    const merged = [];
+    busy.forEach(([s, e]) => {
+      if (merged.length && s <= merged[merged.length - 1][1]) merged[merged.length - 1][1] = Math.max(merged[merged.length - 1][1], e);
+      else merged.push([s, e]);
+    });
+    const free = [];
+    let cursor = dayStart;
+    merged.forEach(([s, e]) => { if (s > cursor) free.push([cursor, s]); cursor = Math.max(cursor, e); });
+    if (cursor < dayEnd) free.push([cursor, dayEnd]);
+    return free;
+  }
+
+  function findFirstSlotFitting(dateStr, durationMin, excludeApptId) {
+    const free = getAvailableSlots(dateStr, excludeApptId);
+    const fit = free.find(([s, e]) => (e - s) >= durationMin);
+    return fit ? fit[0] : null;
+  }
+
+  // Refreshes the "free ranges + suggested slot" hint under the date/time
+  // fields. Never touches the time fields itself — only offers a one-tap
+  // button — so it can safely run on every relevant change without ever
+  // overwriting a time the person already chose on purpose.
+  function refreshSlotsInfo() {
+    const box = document.getElementById('p-slots-info');
+    if (!box) return;
+    const dateStr = document.getElementById('p-date').value;
+    if (!dateStr) { box.style.display = 'none'; return; }
+    const duration = parseInt(document.getElementById('p-duration').value, 10) || 45;
+    const editId = document.getElementById('p-edit-id').value || null;
+    const free = getAvailableSlots(dateStr, editId);
+
+    if (free.length === 0) {
+      box.style.display = 'block';
+      box.innerHTML = '😴 Aucun créneau libre ce jour-là.';
+      return;
+    }
+
+    const rangesText = free.map(([s, e]) => `${minutesToTime(s)}–${minutesToTime(e)}`).join(' · ');
+    const suggestion = findFirstSlotFitting(dateStr, duration, editId);
+    let html = `<strong>Créneaux libres :</strong> ${rangesText}`;
+    if (suggestion != null) {
+      html += `<br>💡 Prochain créneau possible (${duration} min) : <strong>${minutesToTime(suggestion)}</strong> — <button type="button" id="p-use-suggested-slot" style="background:none; border:none; color:#93374A; font-weight:600; text-decoration:underline; cursor:pointer; padding:0; font-size:inherit;">Utiliser ce créneau</button>`;
+    }
+    box.innerHTML = html;
+    box.style.display = 'block';
+    const useBtn = document.getElementById('p-use-suggested-slot');
+    if (useBtn) useBtn.addEventListener('click', () => setPTime(minutesToTime(suggestion)));
   }
 
   // Returns { blocking: bool, message: string }. blocking=true can never be
@@ -2527,10 +3176,14 @@
   async function validateSchedule(entry, excludeId) {
     const startMin = timeToMinutes(entry.time);
     const endMin = startMin + (parseInt(entry.duration, 10) || 45);
-    const { overlap, prevNeighbor, nextNeighbor } = findConflictsAndNeighbors(entry.date, startMin, endMin, excludeId);
+    const { overlap, blockOverlap, prevNeighbor, nextNeighbor } = findConflictsAndNeighbors(entry.date, startMin, endMin, excludeId);
 
     if (overlap) {
       return { blocking: true, message: `⚠️ Ce créneau chevauche le rendez-vous de ${overlap.clientName} à ${overlap.time} (${overlap.duration} min). Choisis un autre horaire.` };
+    }
+    if (blockOverlap) {
+      const label = blockOverlap.label ? ` (${blockOverlap.label})` : '';
+      return { blocking: true, message: `⚠️ Ce créneau chevauche une indisponibilité personnelle de ${blockOverlap.startTime} à ${blockOverlap.endTime}${label}. Choisis un autre horaire.` };
     }
 
     const entryAddr = fullAddressOf(entry);
@@ -2587,6 +3240,7 @@
       addressOverride: useOverride,
       phone: client.phone || '', email: client.email || '',
       service: document.getElementById('p-service').value,
+      colorFormula: document.getElementById('p-service').value === 'Coloration' ? document.getElementById('p-color-formula').value.trim() : '',
       date: document.getElementById('p-date').value,
       time: document.getElementById('p-time').value,
       duration: parseInt(document.getElementById('p-duration').value, 10),
@@ -2881,6 +3535,17 @@
   const ficheOverlay = document.getElementById('fiche-overlay');
   const ficheClientName = document.getElementById('fiche-client-name');
   const ficheBody = document.getElementById('fiche-body');
+  // Tapping a past appointment in a client's history opens the same full
+  // detail view used from the day planning — same modal, same buttons
+  // (edit, duplicate, delete), just reached from the client's side instead.
+  ficheBody.addEventListener('click', (e) => {
+    const row = e.target.closest('.history-row-link');
+    if (!row) return;
+    const apptId = row.getAttribute('data-id');
+    if (!apptId) return;
+    ficheOverlay.classList.remove('open');
+    openAppointmentDetail(apptId);
+  });
   let ficheCurrentId = null;
 
   function ficheRow(label, value, alert) {
@@ -3154,7 +3819,7 @@
   function getClientHistoryItems(client) {
     const phoneKey = normalizePhone(client.phone);
     const items = cachedPlanning.filter(p => p.clientId === client.id || (phoneKey && normalizePhone(p.phone) === phoneKey))
-      .map(p => ({ date: p.date, time: p.time || '', service: p.service || '—' }));
+      .map(p => ({ id: p.id, date: p.date, time: p.time || '', service: p.service || '—', colorFormula: p.colorFormula || '' }));
     items.sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.time || '').localeCompare(a.time || ''));
     return items;
   }
@@ -3162,10 +3827,10 @@
   function historyTableHtml(items) {
     if (items.length === 0) return '<p class="admin-note" style="margin-top:0;">Aucun rendez-vous enregistré pour cette cliente.</p>';
     return `
-      <p class="admin-note" style="margin-top:0;">${items.length} rendez-vous enregistré${items.length > 1 ? 's' : ''}.</p>
+      <p class="admin-note" style="margin-top:0;">${items.length} rendez-vous enregistré${items.length > 1 ? 's' : ''} — touche une ligne pour voir le détail.</p>
       <table class="history-table">
         <thead><tr><th>Date</th><th>Prestation</th></tr></thead>
-        <tbody>${items.map(it => `<tr><td>${formatHistoryDate(it.date)}${it.time ? `<br><span class="history-source">${escapeHtml(it.time)}</span>` : ''}</td><td>${escapeHtml(it.service)}</td></tr>`).join('')}</tbody>
+        <tbody>${items.map(it => `<tr class="history-row-link" data-id="${it.id}" style="cursor:pointer;"><td>${formatHistoryDate(it.date)}${it.time ? `<br><span class="history-source">${escapeHtml(it.time)}</span>` : ''}</td><td>${escapeHtml(it.service)}${it.colorFormula ? `<br><span class="history-source" style="color:#93374A;">🎨 ${escapeHtml(it.colorFormula)}</span>` : ''}</td></tr>`).join('')}</tbody>
       </table>`;
   }
 
